@@ -2,6 +2,12 @@
 {% block content %}
 <h1>All Our Books</h1>
   {% for book in books %}
-    <h2>{{ book.title }}</h2>
+    <p>Title: {{ book.title }}</p>
+    <p>Cover image URL: {{ book.coverImageURL }}</p>
+    <p>Blurb: {{ book.blurb }}</p>
+    <p>Upvotes: {{ book.upvotes }}</p>
+    <p>Affiliate Link: {{ book.affiliateLink }}</p>
+    <p>Author(s) ID: {{ book.authors[0] }}</p>
+    <p>Genre(s) ID: {{ book.genres[0] }}</p>
   {% endfor %}
 {% endblock %}
