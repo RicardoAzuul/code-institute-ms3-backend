@@ -48,15 +48,14 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
     - As a First Time Visitor, I want to easily understand the main purpose of the site. If I see a couple of books, together with upvotes and reviews, I'll quickly realize what the site is about.
     - As a First Time Visitor, I want to be able to easily navigate the site to find content.
     - As a First Time Visitor, I want to get information that indicates how actively the site is used, to determine how valuable the reviews and recommendations are.
-- Returning Visitor Goals
-    - As a Returning Visitor, I want to find reviews and recommendations for books.
-    - As a Returning Visitor, I want to be able to quickly see all my reviews.
-    - As a Returning Visitor, I want to be able to create, update and delete reviews, and create, update and delete books.
+- Returning User Goals
+    - As a Returning User, I want to find reviews and recommendations for books.
+    - As a Returning User, I want to be able to quickly see all my reviews.
+    - As a Returning User, I want to be able to create, update and delete reviews, and create, update and delete books.
 - Frequent User Goals
     - As a Frequent User, I want to find all reviews from a particular user, to determine how valuable their opinion is, which helps in finding new books.
-    - As a Frequent User, I want to be able to edit book details.
 - Site Owner Goals
-    - As the site owner, I want to get recommendations for new books by crowdsourcing book reviews.
+    - As the site owner, I want to get recommendations for new books by crowdsourcing book reviews. The users of my site add reviews to books, which allows me to find new books I might like.
     - As the site owner, I want to earn money using affiliate links for the books on my site.
 
 ---
@@ -87,9 +86,18 @@ The functional specifications of the site:
         - a way to change the sorting order: by title, by author, number of upvotes and number of reviews
     - a navbar, which changes if a user is logged in or not
     - a basic footer
+    - a page to add new books: only visible when logged in
+    - a page to edit or delete books: to prevent abuse this is only accessible to people who added the book, or admins. Only visible when logged in
+    - a page to add reviews: only visible when logged in
+    - a page to edit or delete reviews: to prevent abuse this is only accessible to people who added the review, or admins. Only visible when logged in
+    - a page to view the logged in user's profile: only visible when logged in
+    - a page to register: only visible when not logged in
+    - a page to log in: only visible when not logged in
+    - a link to log out: only visible when logged in
 
 Content requirements:
 - information about books, and reviews of said books
+- users
 
 
 ---
@@ -187,9 +195,13 @@ Looking at [Learn MongoDB The Hard Way](http://learnmongodbthehardway.com/schema
 1. Documents for Authors, in their own collection. These are then linked to books using foreign id's, much like in a relational database. The same goes for books: I'll add foreign ids for the authors to the book documents.
 1. I'll also have a collection for genres. This is because, as the site mentions, it's possible that many books belong to a particular genre. Embedding those books within the genre document would then mean that the maximum size of the document could be reached.
 
+**Update** 
+After talking to my mentor about my database design, he made some poignant observations:
+- the genre of a book or the author of a book will not change. As such it makes more sense to have genre and author as properties of the book document. This information is static: a book will always have been written by the same author, and will always have the same genre: it will not suddenly change from horror to romance.
+
 So, in a JSON-ish structure:
 
-authors, collection of author documents:
+~~authors, collection of author documents:~~
 ```
 {
     _id: 1,
@@ -202,17 +214,17 @@ books, collection of book documents:
 ```
 {
     _id: 1,
-    title: "Shining, The",
+    title: "The Shining",
     coverImageURL: "https://images-na.ssl-images-amazon.com/images/I/81w6JNKs5BS.jpg",
     blurb: "Jack Torrance's new job at the Overlook Hotel is the perfect chance for a fresh start. As the off-season caretaker at the atmospheric old hotel, he'll have plenty of time to spend reconnecting with his family and working on his writing. But as the harsh winter weather sets in, the idyllic location feels ever more remote...and more sinister. And the only one to notice the strange and terrible forces gathering around the Overlook is Danny Torrance, a uniquely gifted five-year-old.", 
     upvotes: 13,
-    genres: [1],
+    genres: ["horror", "psychological horror"]
     affiliatieLink: "https://fake.affiliate.link",
-    authors: [1]
+    authors: Stephen King
 }
 ```
 
-genres, collection of genre documents:
+~~genres, collection of genre documents:~~
 ```
 {
     _id: 1,
