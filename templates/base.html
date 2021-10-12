@@ -21,11 +21,7 @@
       crossorigin="anonymous"
       type="text/css"
     />
-    <link
-      rel="stylesheet"
-      href="static/css/style.css"
-      type="text/css"
-    />
+    <link rel="stylesheet" href="static/css/style.css" type="text/css" />
     <title>Bookable</title>
   </head>
 
@@ -83,6 +79,23 @@
         </div>
       </nav>
     </header>
+
+    <section>
+      <!-- flash messages  -->
+      {% with flash_messages = get_flashed_messages() %} 
+        {% if flash_messages %}
+          {% for message in flash_messages %}
+          <div class="row">
+            <div class="col">
+              <div class="alert alert-info text-center" role="alert">
+                <h4>{{ message }}</h4>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </section>
 
     <main class="container">{% block content %} {% endblock %}</main>
 
