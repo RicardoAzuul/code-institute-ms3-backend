@@ -1,14 +1,14 @@
 {% extends "base.html" %} {% block content %}
-<h1>Register</h1>
+<h1>Log In</h1>
 
 <!-- card from Bootstrap (https://getbootstrap.com/docs/4.6/components/card/), customized for this site -->
 <div class="card shadow p-3 mb-5 bg-white rounded">
   <div class="card-body">
-    <h5 class="card-title">Register Your Account</h5>
+    <h5 class="card-title">Log In To Your Account</h5>
     <!-- form from Bootstrap (https://getbootstrap.com/docs/4.6/components/forms/#overview, customized for this site) -->
-    <form method="POST" action="{{ url_for('register') }}">
+    <form method="POST" action="{{ url_for('login') }}">
       <div class="form-group">
-        <label for="username"><i class="fas fa-user-plus"></i> Username</label>
+        <label for="username"><i class="fas fa-user"></i> Username</label>
         <input
           type="text"
           class="validate form-control"
@@ -35,8 +35,8 @@
           placeholder="Example: Passw0rd"
         />
       </div>
-      <button type="submit" class="btn btn-primary" id="register-button">
-        Register <i class="fas fa-sign-in-alt"></i>
+      <button type="submit" class="btn btn-primary" id="login-button">
+        Log In <i class="fas fa-sign-in-alt"></i>
       </button>
     </form>
   </div>
@@ -44,7 +44,7 @@
 
 <div class="row">
   <div class="col">
-    <p class="text-center">Want to log in? <a href="{{ url_for('login')}}">Log In</a></p>
+    <p class="text-center">Want to create an account? <a href="{{ url_for('register') }}">Register Your Account</a></p>
   </div>
 </div>
 

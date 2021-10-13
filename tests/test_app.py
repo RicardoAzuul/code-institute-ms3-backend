@@ -1,4 +1,8 @@
 # unit tests for app.py
+import os
+if os.path.exists("env.py"):
+    import env
+
 
 def test_index(app, client):
     """
