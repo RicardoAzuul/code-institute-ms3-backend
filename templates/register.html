@@ -9,22 +9,33 @@
     <form method="POST" action="{{ url_for('register') }}">
       <div class="form-group">
         <label for="username"><i class="fas fa-user-plus"></i> Username</label>
-        <input type="text" class="validate" id="username" name="username" minlength="2" maxlength="64" required pattern="^[a-z0-9_.-]{2,64}"/>
+        <input
+          type="text"
+          class="validate form-control"
+          id="username"
+          name="username"
+          minlength="2"
+          maxlength="64"
+          required
+          pattern="^[a-z0-9_.-]{2,64}"
+          placeholder="Lower case letters, numbers, and these symbols: _ -  ."
+        />
       </div>
       <div class="form-group">
         <label for="password"><i class="fas fa-key"></i> Password</label>
         <input
           type="password"
-          class="validate"
+          class="validate form-control"
           id="password"
           name="password"
           minlength="8"
           maxlength="64"
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,64}"
           required
+          placeholder="Example: Passw0rd"
         />
       </div>
-      <button type="submit" class="btn btn-primary">
+      <button type="submit" class="btn btn-primary" id="register-button">
         Register <i class="fas fa-sign-in-alt"></i>
       </button>
     </form>
