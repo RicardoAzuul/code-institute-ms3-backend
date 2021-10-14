@@ -137,4 +137,33 @@ def test_webapp_register_url():
 
     assert url == chrome_driver.current_url
 
+
+def test_webapp_register_function():
+    """
+    GIVEN a running Heroku app
+    WHEN the user registers
+    THEN check that the user is sent to its profile page
+    """    
+    chrome_driver.get('https://code-institute-ms3-book-review.herokuapp.com/register')
+
+    username = "test.user"
+    password = "Passw0rd"
+    url = "https://code-institute-ms3-book-review.herokuapp.com/profile/" + username
+    message = "Congratulations, you've been registered!"
+
+    username_element = chrome_driver.find_element_by_name("username")
+    password_element = chrome_driver.find_element_by_name("password")
+    register_button = chrome_driver.find_element_by_class_name("btn-primary")
+
+    username_element.send_keys(username)
+    password_element.send_keys(password)
+    register_button.click()
+
+    assert url == chrome_driver.current_url
+    assert message == chrome_driver.find_element_by_class_name("alert alert-info text-center").text()
+
     chrome_driver.close()
+
+# TODO: Add test for logging in and logging out
+# TODO: Add test for registering
+# TODO: Add test for deleting user
