@@ -159,8 +159,8 @@ def test_webapp_register_function():
     password_element.send_keys(password)
     register_button.click()
 
-    assert url == chrome_driver.current_url
-    assert message == chrome_driver.find_element_by_class_name("alert alert-info text-center").text()
+    assert message in chrome_driver.page_source
+    assert username in chrome_driver.page_source
 
     chrome_driver.close()
 
