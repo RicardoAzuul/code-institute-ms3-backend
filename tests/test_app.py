@@ -66,7 +66,7 @@ def test_register(app, client):
     assert res.status_code == 200
 
 
-def test_register_card_title(app, client):
+def test_register_content(app, client):
     """
     GIVEN a running Flask app
     WHEN the client browses to /register
@@ -74,3 +74,23 @@ def test_register_card_title(app, client):
     """
     res = client.get('/register')
     assert b'<h5 class="card-title">Register Your Account' in res.data
+
+
+def test_login(app, client):
+    """
+    GIVEN a running Flask app
+    WHEN the client browses to /login
+    THEN check for status code 200
+    """
+    res = client.get('/login')
+    assert res.status_code == 200
+
+
+def test_login_content(app, client):
+    """
+    GIVEN a running Flask app
+    WHEN the client browses to /login
+    THEN check the h5 element with class "card-title" and text "Log In To Your Account"
+    """
+    res = client.get('/login')
+    assert b'<h5 class="card-title">Log In To Your Account' in res.data
