@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- card from Bootstrap (https://getbootstrap.com/docs/4.6/components/card/), customized for this site -->
+<div class="card shadow p-3 mb-5 bg-white rounded" id="profile-card">
+  <div class="card-header">
+    <h1 class="text-center">{{ username}}'s Profile</h1>
+  </div>
+  <div class="card-body">
+    <h2 class="card-text">Books you've added:</h2>
+    <button class="btn btn-success">Edit Book</button>
+    <button class="btn btn-danger">Delete Book</button>
+    <h2 class="card-text">Reviews you've added:</h2>
+    <button class="btn btn-success">Edit Review</button>
+    <button class="btn btn-danger">Delete Review</button>
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="col text-center">
+        <button class="btn btn-danger">Delete Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
