@@ -148,7 +148,6 @@ def test_webapp_register_function():
 
     username = "test.user"
     password = "Passw0rd"
-    url = "https://code-institute-ms3-book-review.herokuapp.com/profile/" + username
     message = "Congratulations, you've been registered!"
 
     username_element = chrome_driver.find_element_by_name("username")
@@ -162,8 +161,49 @@ def test_webapp_register_function():
     assert message in chrome_driver.page_source
     assert username in chrome_driver.page_source
 
+
+def test_webapp_logout_function():
+    """
+    GIVEN a running Heroku app
+    WHEN the logged in user logs out
+    THEN check that the user is sent back to the login page with the message that the user has been logged out
+    """    
+    chrome_driver.get('https://code-institute-ms3-book-review.herokuapp.com/')
+
+    url = "code-institute-ms3-book-review.herokuapp.com/login"
+    message = "You have been successfully logged out."
+
+    logout_href = chrome_driver.find_element_by_xpath("//a[text()='Log Out']")
+    logout_href.click()
+
+    assert message in chrome_driver.page_source
+    assert url in chrome_driver.current_url
+
+
+def test_webapp_login_function():
+    """
+    GIVEN a running Heroku app
+    WHEN the user logs in
+    THEN check that the user is sent to the profile page with a flash message
+    """    
+    chrome_driver.get('https://code-institute-ms3-book-review.herokuapp.com/login')
+
+    username = "test.user"
+    password = "Passw0rd"
+    url = "code-institute-ms3-book-review.herokuapp.com/profile/" + username
+    message = "Welcome back, " + username
+
+    username_element = chrome_driver.find_element_by_name("username")
+    password_element = chrome_driver.find_element_by_name("password")
+    login_button = chrome_driver.find_element_by_class_name("btn-primary")
+
+    username_element.send_keys(username)
+    password_element.send_keys(password)
+    login_button.click()
+
+    assert message in chrome_driver.page_source
+    assert url in chrome_driver.current_url
+
     chrome_driver.close()
 
-# TODO: Add test for logging in and logging out
-# TODO: Add test for registering
 # TODO: Add test for deleting user
