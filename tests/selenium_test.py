@@ -204,6 +204,27 @@ def test_webapp_login_function():
     assert message in chrome_driver.page_source
     assert url in chrome_driver.current_url
 
-    chrome_driver.close()
 
 # TODO: Add test for deleting user
+def test_webapp_delete_profile_function():
+    """
+    GIVEN a running Heroku app
+    WHEN the user deletes their profile
+    THEN check that the user is sent to the home page with a flash message
+    """
+    username = "test.user"
+    chrome_driver.get('https://code-institute-ms3-book-review.herokuapp.com/profile' + username)
+
+    url = "code-institute-ms3-book-review.herokuapp.com/"
+    message = "Your profile has been deleted."
+
+    delete_profile_button = chrome_driver.find_element_by_xpath("//button[text()='Delete Profile']")
+    delete_profile_button.click()
+
+    confirm_delete_button = chrome_driver.find_element_by_css_selector('.modal-footer > .btn-danger')
+    confirm_delete_button.click()
+
+    assert message in chrome_driver.page_source
+    assert url in chrome_driver.current_url
+
+    chrome_driver.close()

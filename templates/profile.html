@@ -16,7 +16,29 @@
   <div class="card-footer">
     <div class="row">
       <div class="col text-center">
-        <button class="btn btn-danger">Delete Profile</button>
+        <!-- Modal button from https://getbootstrap.com/docs/4.6/components/modal/#examples -->
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteProfileModal">Delete Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal from https://getbootstrap.com/docs/4.6/components/modal/#examples -->
+<div class="modal fade" id="deleteProfileModal" tabindex="-1" aria-labelledby="deleteProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteProfileModalLabel">Delete Profile?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete your profile? You will not be able to recover it.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal">Cancel delete</button>
+        <a href="{{ url_for('delete_profile') }}" class="btn btn-danger">Confirm delete</a>
       </div>
     </div>
   </div>

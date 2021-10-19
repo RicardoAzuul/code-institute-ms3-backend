@@ -85,6 +85,14 @@ def logout():
     return redirect(url_for("login"))
 
 
+@app.route("/delete_profile")
+def delete_profile():
+    username = mongo.db.users.find_one({"username": session["user"]})["username"]
+    mongo.db.users.find_one_and_delete({'username': username})
+    flash("Your profile has been deleted.")
+    return redirect(url_for("get_books"))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
