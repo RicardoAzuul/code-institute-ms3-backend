@@ -93,6 +93,11 @@ def delete_profile():
     return redirect(url_for("get_books"))
 
 
+@app.route("/new_book")
+def new_book():
+    return render_template("new_book.html")
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
