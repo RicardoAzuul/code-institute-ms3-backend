@@ -93,8 +93,28 @@ def delete_profile():
     return redirect(url_for("get_books"))
 
 
-@app.route("/new_book")
+@app.route("/new_book", methods=["GET", "POST"])
 def new_book():
+    if request.method == "POST":
+        # Do I want to lowercase titles?
+        book_exists = mongo.db.books.find_one({"title": request.form.get("booktitle")})
+
+        if book_exists:
+            flash("This book is already in the database.")
+            return redirect(url_for("new_book"))
+        
+        book_to_register = {
+            "title": request.form.get("booktitle"),
+            "authors": request.form.get("authors"),
+            "genres": request.form.get("genres"),
+            "coverImageURL": request.form.get("cover-image"),
+            "blurb": request.form.get("blurb")
+        }
+        mongo.db.books.insert_one(book_to_register)
+
+        flash("Book has been added to the database!")
+        return redirect(url_for("get_books"))
+
     return render_template("new_book.html")
 
 
