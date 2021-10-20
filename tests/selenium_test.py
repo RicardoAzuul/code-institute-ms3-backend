@@ -179,6 +179,41 @@ def test_webapp_logout_function():
     assert message in chrome_driver.page_source
     assert url in chrome_driver.current_url
 
+#  https://stackoverflow.com/questions/42142054/assert-an-element-is-not-present-python-selenium
+def test_webapp_logged_out_navs():
+    """
+    GIVEN a running Heroku app
+    WHEN the user is logged out
+    THEN check that the user only sees navs for All Books, Log In and Register
+    """
+    chrome_driver.get('https://code-institute-ms3-book-review.herokuapp.com/')
+
+    all_books_href = chrome_driver.find_element_by_xpath("//a[text()='All Books ']")
+    log_in_href = chrome_driver.find_element_by_xpath("//a[text()='Log In']")
+    register_href = chrome_driver.find_element_by_xpath("//a[text()='Register']")
+
+    assert all_books_href
+    assert log_in_href
+    assert register_href
+
+    with pytest.raises(Exception) as newBookExceptionInfo:
+        x = chrome_driver.find_element_by_xpath("//a[text()='New Book']")
+    
+    with pytest.raises(Exception) as newReviewExceptionInfo:
+        x = chrome_driver.find_element_by_xpath("//a[text()='New Review']")
+    
+    with pytest.raises(Exception) as profileExceptionInfo:
+        x = chrome_driver.find_element_by_xpath("//a[text()='Profile']")   
+
+    with pytest.raises(Exception) as logOutExceptionInfo:
+        x = chrome_driver.find_element_by_xpath("//a[text()='Log Out']")
+
+# https://docs.pytest.org/en/6.2.x/assert.html
+    assert 'Unable to locate element' in str(newBookExceptionInfo.value)
+    assert 'Unable to locate element' in str(newReviewExceptionInfo.value)
+    assert 'Unable to locate element' in str(profileExceptionInfo.value)
+    assert 'Unable to locate element' in str(logOutExceptionInfo.value)
+
 
 def test_webapp_login_function():
     """
@@ -205,7 +240,36 @@ def test_webapp_login_function():
     assert url in chrome_driver.current_url
 
 
-# TODO: Add test for deleting user
+def test_webapp_logged_in_navs():
+    """
+    GIVEN a running Heroku app
+    WHEN the user is logged in
+    THEN check that the user only sees navs for All Books, New Book, New Review, Profile and Log Out
+    """
+    chrome_driver.get('https://code-institute-ms3-book-review.herokuapp.com/')
+
+    all_books_href = chrome_driver.find_element_by_xpath("//a[text()='All Books ']")
+    new_book_href = chrome_driver.find_element_by_xpath("//a[text()='New Book']")
+    new_review_href = chrome_driver.find_element_by_xpath("//a[text()='New Review']")
+    profile_href = chrome_driver.find_element_by_xpath("//a[text()='Profile']")
+    log_out_href = chrome_driver.find_element_by_xpath("//a[text()='Log Out']")
+
+    assert all_books_href
+    assert new_book_href
+    assert new_review_href
+    assert profile_href
+    assert log_out_href
+   
+    with pytest.raises(Exception) as logInExceptionInfo:
+        x = chrome_driver.find_element_by_xpath("//a[text()='Log In']")   
+
+    with pytest.raises(Exception) as registerExceptionInfo:
+        x = chrome_driver.find_element_by_xpath("//a[text()='Register']")
+
+    assert 'Unable to locate element' in str(logInExceptionInfo.value)
+    assert 'Unable to locate element' in str(registerExceptionInfo.value)
+
+
 def test_webapp_delete_profile_function():
     """
     GIVEN a running Heroku app
