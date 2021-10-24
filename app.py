@@ -108,7 +108,8 @@ def new_book():
             "authors": request.form.get("authors"),
             "genres": request.form.get("genres"),
             "coverImageURL": request.form.get("cover-image"),
-            "blurb": request.form.get("blurb")
+            "blurb": request.form.get("blurb"),
+            "upvotes": 0
         }
         mongo.db.books.insert_one(book_to_register)
 

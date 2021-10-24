@@ -1,13 +1,43 @@
-{% extends "base.html" %} 
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <h1>All Our Books</h1>
+<div class="row row-cols-1 row-cols-md-2">
   {% for book in books %}
-    <p>Title: {{ book.title }}</p>
-    <p>Cover image URL: {{ book.coverImageURL }}</p>
-    <p>Blurb: {{ book.blurb }}</p>
-    <p>Upvotes: {{ book.upvotes }}</p>
-    <p>Affiliate Link: {{ book.affiliateLink }}</p>
-    <p>Author(s): {{ book.authors[0] }}</p>
-    <p>Genre(s): {{ book.genres[0] }}</p>
+  <div class="col mb-4">
+    <div class="card shadow p-3 mb-5 bg-white rounded">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          <img src="{{ book.coverImageURL }}" class="card-img-top" alt="..." />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <h6 class="card-subtitle text-muted">
+              Author(s): {{ book.authors }}
+            </h6>
+            <p class="card-text">Blurb: {{ book.blurb }}</p>
+            <p class="card-text">Upvotes: {{ book.upvotes }}</p>
+            <p class="card-text">Affiliate Link: {{ book.affiliateLink }}</p>
+            <p class="card-text"></p>
+            <p class="card-text">Genre(s): {{ book.genres }}</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card-footer">
+            {% if session.user %}
+            <button class="btn btn-danger">Delete Book</button>
+            <button class="btn btn-success">Edit Book</button>
+            {% else %}
+            <div class="text-center">
+              Want to edit books?
+              <a href="{{ url_for('login') }}">Log In</a> or
+              <a href="{{ url_for('register') }}">Register</a>!
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   {% endfor %}
+</div>
 {% endblock %}
