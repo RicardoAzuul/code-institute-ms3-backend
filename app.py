@@ -109,7 +109,9 @@ def new_book():
             "genres": request.form.get("genres"),
             "coverImageURL": request.form.get("cover-image"),
             "blurb": request.form.get("blurb"),
-            "upvotes": 0
+            "upvotes": 0,
+            "affiliateLink": "https://fake.affiliate.link",
+            "addedByUser": session["user"]
         }
         mongo.db.books.insert_one(book_to_register)
 

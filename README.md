@@ -332,6 +332,14 @@ These screenshots indicate the responsiveness of the pages on various screens.
 
 1. If you want to run the project locally 
 
+pip install -r requirements.txt to install required modules
+
+To activate Flash virtual environment:
+& "g:/My Drive/A-B-C/Coding/Github 
+Repos/code-institute-ms3-backend/venv/Scripts/Activate.ps1"
+
+run the app: python app.py
+
 ---
 
 ## Credits
