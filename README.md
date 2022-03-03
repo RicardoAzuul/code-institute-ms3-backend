@@ -340,6 +340,11 @@ Repos/code-institute-ms3-backend/venv/Scripts/Activate.ps1"
 
 run the app: python app.py
 
+
+pip3 install -r requirements.txt
+
+install selenium: pip install selenium
+
 ---
 
 ## Credits

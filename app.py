@@ -93,6 +93,13 @@ def delete_profile():
     return redirect(url_for("get_books"))
 
 
+@app.route("/delete_book/<book_id>")
+def delete_book(book_id):    
+    mongo.db.books.find_one_and_delete({'_id': ObjectId(book_id)})
+    flash("Book has been deleted.")
+    return redirect(url_for("get_books"))
+
+
 @app.route("/new_book", methods=["GET", "POST"])
 def new_book():
     if request.method == "POST":
