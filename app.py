@@ -128,7 +128,28 @@ def new_book():
     return render_template("new_book.html")
 
 
-# DOING
+@app.route("/new_review", methods=["GET", "POST"])
+def new_review():
+    if request.method == "POST":
+        book_exists = mongo.db.books.find_one({"title": request.form.get("booktitle")})
+
+        if not book_exists:
+            flash("There is no book with this title in the database.")
+            return redirect(url_for("new_review"))
+        
+        review_to_register = {
+            "title": request.form.get("booktitle"),
+            "review": request.form.get("review"), 
+            "addedByUser": session["user"]
+        }
+        mongo.db.reviews.insert_one(review_to_register)
+
+        flash("Review has been added!")
+        return redirect(url_for("get_books"))
+
+    return render_template("new_review.html")
+
+
 @app.route("/edit_book/<book_id>", methods=["GET", "POST"])
 def edit_book(book_id):
     if request.method == "POST":      

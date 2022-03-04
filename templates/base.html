@@ -51,10 +51,7 @@
             </li>
             {% if session.user %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('new_book') }}">New Book</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">New Review</a>
+                <a class="nav-link" href="{{ url_for('new_book') }}">Add Book</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('profile', username=session['user']) }}">Profile</a>
@@ -101,7 +98,14 @@
       {% endwith %}
     </section>
 
-    <main class="container">{% block content %} {% endblock %}</main>
+    <main class="container">{% block content %} {% endblock %}
+
+      <div class="text-center">
+        Want to edit books?
+        <a href="{{ url_for('login') }}">Log In</a> or
+        <a href="{{ url_for('register') }}">Register</a>!
+      </div>
+    </main>
 
     <!-- Footer -->
     <footer class="footer mt-auto py-3 bg-primary">
