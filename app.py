@@ -128,6 +128,30 @@ def new_book():
     return render_template("new_book.html")
 
 
+# DOING
+@app.route("/edit_book/<book_id>", methods=["GET", "POST"])
+def edit_book(book_id):
+    if request.method == "POST":      
+        book_to_update = {
+            "title": request.form.get("booktitle"),
+            "authors": request.form.get("authors"),
+            "genres": request.form.get("genres"),
+            "coverImageURL": request.form.get("cover-image"),
+            "blurb": request.form.get("blurb"),
+            "upvotes": 0,
+            "affiliateLink": "https://fake.affiliate.link",
+            "addedByUser": session["user"]
+        }
+        mongo.db.books.update({"_id": ObjectId(book_id)}, book_to_update)
+
+        flash("Book has been updated in the database!")
+        return redirect(url_for("get_books"))
+
+    book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
+
+    return render_template("edit_book.html", book=book)    
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
