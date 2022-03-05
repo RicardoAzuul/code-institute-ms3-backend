@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- card from Bootstrap (https://getbootstrap.com/docs/4.6/components/card/), customized for this site -->
+<div class="card shadow p-3 mb-5 bg-white rounded" id="book-card">
+  <div class="card-header">
+    <h1 class="text-center">{{ book.title }}</h1>
+  </div>
+  <div class="card-body">
+    <h2 class="card-subtitle text-muted">Author(s): {{ book.authors }}</h2>
+    <p class="card-text">Genre(s): {{ book.genres }}</p>
+    <p class="card-text">Upvotes: {{ book.upvotes }}</p>
+    <p class="card-text">{{ book.blurb }}</p>
+    <h3 class="card-text">Reviews from our users</h3>        
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for review_document in review_documents %}
+    <li class="list-group-item">Review from: {{ review_document.addedByUser }} <p>{{ review_document.reviewtext }}</p></li>
+    {% endfor %}
+  </ul> 
+  <div class="card-footer">
+    <div class="row">
+      <div class="col text-center">
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

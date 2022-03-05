@@ -25,6 +25,20 @@ def get_books():
     return render_template("books.html", books=books)
 
 
+@app.route("/get_book/<book_id>")
+def get_book(book_id):
+    book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
+    # We need to get the reviews dictionary element: this contains the id's for reviews, if there are any
+    review_ids = book.get("reviews")
+    # if there are reviews, variable reviews is type list
+    if type(review_ids) is list:
+        review_documents = []
+        for review_id in review_ids:
+            review_document = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
+            review_documents.append(review_document)
+    return render_template("book.html", book=book, review_documents=review_documents)
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -118,6 +132,7 @@ def new_book():
             "blurb": request.form.get("blurb"),
             "upvotes": 0,
             "affiliateLink": "https://fake.affiliate.link",
+            "reviews": [],
             "addedByUser": session["user"]
         }
         mongo.db.books.insert_one(book_to_register)
@@ -138,11 +153,16 @@ def new_review():
             return redirect(url_for("new_review"))
         
         review_to_register = {
-            "title": request.form.get("booktitle"),
-            "review": request.form.get("review"), 
+            "booktitle": request.form.get("booktitle"),
+            "reviewtext": request.form.get("review"), 
             "addedByUser": session["user"]
         }
         mongo.db.reviews.insert_one(review_to_register)
+        # When a new review is added, we retrieve it again, to insert the id on the book document
+        registered_review = mongo.db.reviews.find_one(review_to_register)
+        review_id_to_register = registered_review.get("_id")
+        book_id_to_update = book_exists.get("_id")
+        mongo.db.books.update_one({"_id": ObjectId(book_id_to_update)}, { '$push': {'reviews': review_id_to_register}})
 
         flash("Review has been added!")
         return redirect(url_for("get_books"))
@@ -158,10 +178,7 @@ def edit_book(book_id):
             "authors": request.form.get("authors"),
             "genres": request.form.get("genres"),
             "coverImageURL": request.form.get("cover-image"),
-            "blurb": request.form.get("blurb"),
-            "upvotes": 0,
-            "affiliateLink": "https://fake.affiliate.link",
-            "addedByUser": session["user"]
+            "blurb": request.form.get("blurb")
         }
         mongo.db.books.update({"_id": ObjectId(book_id)}, book_to_update)
 
