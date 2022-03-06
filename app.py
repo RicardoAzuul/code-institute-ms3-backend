@@ -132,10 +132,15 @@ def new_book():
             "blurb": request.form.get("blurb"),
             "upvotes": 0,
             "affiliateLink": "https://fake.affiliate.link",
-            "reviews": [],
             "addedByUser": session["user"]
         }
         mongo.db.books.insert_one(book_to_register)
+        # When we register a book, we also register its id to the user document that added the book
+        registered_book = mongo.db.books.find_one(book_to_register)
+        book_id_to_register = registered_book.get("_id")
+        user_to_update = mongo.db.users.find_one({"username": session["user"]})
+        user_id = user_to_update.get("_id")
+        mongo.db.users.update_one({"_id": ObjectId(user_id)}, { '$push': {'booksAdded': book_id_to_register}})
 
         flash("Book has been added to the database!")
         return redirect(url_for("get_books"))
@@ -158,11 +163,14 @@ def new_review():
             "addedByUser": session["user"]
         }
         mongo.db.reviews.insert_one(review_to_register)
-        # When a new review is added, we retrieve it again, to insert the id on the book document
+        # When a new review is added, we retrieve it again, to insert the id on the book document and on the user document
         registered_review = mongo.db.reviews.find_one(review_to_register)
         review_id_to_register = registered_review.get("_id")
         book_id_to_update = book_exists.get("_id")
+        user_to_update = mongo.db.users.find_one({"username": session["user"]})
+        user_id = user_to_update.get("_id")
         mongo.db.books.update_one({"_id": ObjectId(book_id_to_update)}, { '$push': {'reviews': review_id_to_register}})
+        mongo.db.users.update_one({"_id": ObjectId(user_id)}, { '$push': {'reviewsAdded': review_id_to_register}})
 
         flash("Review has been added!")
         return redirect(url_for("get_books"))
