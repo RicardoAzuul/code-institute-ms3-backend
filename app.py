@@ -28,11 +28,11 @@ def get_books():
 @app.route("/get_book/<book_id>")
 def get_book(book_id):
     book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
-    # We need to get the reviews dictionary element: this contains the id's for reviews, if there are any
+    # We need to get the reviews dictionary element: this contains the ids for reviews, if there are any
     review_ids = book.get("reviews")
+    review_documents = [] 
     # if there are reviews, variable reviews is type list
     if type(review_ids) is list:
-        review_documents = []
         for review_id in review_ids:
             review_document = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
             review_documents.append(review_document)
@@ -84,10 +84,25 @@ def login():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    username = mongo.db.users.find_one({"username": session["user"]})["username"]
+    user = mongo.db.users.find_one({"username": session["user"]})
+    username = user.get("username")
+    # We want to add the titles of books added to the profile page, and also pass through the id of the books, for use with the buttons
+    # We want to add the titles of books that are reviewed to the profile page, and also pass through the id of the reviews, for use with the buttons
+    books_added = user.get("booksAdded")
+    books = []
+    if type(books_added) is list:
+        for book_id in books_added:
+            book_document = mongo.db.books.find_one({"_id": ObjectId(book_id)})
+            books.append(book_document)
+    reviews_added = user.get("reviewsAdded")
+    reviews = []
+    if type(reviews_added) is list:
+        for review_id in reviews_added:
+            review_document = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
+            reviews.append(review_document)
 
     if session["user"]:
-        return render_template("profile.html", username=username)
+        return render_template("profile.html", username=username, books=books, reviews=reviews)
 
     return redirect(url_for("login"))
 
@@ -108,8 +123,12 @@ def delete_profile():
 
 
 @app.route("/delete_book/<book_id>")
-def delete_book(book_id):    
-    mongo.db.books.find_one_and_delete({'_id': ObjectId(book_id)})
+def delete_book(book_id):
+    book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
+    reviews_of_book = book_to_delete.get("_reviews")
+    mongo.db.books.delete_one(book_to_delete)
+    for review in reviews_of_book:
+        mongo.db.reviews.find_one_and_delete(review)   
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
@@ -173,7 +192,7 @@ def new_review():
         mongo.db.users.update_one({"_id": ObjectId(user_id)}, { '$push': {'reviewsAdded': review_id_to_register}})
 
         flash("Review has been added!")
-        return redirect(url_for("get_books"))
+        return redirect(url_for("get_books"))   
 
     return render_template("new_review.html")
 
