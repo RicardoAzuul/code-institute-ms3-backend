@@ -116,6 +116,7 @@ def logout():
 
 @app.route("/delete_profile")
 def delete_profile():
+    # TODO: Add code that deletes the reviews of the user as well. Books we leave?
     username = mongo.db.users.find_one({"username": session["user"]})["username"]
     mongo.db.users.find_one_and_delete({'username': username})
     flash("Your profile has been deleted.")
@@ -131,6 +132,18 @@ def delete_book(book_id):
         mongo.db.reviews.find_one_and_delete(review)   
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
+
+"""
+@app.route("/delete_book/<book_id>")
+def delete_book(book_id):
+    book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
+    reviews_of_book = book_to_delete.get("_reviews")
+    mongo.db.books.delete_one(book_to_delete)
+    for review in reviews_of_book:
+        mongo.db.reviews.find_one_and_delete(review)   
+    flash("Book has been deleted.")
+    return redirect(url_for("get_books")) 
+"""
 
 
 @app.route("/new_book", methods=["GET", "POST"])
@@ -199,22 +212,36 @@ def new_review():
 
 @app.route("/edit_book/<book_id>", methods=["GET", "POST"])
 def edit_book(book_id):
-    if request.method == "POST":      
-        book_to_update = {
-            "title": request.form.get("booktitle"),
-            "authors": request.form.get("authors"),
-            "genres": request.form.get("genres"),
-            "coverImageURL": request.form.get("cover-image"),
-            "blurb": request.form.get("blurb")
-        }
-        mongo.db.books.update({"_id": ObjectId(book_id)}, book_to_update)
+    if request.method == "POST":   
+        title_to_update = request.form.get("booktitle")
+        authors_to_update = request.form.get("authors")
+        genres_to_update = request.form.get("genres")
+        coverImageURL_to_update = request.form.get("cover-image")
+        blurb_to_update = request.form.get("blurb")
+
+        mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$set': {'title': title_to_update, 'authors': authors_to_update, 'genres': genres_to_update, 'coverImageURL': coverImageURL_to_update, 'blurb': blurb_to_update}})
 
         flash("Book has been updated in the database!")
         return redirect(url_for("get_books"))
 
     book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
 
-    return render_template("edit_book.html", book=book)    
+    return render_template("edit_book.html", book=book)
+
+
+@app.route("/edit_review/<review_id>", methods=["GET", "POST"])
+def edit_review(review_id):
+    if request.method == "POST":
+        reviewtext_to_update = request.form.get("review")
+
+        mongo.db.reviews.update_one({"_id": ObjectId(review_id)}, { '$set': {'reviewtext': reviewtext_to_update}})
+
+        flash("Review has been updated in the database!")
+        return redirect(url_for("get_books"))
+
+    review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
+
+    return render_template("edit_review.html", review=review)
 
 
 if __name__ == "__main__":

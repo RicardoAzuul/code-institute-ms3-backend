@@ -1,5 +1,23 @@
+* {
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
 /* Main */
 main {
   padding-top: 5em;
   min-height: 90vh;
+}
+
+/* Cards */
+.card-img-top {
+  width: 100%;
+  height: 25vw;
+  object-fit: contain;
+}
+
+.book-cover-a-href:hover {
+  border: 10 px;
+  border-color: red;
 }

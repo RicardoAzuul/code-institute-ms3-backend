@@ -21,9 +21,13 @@
     <h3 class="card-text">Reviews from our users</h3>     
   </div>
   <ul class="list-group list-group-flush">
-    {% for review_document in review_documents %}
-    <li class="list-group-item">Review from: {{ review_document.addedByUser }} <p>{{ review_document.reviewtext }}</p></li>
-    {% endfor %}
+    {% if review_documents|length > 0 %}
+      {% for review_document in review_documents %}
+        <li class="list-group-item">Review from: {{ review_document.addedByUser }} <p>{{ review_document.reviewtext }}</p></li>
+      {% endfor %}
+    {% else %}
+      There are no reviews for {{ book.title }} yet!
+    {% endif %}
   </ul> 
   <div class="card-footer">
     <div class="row">
