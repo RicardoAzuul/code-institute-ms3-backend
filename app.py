@@ -134,14 +134,16 @@ def delete_book(book_id):
     return redirect(url_for("get_books"))
 
 """
-@app.route("/delete_book/<book_id>")
-def delete_book(book_id):
-    book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
-    reviews_of_book = book_to_delete.get("_reviews")
-    mongo.db.books.delete_one(book_to_delete)
-    for review in reviews_of_book:
-        mongo.db.reviews.find_one_and_delete(review)   
-    flash("Book has been deleted.")
+@app.route("/delete_review/<review_id>")
+def delete_review(review_id):
+    review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
+    book_title = review_to_delete.get("booktitle")
+    # Get the booktitle from the review document
+    # Get the book document
+    # Modify the reviews array, to remove the objectID of the review
+    mongo.db.reviews.delete_one(review_to_delete)
+
+    flash("Review has been deleted.")
     return redirect(url_for("get_books")) 
 """
 
@@ -155,6 +157,8 @@ def new_book():
         if book_exists:
             flash("This book is already in the database.")
             return redirect(url_for("new_book"))
+
+        # TODO add regex validation to check if coverImageURL is indeed a url, if not, return error
         
         book_to_register = {
             "title": request.form.get("booktitle"),
@@ -180,15 +184,11 @@ def new_book():
     return render_template("new_book.html")
 
 
-@app.route("/new_review", methods=["GET", "POST"])
-def new_review():
+@app.route("/new_review/<book_id>", methods=["GET", "POST"])
+def new_review(book_id):
     if request.method == "POST":
-        book_exists = mongo.db.books.find_one({"title": request.form.get("booktitle")})
-
-        if not book_exists:
-            flash("There is no book with this title in the database.")
-            return redirect(url_for("new_review"))
-        
+        book = mongo.db.books.find_one({"title": request.form.get("booktitle")})
+       
         review_to_register = {
             "booktitle": request.form.get("booktitle"),
             "reviewtext": request.form.get("review"), 
@@ -198,16 +198,18 @@ def new_review():
         # When a new review is added, we retrieve it again, to insert the id on the book document and on the user document
         registered_review = mongo.db.reviews.find_one(review_to_register)
         review_id_to_register = registered_review.get("_id")
-        book_id_to_update = book_exists.get("_id")
+        book_id_to_update = book.get("_id")
         user_to_update = mongo.db.users.find_one({"username": session["user"]})
         user_id = user_to_update.get("_id")
         mongo.db.books.update_one({"_id": ObjectId(book_id_to_update)}, { '$push': {'reviews': review_id_to_register}})
         mongo.db.users.update_one({"_id": ObjectId(user_id)}, { '$push': {'reviewsAdded': review_id_to_register}})
 
         flash("Review has been added!")
-        return redirect(url_for("get_books"))   
+        return redirect(url_for("get_books"))
 
-    return render_template("new_review.html")
+    book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
+
+    return render_template("new_review.html", book=book)
 
 
 @app.route("/edit_book/<book_id>", methods=["GET", "POST"])
