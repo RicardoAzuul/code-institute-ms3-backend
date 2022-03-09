@@ -21,11 +21,15 @@
     <!-- TODO: add check to see if there are reviews -->
     <!-- TODO: remove buttons if there are no reviews -->
     <!-- TODO: not use modal to delete reviews, but a separate page -->
-    {% for review in reviews %}
-      {{ review.booktitle }}
-      <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn btn-success">Edit Review</a>
-      <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn btn-danger">Delete Review</a>
-    {% endfor %} 
+    {% if reviews|length > 0 %}
+      {% for review in reviews %}
+        {{ review.booktitle }}
+        <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn btn-success">Edit Review</a>
+        <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn btn-danger">Delete Review</a>
+      {% endfor %}
+    {% else %}
+      <p>You've not added any reviews yet!</p>
+    {% endif %}
   </div>
   <div class="card-footer">
     <div class="row">
