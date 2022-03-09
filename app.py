@@ -141,10 +141,11 @@ def delete_profile():
 @app.route("/delete_book/<book_id>")
 def delete_book(book_id):
     book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
-    reviews_of_book = book_to_delete.get("_reviews")
+    reviews_of_book = book_to_delete.get("reviews")
     mongo.db.books.delete_one(book_to_delete)
-    for review in reviews_of_book:
-        mongo.db.reviews.find_one_and_delete(review)   
+    if reviews_of_book != None:
+        for review in reviews_of_book:
+            mongo.db.reviews.find_one_and_delete(review)   
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
