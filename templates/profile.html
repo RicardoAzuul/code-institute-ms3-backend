@@ -18,8 +18,6 @@
       <p>You've not added any books yet!</p>
     {% endif %}
     <h2 class="card-text">Reviews you've added:</h2>
-    <!-- TODO: add check to see if there are reviews -->
-    <!-- TODO: remove buttons if there are no reviews -->
     <!-- TODO: not use modal to delete reviews, but a separate page -->
     {% if reviews|length > 0 %}
       {% for review in reviews %}
@@ -52,7 +50,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete your profile? You will not be able to recover it.
+        Are you sure you want to delete your profile? You will not be able to recover it. The books and reviews you've added will remain.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal">Cancel delete</button>

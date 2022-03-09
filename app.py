@@ -116,8 +116,10 @@ def logout():
 
 @app.route("/delete_profile")
 def delete_profile():
-    # TODO: Add code that deletes the reviews of the user as well. Books we leave?
-    username = mongo.db.users.find_one({"username": session["user"]})["username"]
+    # TODO: Add code that modfies the reviews of the user as well. Books we leave?
+    user = mongo.db.users.find_one({"username": session["user"]})
+    username = user.get("username")
+    reviews_by_user = user.get("reviews")
     mongo.db.users.find_one_and_delete({'username': username})
     flash("Your profile has been deleted.")
     return redirect(url_for("get_books"))
@@ -134,13 +136,15 @@ def delete_book(book_id):
     return redirect(url_for("get_books"))
 
 
-# TODO
 @app.route("/delete_review/<review_id>")
 def delete_review(review_id):
     review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
     book_title = review_to_delete.get("booktitle")
+    username = review_to_delete.get("addedByUser")
     book = mongo.db.books.find_one({"title": book_title})
-    mongo.db.books.update_one(book, {'$pull': {'reviews': review_id}})
+    user = mongo.db.users.find_one({"username": username})
+    mongo.db.books.update_one(book, {'$pull': {'reviews': ObjectId(review_id)}})
+    mongo.db.users.update_one(user, {'$pull': {'reviewsAdded': ObjectId(review_id)}})
     mongo.db.reviews.delete_one(review_to_delete)
 
     flash("Review has been deleted.")
