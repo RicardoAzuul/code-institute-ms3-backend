@@ -130,22 +130,20 @@ def logout():
 @app.route("/delete_profile")
 def delete_profile():
     # TODO: Add code that updates the addedByUser field on the book document, from username to objectID
-    # TODO: Add session.pop, like logout?
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
     user_id = user.get("_id")
     reviews_by_user = user.get("reviewsAdded")
     if reviews_by_user != None:
         for review in reviews_by_user:
-            print("[PRINT] review", review)
             review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review)})
-            print("[PRINT] review_to_delete", review_to_delete)
             book_title = review_to_delete.get("booktitle")
             book = mongo.db.books.find_one({"title": book_title})
             mongo.db.books.update_one(book, {'$pull': {'reviews': review}})
             mongo.db.reviews.find_one_and_delete({'_id': ObjectId(review)})  
     mongo.db.users.find_one_and_delete({'username': username})
     flash("Your profile has been deleted.")
+    session.pop("user")
     return redirect(url_for("get_books"))
 
 
