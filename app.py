@@ -1,4 +1,5 @@
 import os
+import re
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -16,6 +17,18 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
+
+# function from https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
+def imageFile(str):
+ 
+    # Regex to check valid image file extension.
+    regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)"     
+    p = re.compile(regex)
+
+    if(re.search(p, str)):
+        return True
+    else:
+        return False
 
 
 @app.route("/")
@@ -135,7 +148,7 @@ def delete_book(book_id):
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
-
+# IMPROVE
 @app.route("/delete_review/<review_id>")
 def delete_review(review_id):
     review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
@@ -161,7 +174,10 @@ def new_book():
             flash("This book is already in the database.")
             return redirect(url_for("new_book"))
 
-        # TODO add regex validation to check if coverImageURL is indeed a url, if not, return error
+        cover_image_input = request.form.get("cover-image")
+        if imageFile(cover_image_input) == False:
+            flash("The url you entered is not an image.")
+            return redirect(url_for("new_book"))
         
         book_to_register = {
             "title": request.form.get("booktitle"),
@@ -217,12 +233,17 @@ def new_review(book_id):
 
 @app.route("/edit_book/<book_id>", methods=["GET", "POST"])
 def edit_book(book_id):
-    if request.method == "POST":   
+    if request.method == "POST":
+        book_to_update_id = book_id   
         title_to_update = request.form.get("booktitle")
         authors_to_update = request.form.get("authors")
         genres_to_update = request.form.get("genres")
         coverImageURL_to_update = request.form.get("cover-image")
         blurb_to_update = request.form.get("blurb")
+
+        if imageFile(coverImageURL_to_update) == False:
+            flash("The url you entered is not an image.")
+            return redirect(url_for("edit_book", book_id=book_to_update_id))
 
         mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$set': {'title': title_to_update, 'authors': authors_to_update, 'genres': genres_to_update, 'coverImageURL': coverImageURL_to_update, 'blurb': blurb_to_update}})
 
