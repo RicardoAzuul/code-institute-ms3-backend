@@ -129,18 +129,32 @@ def logout():
 
 @app.route("/delete_profile")
 def delete_profile():
-    # TODO: Add code that modfies the reviews of the user as well. Books we leave?
+    # TODO: Add code that updates the addedByUser field on the book document, from username to objectID
+    # TODO: Add session.pop, like logout?
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
-    reviews_by_user = user.get("reviews")
+    user_id = user.get("_id")
+    reviews_by_user = user.get("reviewsAdded")
+    if reviews_by_user != None:
+        for review in reviews_by_user:
+            print("[PRINT] review", review)
+            review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review)})
+            print("[PRINT] review_to_delete", review_to_delete)
+            book_title = review_to_delete.get("booktitle")
+            book = mongo.db.books.find_one({"title": book_title})
+            mongo.db.books.update_one(book, {'$pull': {'reviews': review}})
+            mongo.db.reviews.find_one_and_delete({'_id': ObjectId(review)})  
     mongo.db.users.find_one_and_delete({'username': username})
     flash("Your profile has been deleted.")
     return redirect(url_for("get_books"))
 
 
+# IMPROVE: this can be done with fewer lines of code
 @app.route("/delete_book/<book_id>")
 def delete_book(book_id):
     book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
+    user = mongo.db.users.find_one({"username": session["user"]})
+    mongo.db.users.find_one_and_update(user, {'$pull': {'booksAdded': ObjectId(book_id)}})
     reviews_of_book = book_to_delete.get("reviews")
     mongo.db.books.delete_one(book_to_delete)
     if reviews_of_book != None:
@@ -149,7 +163,7 @@ def delete_book(book_id):
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
-# IMPROVE
+# IMPROVE: this can be done with fewer lines of code
 @app.route("/delete_review/<review_id>")
 def delete_review(review_id):
     review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
