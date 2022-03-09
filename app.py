@@ -133,19 +133,18 @@ def delete_book(book_id):
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
-"""
+
+# TODO
 @app.route("/delete_review/<review_id>")
 def delete_review(review_id):
     review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
     book_title = review_to_delete.get("booktitle")
-    # Get the booktitle from the review document
-    # Get the book document
-    # Modify the reviews array, to remove the objectID of the review
+    book = mongo.db.books.find_one({"title": book_title})
+    mongo.db.books.update_one(book, {'$pull': {'reviews': review_id}})
     mongo.db.reviews.delete_one(review_to_delete)
 
     flash("Review has been deleted.")
-    return redirect(url_for("get_books")) 
-"""
+    return redirect(url_for("get_books"))
 
 
 @app.route("/new_book", methods=["GET", "POST"])
