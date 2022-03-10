@@ -1,5 +1,8 @@
+# IMPROVE: use Flask-login --> module for Flask to deal with login and session management
+
 import os
 import re
+import functools
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -29,6 +32,16 @@ def imageFile(str):
         return True
     else:
         return False
+
+# function from https://blog.teclado.com/protecting-endpoints-in-flask-apps-by-requiring-login/
+def login_required(func):
+    @functools.wraps(func)
+    def secure_function(*args, **kwargs):
+        if "user" not in session:
+            return redirect(url_for("login"))
+        return func(*args, **kwargs)
+
+    return secure_function
 
 
 @app.route("/")
@@ -96,6 +109,7 @@ def login():
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
+@login_required
 def profile(username):
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
@@ -114,10 +128,7 @@ def profile(username):
             review_document = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
             reviews.append(review_document)
 
-    if session["user"]:
-        return render_template("profile.html", username=username, books=books, reviews=reviews)
-
-    return redirect(url_for("login"))
+    return render_template("profile.html", username=username, books=books, reviews=reviews)
 
 
 @app.route("/logout")
@@ -128,6 +139,7 @@ def logout():
 
 
 @app.route("/delete_profile")
+@login_required
 def delete_profile():
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
@@ -151,6 +163,7 @@ def delete_profile():
 
 # IMPROVE: this can be done with fewer lines of code
 @app.route("/delete_book/<book_id>")
+@login_required
 def delete_book(book_id):
     book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
     user = mongo.db.users.find_one({"username": session["user"]})
@@ -163,8 +176,10 @@ def delete_book(book_id):
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
+
 # IMPROVE: this can be done with fewer lines of code
 @app.route("/delete_review/<review_id>")
+@login_required
 def delete_review(review_id):
     review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
     book_title = review_to_delete.get("booktitle")
@@ -180,6 +195,7 @@ def delete_review(review_id):
 
 
 @app.route("/new_book", methods=["GET", "POST"])
+@login_required
 def new_book():
     if request.method == "POST":
         # Do I want to lowercase titles?
@@ -201,6 +217,7 @@ def new_book():
             "coverImageURL": request.form.get("cover-image"),
             "blurb": request.form.get("blurb"),
             "upvotes": 0,
+            # Example affiliate link: https://www.amazon.com/Natural-Postpartum-Hemorrhoid-Discomfort-Essential/dp/B073KD4V6W/ref=as_li_ss_tl?keywords=postnatal+care&qid=1567520298&s=gateway&sr=8-9&th=1&linkCode=sl1&tag=loveourlittles-20&linkId=97598c121390e0a89fbc93df46018337
             "affiliateLink": "https://fake.affiliate.link",
             "addedByUser": session["user"]
         }
@@ -219,6 +236,7 @@ def new_book():
 
 
 @app.route("/new_review/<book_id>", methods=["GET", "POST"])
+@login_required
 def new_review(book_id):
     if request.method == "POST":
         book = mongo.db.books.find_one({"title": request.form.get("booktitle")})
@@ -247,6 +265,7 @@ def new_review(book_id):
 
 
 @app.route("/edit_book/<book_id>", methods=["GET", "POST"])
+@login_required
 def edit_book(book_id):
     if request.method == "POST":
         book_to_update_id = book_id   
@@ -270,7 +289,20 @@ def edit_book(book_id):
     return render_template("edit_book.html", book=book)
 
 
+@app.route("/adopt_book/<book_id>")
+@login_required
+def adopt_book(book_id):
+    user_to_update = mongo.db.users.find_one({"username": session["user"]})
+    username =  user_to_update.get("username")
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$set': {'addedByUser': username}}) 
+    mongo.db.users.update_one(user_to_update, { '$push': {'booksAdded': book_id}}) 
+
+    flash("Book has been adopted !")
+    return redirect(url_for("get_book", book_id=book_id))
+
+
 @app.route("/edit_review/<review_id>", methods=["GET", "POST"])
+@login_required
 def edit_review(review_id):
     if request.method == "POST":
         reviewtext_to_update = request.form.get("review")

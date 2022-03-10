@@ -10,6 +10,10 @@
     <p class="card-text">Genre(s): {{ book.genres }}</p>
     <p class="card-text">Upvotes: {{ book.upvotes }}</p>
     <p class="card-text">{{ book.blurb }}</p>
+    {% if book.addedByUser == "" %}
+    <p class="card-text">This book  has no owner!</p>
+    <a href="{{ url_for('adopt_book', book_id=book._id) }}" class="btn btn-success">Adopt Book?</a>
+    {% endif %}
     {% if session.user == book.addedByUser %}
     <!-- Modal button from https://getbootstrap.com/docs/4.6/components/modal/#examples -->
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteBookModal">Delete Book</button>
