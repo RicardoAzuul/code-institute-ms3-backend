@@ -301,6 +301,15 @@ def adopt_book(book_id):
     return redirect(url_for("get_book", book_id=book_id))
 
 
+@app.route("/upvote_book/<book_id>")
+@login_required
+def upvote_book(book_id):
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$inc': {'upvotes': +1}}) 
+
+    flash("Book has been upvoted !")
+    return redirect(url_for("get_book", book_id=book_id))
+
+
 @app.route("/edit_review/<review_id>", methods=["GET", "POST"])
 @login_required
 def edit_review(review_id):

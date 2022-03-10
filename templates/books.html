@@ -19,8 +19,7 @@
         </div>
         <div class="col">
           <div class="card-footer">
-             <!-- TODO: Add upvote function. Should only work for logged in users, and only once  -->
-            <p class="card-text">Upvotes: {{ book.upvotes }}</p>
+            <p class="card-text">Upvotes: <i class="fas fa-arrow-circle-up"></i> {{ book.upvotes }}</p>
             <a href="{{ url_for('get_book', book_id=book._id) }}" class="btn btn-primary">More About This Book</a> 
           </div>
         </div>

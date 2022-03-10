@@ -8,7 +8,8 @@
   <div class="card-body">
     <h2 class="card-subtitle text-muted">Author(s): {{ book.authors }}</h2>
     <p class="card-text">Genre(s): {{ book.genres }}</p>
-    <p class="card-text">Upvotes: {{ book.upvotes }}</p>
+    <!-- IMPROVE: Should only work for logged in users, and only once  --> 
+    <p class="card-text">Upvotes: <a href="{{ url_for('upvote_book', book_id=book._id) }}"><i class="fas fa-arrow-circle-up"></i></a> {{ book.upvotes }}</p>
     <p class="card-text">{{ book.blurb }}</p>
     {% if book.addedByUser == "" %}
     <p class="card-text">This book  has no owner!</p>

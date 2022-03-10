@@ -6,23 +6,24 @@
     <h1 class="text-center">{{ username}}'s Profile</h1>
   </div>
   <div class="card-body">
-    <h2 class="card-text">Books you've added:</h2>
-    <!-- TODO: not use modal to delete books, but a separate page -->
+    <h2 class="card-text">Books you've added:</h2>    
     {% if books|length > 0 %}
       {% for book in books %}
         {{ book.title }}
         <a href="{{ url_for('edit_book', book_id=book._id) }}" class="btn btn-success">Edit Book</a>
+        <!-- TODO: not use modal to delete books, but a separate page -->
         <a href="{{ url_for('delete_book', book_id=book._id) }}" class="btn btn-danger">Delete Book</a>
       {% endfor %}
     {% else %}
       <p>You've not added any books yet!</p>
     {% endif %}
     <h2 class="card-text">Reviews you've added:</h2>
-    <!-- TODO: not use modal to delete reviews, but a separate page -->
+    
     {% if reviews|length > 0 %}
       {% for review in reviews %}
         {{ review.booktitle }}
         <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn btn-success">Edit Review</a>
+        <!-- TODO: not use modal to delete reviews, but a separate page -->
         <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn btn-danger">Delete Review</a>
       {% endfor %}
     {% else %}
