@@ -1,10 +1,9 @@
 {% extends "base.html" %} {% block content %}
-<h1>Add Book</h1>
 
 <!-- card from Bootstrap (https://getbootstrap.com/docs/4.6/components/card/), customized for this site -->
 <div class="card shadow p-3 mb-5 bg-white rounded">
   <div class="card-body">
-    <h5 class="card-title">Add A New Book</h5>
+    <h1 class="card-title">Add A New Book</h1>
     <!-- form from Bootstrap (https://getbootstrap.com/docs/4.6/components/forms/#overview, customized for this site) -->
     <form method="POST" action="{{ url_for('new_book') }}">
       <div class="form-group">

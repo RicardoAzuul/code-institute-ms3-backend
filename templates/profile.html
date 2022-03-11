@@ -9,10 +9,10 @@
     <h2 class="card-text">Books you've added:</h2>    
     {% if books|length > 0 %}
       {% for book in books %}
-        {{ book.title }}
-        <a href="{{ url_for('edit_book', book_id=book._id) }}" class="btn btn-success">Edit Book</a>
-        <!-- TODO: not use modal to delete books, but a separate page -->
-        <a href="{{ url_for('delete_book', book_id=book._id) }}" class="btn btn-danger">Delete Book</a>
+      <!-- TODO: turn into table -->
+        <p>{{ book.title }} <a href="{{ url_for('edit_book', book_id=book._id) }}" class="btn btn-success">Edit Book</a>
+          <!-- TODO: add confirmation before deleting https://stackoverflow.com/questions/45874906/flask-and-javascript-confirm-before-deleting -->
+          <a href="{{ url_for('delete_book', book_id=book._id) }}" class="btn btn-danger">Delete Book</a></p>
       {% endfor %}
     {% else %}
       <p>You've not added any books yet!</p>
@@ -23,7 +23,7 @@
       {% for review in reviews %}
         {{ review.booktitle }}
         <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn btn-success">Edit Review</a>
-        <!-- TODO: not use modal to delete reviews, but a separate page -->
+        <!-- TODO: add confirmation before deleting https://stackoverflow.com/questions/45874906/flask-and-javascript-confirm-before-deleting -->
         <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn btn-danger">Delete Review</a>
       {% endfor %}
     {% else %}
@@ -51,7 +51,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete your profile? You will not be able to recover it. The books you've added will remain.
+        Are you sure you want to delete your profile? You will not be able to recover it. The books you've added will remain, to be adopted by other users.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal">Cancel delete</button>

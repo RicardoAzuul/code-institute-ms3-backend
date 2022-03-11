@@ -161,7 +161,6 @@ def delete_profile():
     return redirect(url_for("get_books"))
 
 
-# IMPROVE: this can be done with fewer lines of code
 @app.route("/delete_book/<book_id>")
 @login_required
 def delete_book(book_id):
