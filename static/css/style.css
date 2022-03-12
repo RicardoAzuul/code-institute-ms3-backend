@@ -54,7 +54,7 @@ h3 {
 }
 
 /* login.html */
-#login-card {
+#login-card, #register-card {
   margin-left: 3rem;
 }
 
@@ -95,7 +95,7 @@ h3 {
   #book-card-col {
     margin-top: 1rem;
   }
-  #login-card {
+  #login-card, #register-card {
     margin-left: 8rem;
     width: 26rem;
   }
@@ -118,7 +118,7 @@ h3 {
   .card-footer {
     text-align: left;
   }
-  #login-card {
+  #login-card, #register-card {
     margin-left: 8rem;
     width: 40rem;
   }
