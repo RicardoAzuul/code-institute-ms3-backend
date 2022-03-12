@@ -27,7 +27,7 @@ h3 {
 }
 
 /* Cards */
-.card {
+.all-books-card {
   width: 18rem;
 }
 
@@ -58,21 +58,11 @@ h3 {
   margin-left: 3rem;
 }
 
-/* profile.html */
-#profile-card {
-  width: auto;
-}
-
-/* edit_book.html, new_book.html */
-#edit-book-card, #new-book-card, #edit-review-card {
-  width: auto;
-}
-
 /* edit_review.html */
-#edit-review-card-body {
+.review-card-body {
   text-align: left;
 }
-#div-book-title {
+.div-book-title {
   padding-bottom: 1.25rem;
 }
 
@@ -121,7 +111,7 @@ h3 {
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
-  #div-book-title {
+  .div-book-title {
     padding-top: 1.25rem;
   }
 }
