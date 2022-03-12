@@ -45,6 +45,14 @@ h3 {
   text-align: center;
 }
 
+/* book.html */
+#book-card-subtitle {
+  margin-bottom: 1rem;
+}
+#book-reviews {
+  text-align: center;
+}
+
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   main {
@@ -69,6 +77,18 @@ h3 {
   }
   .card-subtitle {
     margin-bottom: 1rem;
+  }
+  #book-card {
+    width: 30rem;
+  }
+  #book-card-subtitle {
+    margin-top: 1rem;
+  }
+  #book-reviews {
+    text-align: left;
+  }
+  #book-card-col {
+    margin-top: 1rem;
   }
 }
 
@@ -104,5 +124,8 @@ h3 {
   }
   .card-img-top {
     height: 25vw;
-  }  
+  }
+  #book-card {
+    width: 50rem;
+  }   
 }

@@ -314,6 +314,9 @@ These screenshots indicate the responsiveness of the pages on various screens.
 - :heavy_check_mark: Realizing that I was doing a lot of manual work to check all the links, I googled for an automated solution. I found one using a Github Action Workflow. This Workflow checks all the links in markdown files. The action does generate an error: a 403 status for the Pexels website. This error is probably due to a blacklist, because I ran the workflow too often.
 <br/>
 
+Selenium
+pip install selenium
+
 <ins>Code validation:</ins>
 1. [HTML validation](https://validator.w3.org/nu/)
 1. [CSS validation](https://jigsaw.w3.org/css-validator/)
