@@ -63,8 +63,8 @@ h3 {
   width: auto;
 }
 
-/* edit_book.html */
-#edit-book-card {
+/* edit_book.html, new_book.html */
+#edit-book-card, #new-book-card {
   width: auto;
 }
 
