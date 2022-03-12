@@ -53,6 +53,11 @@ h3 {
   text-align: center;
 }
 
+/* new_book.html */
+#new-book-book-title-div {
+  margin-top: 0.5rem;
+}
+
 /* login.html, register.html */
 #login-card, #register-card {
   margin-left: 3rem;
