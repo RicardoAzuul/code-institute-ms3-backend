@@ -53,9 +53,14 @@ h3 {
   text-align: center;
 }
 
-/* login.html */
+/* login.html, register.html */
 #login-card, #register-card {
   margin-left: 3rem;
+}
+
+/* profile.html */
+#profile-card {
+  width: auto;
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -99,6 +104,10 @@ h3 {
     margin-left: 8rem;
     width: 26rem;
   }
+  #profile-card h2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -117,6 +126,9 @@ h3 {
   }
   .card-footer {
     text-align: left;
+  }
+  #book-card .card-footer {
+    text-align: center;
   }
   #login-card, #register-card {
     margin-left: 8rem;

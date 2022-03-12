@@ -1,3 +1,4 @@
+<!-- TODO: Add CSS for this page -->
 {% extends "base.html" %} {% block content %}
 
 <!-- card from Bootstrap (https://getbootstrap.com/docs/4.6/components/card/), customized for this site -->
@@ -6,56 +7,135 @@
     <h1 class="text-center">{{ username}}'s Profile</h1>
   </div>
   <div class="card-body">
-    <h2 class="card-text">Books you've added:</h2>    
+    <h2 class="card-text">Books you've added:</h2>
     {% if books|length > 0 %}
-      {% for book in books %}
-      <!-- TODO: turn into table -->
-        <p>{{ book.title }} <a href="{{ url_for('edit_book', book_id=book._id) }}" class="btn btn-success">Edit Book</a>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Book</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in books %}
+        <tr>
+          <td>{{ book.title }}</td>
+          <td>
+            <a
+              href="{{ url_for('edit_book', book_id=book._id) }}"
+              class="btn btn-success"
+              >Edit</a
+            >
+          </td>
           <!-- TODO: add confirmation before deleting https://stackoverflow.com/questions/45874906/flask-and-javascript-confirm-before-deleting -->
-          <a href="{{ url_for('delete_book', book_id=book._id) }}" class="btn btn-danger">Delete Book</a></p>
-      {% endfor %}
+          <td>
+            <a
+              href="{{ url_for('delete_book', book_id=book._id) }}"
+              class="btn btn-danger"
+              >Delete</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% else %}
-      <p>You've not added any books yet!</p>
+    <p>You've not added any books yet!</p>
     {% endif %}
     <h2 class="card-text">Reviews you've added:</h2>
-    
     {% if reviews|length > 0 %}
-      {% for review in reviews %}
-        {{ review.booktitle }}
-        <a href="{{ url_for('edit_review', review_id=review._id) }}" class="btn btn-success">Edit Review</a>
-        <!-- TODO: add confirmation before deleting https://stackoverflow.com/questions/45874906/flask-and-javascript-confirm-before-deleting -->
-        <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn btn-danger">Delete Review</a>
-      {% endfor %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Review for</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for review in reviews %}
+        <tr>
+          <td>{{ review.booktitle }}</td>
+          <td>
+            <a
+              href="{{ url_for('edit_review', review_id=review._id) }}"
+              class="btn btn-success"
+              >Edit</a
+            >
+          </td>
+          <!-- TODO: add confirmation before deleting https://stackoverflow.com/questions/45874906/flask-and-javascript-confirm-before-deleting -->
+          <td>
+            <a
+              href="{{ url_for('delete_review', review_id=review._id) }}"
+              class="btn btn-danger"
+              >Delete</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% else %}
-      <p>You've not added any reviews yet!</p>
+    <p>You've not added any reviews yet!</p>
     {% endif %}
   </div>
   <div class="card-footer">
     <div class="row">
       <div class="col text-center">
         <!-- Modal button from https://getbootstrap.com/docs/4.6/components/modal/#examples -->
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteProfileModal">Delete Profile</button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-toggle="modal"
+          data-target="#deleteProfileModal"
+        >
+          Delete Profile
+        </button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal from https://getbootstrap.com/docs/4.6/components/modal/#examples -->
-<div class="modal fade" id="deleteProfileModal" tabindex="-1" aria-labelledby="deleteProfileModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="deleteProfileModal"
+  tabindex="-1"
+  aria-labelledby="deleteProfileModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteProfileModalLabel">Delete Profile?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="deleteProfileModalLabel">
+          Delete Profile?
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete your profile? You will not be able to recover it. The books you've added will remain, to be adopted by other users.
+        Are you sure you want to delete your profile? You will not be able to
+        recover it. The books you've added will remain, to be adopted by other
+        users.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal">Cancel delete</button>
-        <a href="{{ url_for('delete_profile') }}" class="btn btn-danger">Confirm delete</a>
+        <button
+          type="button"
+          class="btn btn-primary mr-auto"
+          data-dismiss="modal"
+        >
+          Cancel delete
+        </button>
+        <a href="{{ url_for('delete_profile') }}" class="btn btn-danger"
+          >Confirm delete</a
+        >
       </div>
     </div>
   </div>
