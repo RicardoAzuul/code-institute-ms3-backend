@@ -63,6 +63,11 @@ h3 {
   width: auto;
 }
 
+/* edit_book.html */
+#edit-book-card {
+  width: auto;
+}
+
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   main {
