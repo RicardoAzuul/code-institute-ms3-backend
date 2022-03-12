@@ -22,9 +22,13 @@
         <!-- IMPROVE: Should only work for logged in users, and only once  -->
         <p class="card-text">
           Upvotes:
+          {% if session.user %}
           <a href="{{ url_for('upvote_book', book_id=book._id) }}"
             ><i class="fas fa-arrow-circle-up"></i
           ></a>
+          {% else %}
+            <i class="fas fa-arrow-circle-up"></i>
+          {% endif %}
           {{ book.upvotes }}
         </p>
         <p class="card-text">{{ book.blurb }}</p>

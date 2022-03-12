@@ -176,17 +176,14 @@ def delete_book(book_id):
     return redirect(url_for("get_books"))
 
 
-# IMPROVE: this can be done with fewer lines of code
 @app.route("/delete_review/<review_id>")
 @login_required
 def delete_review(review_id):
     review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
     book_title = review_to_delete.get("booktitle")
     username = review_to_delete.get("addedByUser")
-    book = mongo.db.books.find_one({"title": book_title})
-    user = mongo.db.users.find_one({"username": username})
-    mongo.db.books.update_one(book, {'$pull': {'reviews': ObjectId(review_id)}})
-    mongo.db.users.update_one(user, {'$pull': {'reviewsAdded': ObjectId(review_id)}})
+    mongo.db.books.update_one({"title": book_title}, {'$pull': {'reviews': ObjectId(review_id)}})
+    mongo.db.users.update_one({"username": username}, {'$pull': {'reviewsAdded': ObjectId(review_id)}})
     mongo.db.reviews.delete_one(review_to_delete)
 
     flash("Review has been deleted.")
@@ -300,10 +297,13 @@ def adopt_book(book_id):
     return redirect(url_for("get_book", book_id=book_id))
 
 
+# TODO: Add to code that user who upvoted is written to document, so that we can stop them from upvoting more than once
+# Add empty array when adding new book?
 @app.route("/upvote_book/<book_id>")
 @login_required
 def upvote_book(book_id):
-    mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$inc': {'upvotes': +1}}) 
+    username = session["user"]
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$inc': {'upvotes': +1}}, {'$push': {'upvotedBy': username}})
 
     flash("Book has been upvoted !")
     return redirect(url_for("get_book", book_id=book_id))
