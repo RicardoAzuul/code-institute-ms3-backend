@@ -17,27 +17,32 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
 ---
 
 ## Table of Contents
-1. [UI and UX](#ui-and-ux)
-    1. [User Stories](#user-stories)
-    1. [The 5 Planes of Design](#the-5-planes-of-design)
-        1. [Strategy Plane](#strategy-plane)
-        2. [Scope Plane](#scope-plane)
-        3. [Structure Plane](#structure-plane)
-        4. [Skeleton Plane](#skeleton-plane)
-        5. [Surface Plane](#surface-plane)
-1. [Database Design](#Database-design)
-1. [Features](#Features)
-    1. [Existing Features](#existing-features)
-    1. [Features Left To Implement](#features-left-to-implement)
-1. [Technologies Used](#technologies-used)
-1. [Responsiveness of Pages](#responsiveness-of-pages)
-1. [Testing](#Testing)
-    1. [Notable Bugs](#notable-bugs)
-1. [Deployment](#Deployment)
-1. [Credits](#Credits)
-    1. [Content](#Content)
-    2. [Media](#Media)
-    3. [Acknowledgements](#Acknowledgements)
+- [Bookable](#bookable)
+  - [Table of Contents](#table-of-contents)
+  - [UI and UX](#ui-and-ux)
+    - [User stories](#user-stories)
+    - [The 5 Planes of Design](#the-5-planes-of-design)
+      - [Strategy Plane](#strategy-plane)
+      - [Scope Plane](#scope-plane)
+      - [Structure Plane](#structure-plane)
+      - [Skeleton Plane](#skeleton-plane)
+      - [Surface Plane](#surface-plane)
+  - [Database Design](#database-design)
+  - [Features](#features)
+    - [Existing Features](#existing-features)
+    - [Features Left to Implement](#features-left-to-implement)
+  - [Technologies Used](#technologies-used)
+  - [Responsiveness of Pages](#responsiveness-of-pages)
+  - [Testing](#testing)
+    - [Notable Bugs](#notable-bugs)
+    - [Problems](#problems)
+  - [Deployment](#deployment)
+    - [Run locally](#run-locally)
+  - [Credits](#credits)
+    - [Inspiration](#inspiration)
+    - [Content](#content)
+    - [Media](#media)
+    - [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -109,7 +114,7 @@ All pages should have the same navigation bar and footer:
 
 <ins>The Home Page</ins>
 - the site's logo
-- tiles containing various books from the site's database
+- cards containing books from the site's database
     - if the visitor is logged in, there should be buttons visible on the book tiles in order to edit or delete books, and to upvote and review them
 
 <ins>The New Book page</ins>
@@ -149,12 +154,11 @@ At the bottom of every page will be the same footer.
 
 #### Surface Plane
 
-The icons are sourced from Font Awesome.
+Icons are sourced from Font Awesome, specifically version 5: https://fontawesome.com/v5/search.
 
 The buttons are Bootstrap-style buttons: Bootstrap's design helps with a quicker understanding of functionality.
 
-Fonts are sourced from Google Fonts. 
-
+<!-- TODO: Update wireframes -->
 <ins>Wireframes</ins>
 - [Home](readme-assets/home.png)
 - [Home - tablet](readme-assets/home_tablet_view.png)
@@ -195,13 +199,17 @@ Looking at [Learn MongoDB The Hard Way](http://learnmongodbthehardway.com/schema
 1. Documents for Authors, in their own collection. These are then linked to books using foreign id's, much like in a relational database. The same goes for books: I'll add foreign ids for the authors to the book documents.
 1. I'll also have a collection for genres. This is because, as the site mentions, it's possible that many books belong to a particular genre. Embedding those books within the genre document would then mean that the maximum size of the document could be reached.
 
-**Update** 
+**Update 1** 
 After talking to my mentor about my database design, he made some poignant observations:
 - the genre of a book or the author of a book will not change. As such it makes more sense to have genre and author as properties of the book document. This information is static: a book will always have been written by the same author, and will always have the same genre: it will not suddenly change from horror to romance.
 
+**Update 2**
+Realizing that I was adding extra complexity to the database design, I decided to simplify it. A real-life webapp would definitely make use of something along the lines of the above database design, in order to deal with potential hundreds or thousands of reviews, but right now, it's better to keep it simple. 
+
+
 So, in a JSON-ish structure:
 
-~~authors, collection of author documents:~~
+**No longer a separate collection**: authors, collection of author documents:
 ```
 {
     _id: 1,
@@ -218,13 +226,14 @@ books, collection of book documents:
     coverImageURL: "https://images-na.ssl-images-amazon.com/images/I/81w6JNKs5BS.jpg",
     blurb: "Jack Torrance's new job at the Overlook Hotel is the perfect chance for a fresh start. As the off-season caretaker at the atmospheric old hotel, he'll have plenty of time to spend reconnecting with his family and working on his writing. But as the harsh winter weather sets in, the idyllic location feels ever more remote...and more sinister. And the only one to notice the strange and terrible forces gathering around the Overlook is Danny Torrance, a uniquely gifted five-year-old.", 
     upvotes: 13,
-    genres: ["horror", "psychological horror"]
-    affiliatieLink: "https://fake.affiliate.link",
-    authors: Stephen King
+    genres: "horror, psychological horror"
+    affiliateLink: "https://fake.affiliate.link",
+    authors: "Stephen King"
+    addedby: "richard
 }
 ```
 
-~~genres, collection of genre documents:~~
+**No longer a separate collection**: genres, collection of genre documents:
 ```
 {
     _id: 1,
@@ -256,7 +265,8 @@ users, collection of user documents:
 {
     _id: 1.
     name: "Hank Schrader",
-    reviews: [1]
+    reviewsAdded: [1, 2]
+    booksAdded: [1, 2]
 }
 ```
 
@@ -284,9 +294,9 @@ Add a link such as the following to each book page, such that you could conceiva
 - Python
 - Flask
 - MongoDB
+- Selenium
 - [FontAwesome](https://fontawesome.com/): provides several icons I've used on the site.
 - [Visual Studio Code](https://code.visualstudio.com/): a free IDE with enough features to be useful but not so many features as to confuse you.
-- [Live Server](https://ritwickdey.github.io/vscode-live-server/): a Visual Studio Code extension that allows you to run your site on your local machine, for quick debugging, testing and developing.
 - [GitHub](https://github.com): for hosting the git repository.
 - [git](https://git-scm.com/): as one of the most popular source code management tools.
 - Heroku: for hosting the webapp.
@@ -316,6 +326,7 @@ These screenshots indicate the responsiveness of the pages on various screens.
 
 Selenium
 pip install selenium
+install chromedriver for selenium --> download correct one for your chrome version: https://chromedriver.chromium.org/downloads
 
 <ins>Code validation:</ins>
 1. [HTML validation](https://validator.w3.org/nu/)

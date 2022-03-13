@@ -1,8 +1,10 @@
+# TODO: Edit tests
 import pytest
 import time
 from selenium import webdriver
 # Keys allows for emulating keyboard keys
 from selenium.webdriver.common.keys import Keys
+
 
 chrome_driver = webdriver.Chrome(r'dev\chromedriver.exe')
 chrome_driver.maximize_window()
