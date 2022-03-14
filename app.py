@@ -231,7 +231,8 @@ def new_book():
         book_to_register = {
             "title": request.form.get("booktitle"),
             "authors": request.form.get("authors"),
-            "genres": request.form.get("genres"),
+            # FIX: turn genres into genre, everywhere
+            "genres": request.form.get("genreSelector"),
             "coverImageURL": request.form.get("cover-image"),
             "blurb": request.form.get("blurb"),
             "upvotes": 0,
@@ -250,8 +251,9 @@ def new_book():
 
         flash("Book has been added to the database!")
         return redirect(url_for("get_books"))
-
-    return render_template("new_book.html")
+    
+    genres = mongo.db.genres.find()
+    return render_template("new_book.html", genres=genres)
 
 
 @app.route("/new_review/<book_id>", methods=["GET", "POST"])
@@ -290,6 +292,9 @@ def edit_book(book_id):
         book_to_update_id = book_id   
         title_to_update = request.form.get("booktitle")
         authors_to_update = request.form.get("authors")
+        # TODO: turn this into a select from the genres collection
+        # FIX: turn genres into genre, everywhere
+        genre_to_update: request.form.get("genreSelector")
         genres_to_update = request.form.get("genres")
         coverImageURL_to_update = request.form.get("cover-image")
         blurb_to_update = request.form.get("blurb")
@@ -304,8 +309,8 @@ def edit_book(book_id):
         return redirect(url_for("get_books"))
 
     book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
-
-    return render_template("edit_book.html", book=book)
+    genres = mongo.db.genres.find()
+    return render_template("edit_book.html", book=book, genres=genres)
 
 
 @app.route("/adopt_book/<book_id>")

@@ -238,7 +238,7 @@ So, in a JSON-ish structure, my current database design:
 }
 ```
 
-reviews, collection ~~of buckets~~ of reviews:
+**reviews, collection ~~of buckets~~ of reviews:**
 ```
 {
     _id: ObjectId("1"),
@@ -248,7 +248,7 @@ reviews, collection ~~of buckets~~ of reviews:
 }
 ```
 
-users, collection of user documents:
+**users, collection of user documents:**
 ```
 {
     _id: ObjectId("1"),
@@ -268,6 +268,15 @@ users, collection of user documents:
     ]    
 }
 ```
+
+**genres, collection of genre documents:**
+```
+{
+    _id: ObjectId("1"),
+    genreName: "fantasy" 
+}
+```
+
 
 
 ---

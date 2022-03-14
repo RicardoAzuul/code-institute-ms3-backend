@@ -35,17 +35,12 @@
         />
       </div>
       <div class="form-group">
-        <label for="genres"
-          ><i class="fas fa-theater-masks"></i> Genre(s)</label
-        >
-        <input
-          type="text"
-          class="validate form-control"
-          id="genres"
-          name="genres"
-          required
-          placeholder="horror"
-        />
+        <label for="genreSelector"><i class="fas fa-theater-masks"></i> Select genre</label>
+        <select class="form-control" id="genreSelector" name="genreSelector" required >
+          {% for genre in genres %}
+            <option>{{genre.genreName}}</option>
+          {% endfor %}
+        </select>
       </div>
       <div class="form-group">
         <label for="cover-image"
