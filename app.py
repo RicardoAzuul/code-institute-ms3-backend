@@ -70,6 +70,13 @@ def get_book(book_id):
     return render_template("book.html", book=book, review_documents=review_documents, users_that_added_reviews=users_that_added_reviews)
 
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    search = request.form.get("search")
+    books = mongo.db.books.find({"$text": {"$search": search}})
+    return render_template("books.html", books=books)
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
