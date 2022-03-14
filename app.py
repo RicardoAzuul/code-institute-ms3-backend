@@ -1,4 +1,4 @@
-# TODO: Remove comments, superfluous empty lines
+# CLEANUP: Remove comments, superfluous empty lines
 # IMPROVE: use Flask-login --> module for Flask to deal with login and session management
 
 import os
@@ -20,7 +20,7 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
-# TODO: Delete everything from database and re-add upon submission, for cleanup
+# CLEANUP: Delete everything from database and re-add upon submission, for cleanup
 mongo = PyMongo(app)
 
 # function from https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
@@ -143,7 +143,7 @@ def logout():
     return redirect(url_for("login"))
 
 
-# TODO: Add delete of upvotes 
+# TEST
 @app.route("/delete_profile")
 @login_required
 def delete_profile():
@@ -152,6 +152,7 @@ def delete_profile():
     reviews_by_user = user.get("reviewsAdded")
     # We want to keep the books - we use these to make money through affiliate links. When a user deletes their profile, the books they added come up for "adoption".
     books_by_user = user.get("booksAdded")
+    books_upvoted =  user.get("booksUpvoted")
     if reviews_by_user != None:
         for review in reviews_by_user:
             review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review)})
@@ -162,6 +163,10 @@ def delete_profile():
     if books_by_user != None:
         for book in books_by_user:
             mongo.db.books.update_one({'_id': ObjectId(book)}, {'$set': {'addedByUser': ""}})
+    if books_upvoted != None:
+        for upvoted_book in books_upvoted:
+            mongo.db.books.update_one({'_id': ObjectId(upvoted_book)}, {'$pull': {'upvotedBy': username}})  
+            mongo.db.books.update_one({'_id': ObjectId(upvoted_book)}, { '$inc': {'upvotes': -1}})  
     mongo.db.users.find_one_and_delete({'username': username})
     flash("Your profile has been deleted.")
     session.pop("user")
