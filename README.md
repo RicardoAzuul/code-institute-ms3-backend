@@ -31,7 +31,7 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
   - [Database Design](#database-design)
   - [Features](#features)
     - [Existing Features](#existing-features)
-  - [- register and login/logout functionality.](#--register-and-loginlogout-functionality)
+  - [- when a new book is added, a proof of concept affiliate link is created and added to the book document. This is used to generate a button which takes the user to an Amazon search page.](#--when-a-new-book-is-added-a-proof-of-concept-affiliate-link-is-created-and-added-to-the-book-document-this-is-used-to-generate-a-button-which-takes-the-user-to-an-amazon-search-page)
     - [Features Left to Implement](#features-left-to-implement)
   - [Technologies Used](#technologies-used)
   - [Responsiveness of Pages](#responsiveness-of-pages)
@@ -280,11 +280,10 @@ users, collection of user documents:
 - a page to add a new book, that asks for all the necessary info to add a book to the database.
 - a profile page, from where the logged in user can edit or delete the books and reviews they added, or even delete their entire profile.
 - register and login/logout functionality.
+- when a new book is added, a proof of concept affiliate link is created and added to the book document. This is used to generate a button which takes the user to an Amazon search page.
 ---
 
 ### Features Left to Implement
-TODO: custom affiliate links: advanced feature?
-- adding custom affiliate links to new books added to the database. An example: https://www.amazon.com/s?tag=faketag&k=alice+in+wonderland
 TODO: admin portal
 - an admin page, where a user with admin privileges can edit and delete all books, reviews and users.
 

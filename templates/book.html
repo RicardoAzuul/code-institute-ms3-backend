@@ -33,6 +33,7 @@
           {{ book.upvotes }}
         </p>
         <p class="card-text">{{ book.blurb }}</p>
+        <p class="card-text"><a href="{{ book.affiliateLink }}" class="btn btn-info" target="_blank">Buy {{ book.title}}</a></p>
         <h3 class="card-text">Reviews from our users</h3>
       </div>
       <ul class="list-group list-group-flush" id="book-reviews">

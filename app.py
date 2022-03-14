@@ -218,6 +218,9 @@ def new_book():
             flash("The url you entered is not an image.")
             return redirect(url_for("new_book"))
         
+        book_title_for_affiliate_link = request.form.get("booktitle").lower().replace(" ", "+")
+        affiliate_link = "https://www.amazon.com/s?tag=bookablefaketag&k=" + book_title_for_affiliate_link       
+        
         book_to_register = {
             "title": request.form.get("booktitle"),
             "authors": request.form.get("authors"),
@@ -225,10 +228,10 @@ def new_book():
             "coverImageURL": request.form.get("cover-image"),
             "blurb": request.form.get("blurb"),
             "upvotes": 0,
-            # TODO: Advanced functionality: adding affiliate links
-            # Example affiliate link: https://www.amazon.com/Natural-Postpartum-Hemorrhoid-Discomfort-Essential/dp/B073KD4V6W/ref=as_li_ss_tl?keywords=postnatal+care&qid=1567520298&s=gateway&sr=8-9&th=1&linkCode=sl1&tag=loveourlittles-20&linkId=97598c121390e0a89fbc93df46018337
-            "affiliateLink": "https://fake.affiliate.link",
-            "addedByUser": session["user"]
+            "affiliateLink": affiliate_link,
+            "addedByUser": session["user"],
+            "reviews": [],
+            "upvotedBy": []
         }
         mongo.db.books.insert_one(book_to_register)
         # When we register a book, we also register its id to the user document that added the book
