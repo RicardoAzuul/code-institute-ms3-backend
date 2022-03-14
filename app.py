@@ -150,6 +150,7 @@ def delete_profile():
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
     reviews_by_user = user.get("reviewsAdded")
+    # We want to keep the books - we use these to make money through affiliate links. When a user deletes their profile, the books they added come up for "adoption".
     books_by_user = user.get("booksAdded")
     if reviews_by_user != None:
         for review in reviews_by_user:
@@ -304,13 +305,14 @@ def adopt_book(book_id):
     return redirect(url_for("get_book", book_id=book_id))
 
 
-# Add empty array when adding new book?
 @app.route("/upvote_book/<book_id>")
 @login_required
 def upvote_book(book_id):
-    username = session["user"]
+    user_to_update = mongo.db.users.find_one({"username": session["user"]})
+    username =  user_to_update.get("username")
     mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$inc': {'upvotes': +1}})
     mongo.db.books.update_one({"_id": ObjectId(book_id)}, {'$push': {'upvotedBy': username}})
+    mongo.db.users.update_one(user_to_update, {'$push': {'booksUpvoted': book_id}})
     flash("Book has been upvoted !")
     return redirect(url_for("get_book", book_id=book_id))
 
