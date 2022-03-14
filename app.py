@@ -1,3 +1,4 @@
+# TODO: Remove comments, superfluous empty lines
 # IMPROVE: use Flask-login --> module for Flask to deal with login and session management
 
 import os
@@ -19,6 +20,7 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
+# TODO: Delete everything from database and re-add upon submission, for cleanup
 mongo = PyMongo(app)
 
 # function from https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
@@ -56,13 +58,16 @@ def get_book(book_id):
     book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
     # We need to get the reviews dictionary element: this contains the ids for reviews, if there are any
     review_ids = book.get("reviews")
-    review_documents = [] 
+    review_documents = []
+    users_that_added_reviews = [] 
     # if there are reviews, variable reviews is type list
     if type(review_ids) is list:
         for review_id in review_ids:
             review_document = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
+            user_that_added_review = review_document.get("addedByUser")
             review_documents.append(review_document)
-    return render_template("book.html", book=book, review_documents=review_documents)
+            users_that_added_reviews.append(user_that_added_review)
+    return render_template("book.html", book=book, review_documents=review_documents, users_that_added_reviews=users_that_added_reviews)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -138,6 +143,7 @@ def logout():
     return redirect(url_for("login"))
 
 
+# TODO: Add delete of upvotes 
 @app.route("/delete_profile")
 @login_required
 def delete_profile():
@@ -213,6 +219,7 @@ def new_book():
             "coverImageURL": request.form.get("cover-image"),
             "blurb": request.form.get("blurb"),
             "upvotes": 0,
+            # TODO: Advanced functionality: adding affiliate links
             # Example affiliate link: https://www.amazon.com/Natural-Postpartum-Hemorrhoid-Discomfort-Essential/dp/B073KD4V6W/ref=as_li_ss_tl?keywords=postnatal+care&qid=1567520298&s=gateway&sr=8-9&th=1&linkCode=sl1&tag=loveourlittles-20&linkId=97598c121390e0a89fbc93df46018337
             "affiliateLink": "https://fake.affiliate.link",
             "addedByUser": session["user"]
@@ -297,14 +304,13 @@ def adopt_book(book_id):
     return redirect(url_for("get_book", book_id=book_id))
 
 
-# TODO: Add to code that user who upvoted is written to document, so that we can stop them from upvoting more than once
 # Add empty array when adding new book?
 @app.route("/upvote_book/<book_id>")
 @login_required
 def upvote_book(book_id):
     username = session["user"]
-    mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$inc': {'upvotes': +1}}, {'$push': {'upvotedBy': username}})
-
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$inc': {'upvotes': +1}})
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, {'$push': {'upvotedBy': username}})
     flash("Book has been upvoted !")
     return redirect(url_for("get_book", book_id=book_id))
 
