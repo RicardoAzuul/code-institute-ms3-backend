@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block all_books %}nav-item active{% endblock %}
+{% block content %}
 <h1 class="text-center">Books Added By Our Users</h1>
 <div class="row row-cols-1">
   {% for book in books %}
