@@ -31,7 +31,7 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
   - [Database Design](#database-design)
   - [Features](#features)
     - [Existing Features](#existing-features)
-  - [- when a new book is added, a proof of concept affiliate link is created and added to the book document. This is used to generate a button which takes the user to an Amazon search page.](#--when-a-new-book-is-added-a-proof-of-concept-affiliate-link-is-created-and-added-to-the-book-document-this-is-used-to-generate-a-button-which-takes-the-user-to-an-amazon-search-page)
+  - [- an admin portal, where the admin can delete and edit books, and delete reviews](#--an-admin-portal-where-the-admin-can-delete-and-edit-books-and-delete-reviews)
     - [Features Left to Implement](#features-left-to-implement)
   - [Technologies Used](#technologies-used)
   - [Responsiveness of Pages](#responsiveness-of-pages)
@@ -290,6 +290,7 @@ So, in a JSON-ish structure, my current database design:
 - a profile page, from where the logged in user can edit or delete the books and reviews they added, or even delete their entire profile.
 - register and login/logout functionality.
 - when a new book is added, a proof of concept affiliate link is created and added to the book document. This is used to generate a button which takes the user to an Amazon search page.
+- an admin portal, where the admin can delete and edit books, and delete reviews
 ---
 
 ### Features Left to Implement

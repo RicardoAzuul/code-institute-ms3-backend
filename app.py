@@ -183,6 +183,7 @@ def delete_profile():
 @app.route("/delete_book/<book_id>")
 @login_required
 def delete_book(book_id):
+    # TODO: add code that removes upvotes from user document
     book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
     user = mongo.db.users.find_one({"username": session["user"]})
     mongo.db.users.find_one_and_update(user, {'$pull': {'booksAdded': ObjectId(book_id)}})
@@ -231,7 +232,7 @@ def new_book():
         book_to_register = {
             "title": request.form.get("booktitle"),
             "authors": request.form.get("authors"),
-            # FIX: turn genres into genre, everywhere
+            # FIXME: turn genres into genre, everywhere
             "genres": request.form.get("genreSelector"),
             "coverImageURL": request.form.get("cover-image"),
             "blurb": request.form.get("blurb"),
@@ -292,8 +293,7 @@ def edit_book(book_id):
         book_to_update_id = book_id   
         title_to_update = request.form.get("booktitle")
         authors_to_update = request.form.get("authors")
-        # TODO: turn this into a select from the genres collection
-        # FIX: turn genres into genre, everywhere
+        # FIXME: turn genres into genre, everywhere
         genre_to_update: request.form.get("genreSelector")
         genres_to_update = request.form.get("genres")
         coverImageURL_to_update = request.form.get("cover-image")
@@ -351,6 +351,16 @@ def edit_review(review_id):
     review = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
 
     return render_template("edit_review.html", review=review)
+
+
+@app.route("/admin", methods=["GET", "POST"])
+@login_required
+def admin():
+    books = mongo.db.books.find() 
+    reviews = mongo.db.reviews.find() 
+    users = mongo.db.users.find() 
+    genres = mongo.db.genres.find() 
+    return render_template("admin_portal.html", users=users, books=books, reviews=reviews, genres=genres)
 
 
 if __name__ == "__main__":

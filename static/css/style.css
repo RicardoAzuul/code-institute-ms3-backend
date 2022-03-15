@@ -71,6 +71,11 @@ h3 {
   padding-bottom: 1.25rem;
 }
 
+/* admin_portal.html */
+#admin-card .card-body {
+  text-align: left;
+}
+
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   main {
