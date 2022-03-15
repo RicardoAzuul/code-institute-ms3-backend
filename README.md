@@ -294,8 +294,8 @@ So, in a JSON-ish structure, my current database design:
 ---
 
 ### Features Left to Implement
-TODO: admin portal
-- an admin page, where a user with admin privileges can edit and delete all books, reviews and users.
+IMPROVE: expand admin portal
+- make it possible to delete users, and add and delete categories on the admin page
 
 ---
 

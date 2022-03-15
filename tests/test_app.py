@@ -18,16 +18,10 @@ def test_index_content(app, client):
     """
     GIVEN a running Flask app
     WHEN the client browses to /
-    THEN check for '<p> elements' in the returned data: this indicates that the template has been filled with data from the db
+    THEN check for <div class="card  in the returned data: this indicates that the template has been filled with data from the db
     """
     res = client.get('/')
-    assert b'<p>Title' in res.data
-    assert b'<p>Cover' in res.data
-    assert b'<p>Blurb' in res.data
-    assert b'<p>Upvotes' in res.data
-    assert b'<p>Affiliate' in res.data
-    assert b'<p>Author' in res.data
-    assert b'<p>Genre' in res.data
+    assert b'<div class="card' in res.data
 
 
 def test_get_books(app, client):
@@ -44,16 +38,10 @@ def test_get_books_content(app, client):
     """
     GIVEN a running Flask app
     WHEN the client browses to /get_books
-    THEN check for '<p> elements' in the returned data: this indicates that the template has been filled with data from the db
+    THEN check for '<div class="card' in the returned data: this indicates that the template has been filled with data from the db
     """
     res = client.get('/get_books')
-    assert b'<p>Title' in res.data
-    assert b'<p>Cover' in res.data
-    assert b'<p>Blurb' in res.data
-    assert b'<p>Upvotes' in res.data
-    assert b'<p>Affiliate' in res.data
-    assert b'<p>Author' in res.data
-    assert b'<p>Genre' in res.data
+    assert b'<div class="card' in res.data
 
 
 def test_register(app, client):
@@ -73,7 +61,7 @@ def test_register_content(app, client):
     THEN check the h5 element with class "card-title" and text "Register Your Account"
     """
     res = client.get('/register')
-    assert b'<h5 class="card-title">Register Your Account' in res.data
+    assert b'<h1 class="card-title">Register Your Account</h1>' in res.data
 
 
 def test_login(app, client):
@@ -93,4 +81,4 @@ def test_login_content(app, client):
     THEN check the h5 element with class "card-title" and text "Log In To Your Account"
     """
     res = client.get('/login')
-    assert b'<h5 class="card-title">Log In To Your Account' in res.data
+    assert b'<h1 class="card-title">Log In To Your Account</h1>' in res.data

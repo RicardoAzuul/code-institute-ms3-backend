@@ -2,7 +2,6 @@
 {% block admin %}nav-item active{% endblock %}
 {% block content %}
 
-<!-- TODO: CSS styling -->
 <!-- card from Bootstrap (https://getbootstrap.com/docs/4.6/components/card/), customized for this site -->
 <div class="card shadow p-3 mb-5 bg-white rounded" id="admin-card">
   <div class="card-header">
@@ -45,7 +44,7 @@
             Username: {{ user.username }}
           </td>
           <td class="text-right">
-            <!-- TODO: delete users, edit? -->
+            <!-- IMPROVE: delete users, edit? -->
             <a href="" class="btn btn-danger">Delete</a>
           </td>
         </tr>
@@ -59,7 +58,7 @@
         {% for genre in genres %}
         <tr>
           <td colspan="2">Genre: {{ genre.genreName }}</td>
-          <!-- TODO: Add, edit, delete genres -->
+          <!-- IMPROVE: Add, delete genres -->
           <td class="text-right"><a href="" class="btn btn-danger">Delete</a></td>
         </tr>
         {% endfor %}
