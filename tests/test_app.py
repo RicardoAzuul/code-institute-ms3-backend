@@ -58,7 +58,7 @@ def test_register_content(app, client):
     """
     GIVEN a running Flask app
     WHEN the client browses to /register
-    THEN check the h5 element with class "card-title" and text "Register Your Account"
+    THEN check the h1 element with class "card-title" and text "Register Your Account"
     """
     res = client.get('/register')
     assert b'<h1 class="card-title">Register Your Account</h1>' in res.data
@@ -78,7 +78,7 @@ def test_login_content(app, client):
     """
     GIVEN a running Flask app
     WHEN the client browses to /login
-    THEN check the h5 element with class "card-title" and text "Log In To Your Account"
+    THEN check the h1 element with class "card-title" and text "Log In To Your Account"
     """
     res = client.get('/login')
     assert b'<h1 class="card-title">Log In To Your Account</h1>' in res.data

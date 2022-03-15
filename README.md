@@ -346,12 +346,51 @@ install chromedriver for selenium --> download correct one for your chrome versi
 TODO: Write out how to do automated tests
 I've written some automatic tests. These can be found in selenium_test.py and test_app.py. All tests pass:
 - [Output pytest](readme-assets/output_pytest.png)
+  
 Functionality tested:
-- :heavy_check_mark: browse to https://code-institute-ms3-book-review.herokuapp.com/
-- :heavy_check_mark: browse to https://code-institute-ms3-book-review.herokuapp.com/
+test_app.py tests browsing to different pages: /, /get_books, /register and /login:
+- :heavy_check_mark: GIVEN a running Flask app WHEN the client browses to /  THEN check for status code 200
+- :heavy_check_mark: GIVEN a running Flask app WHEN the client browses to /    THEN check for <div class="card  in the returned data: this indicates that the template has been filled with data from the db
+- :heavy_check_mark: GIVEN a running Flask app WHEN the client browses to /  get_books THEN check for status code 200
+- :heavy_check_mark: GIVEN a running Flask app WHEN the client browses to /get_books THEN check for '<div class="card' in the returned data: this indicates that the template has been filled with data from the db
+- :heavy_check_mark: GIVEN a running Flask app WHEN the client browses to /register THEN check for status code 200
+- :heavy_check_mark: GIVEN a running Flask app WHEN the client browses to /register THEN check the h1 element with class "card-title" and text "Register Your Account"
+- :heavy_check_mark: GIVEN a running Flask app WHEN the client browses to /login THEN check for status code 200
+- :heavy_check_mark: GIVEN a running Flask app WHEN the client browses to /login THEN check the h1 element with class "card-title" and text "Log In To Your Account"
+
+selenium_test.py tests several user interactions:
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the client browses to /
+THEN check the title is "Bookable"
+- :heavy_check_mark: GIVEN an existing username WHEN the client tries to register the existing username THEN check for the "Sorry, your username has already been taken!" flash message
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the client clicks the brand nav THEN check the url ends with get_books
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the client clicks the All Books button THEN check the url ends with get_books
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the client clicks the Log In nav THEN check the url ends with login
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the client clicks the Register nav THEN check the url ends with register
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the client clicks the Log In link at the bottom of the Register page THEN check the url ends with login
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the client clicks the Register link at the bottom of the Log In page THEN check the url ends with register
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the user registers THEN check that the user is sent to its profile page
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the logged in user logs out THEN check that the user is sent back to the login page with the message that the user has been logged out
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the user is logged out THEN check that the user only sees navs for All Books, Log In and Register
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the user logs in THEN check that the user is sent to the profile page with a flash message
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the user is logged in THEN check that the user only sees navs for All Books, Add Book, Profile and Log Out
+- :heavy_check_mark: GIVEN a running Heroku app WHEN the user deletes their profile THEN check that the user is sent to the home page with a flash message
+
+
 
 <ins>Manual tests</ins>
 TODO: Add manual tests, for the things that I am not testing automatically.
+
+[ ] Test getting more info about a book: do I get info about the right book?
+[ ] Test search: I should be able to search titles, authors and genres
+[ ] Test getting more info about a book when logged in:
+    - I should be able to review a book --> this should be disabled if I already reviewed the book
+    - I should be able to upvote a book --> this should be disabled if I already upvoted the book
+    - if I added the book, I should be able to edit or delete it
+    - if the book has no current "owner", I should be able to adopt it
+[ ] Test adding a book
+[ ] Test adding a review
+[ ] Test editing and deleting from profile page
+[ ] Test deleting profile and seeing what happens to reviews, books and upvotes
 
 
 
