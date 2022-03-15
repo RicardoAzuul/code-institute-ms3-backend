@@ -150,7 +150,6 @@ def logout():
     return redirect(url_for("login"))
 
 
-# TEST
 @app.route("/delete_profile")
 @login_required
 def delete_profile():
@@ -183,10 +182,10 @@ def delete_profile():
 @app.route("/delete_book/<book_id>")
 @login_required
 def delete_book(book_id):
-    # TODO: add code that removes upvotes from user document
     book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
     user = mongo.db.users.find_one({"username": session["user"]})
     mongo.db.users.find_one_and_update(user, {'$pull': {'booksAdded': ObjectId(book_id)}})
+    mongo.db.users.find_one_and_update(user, {'$pull': {'booksUpvoted': ObjectId(book_id)}})
     reviews_of_book = book_to_delete.get("reviews")
     mongo.db.books.delete_one(book_to_delete)
     if reviews_of_book != None:

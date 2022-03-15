@@ -344,6 +344,11 @@ Selenium
 pip install selenium
 install chromedriver for selenium --> download correct one for your chrome version: https://chromedriver.chromium.org/downloads
 TODO: Write out how to do automated tests
+I've written some automatic tests. These can be found in selenium_test.py and test_app.py. All tests pass:
+- [Output pytest](readme-assets/output_pytest.png)
+Functionality tested:
+- :heavy_check_mark: browse to https://code-institute-ms3-book-review.herokuapp.com/
+- :heavy_check_mark: browse to https://code-institute-ms3-book-review.herokuapp.com/
 
 <ins>Manual tests</ins>
 TODO: Add manual tests, for the things that I am not testing automatically.
@@ -353,9 +358,9 @@ TODO: Add manual tests, for the things that I am not testing automatically.
 
 <ins>Code validation:</ins>
 1. [HTML validation](https://validator.w3.org/nu/)
-1. [CSS validation](https://jigsaw.w3.org/css-validator/)
-1. [VS Code JSHint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.jshint)
-1. [Python Validation](http://pep8online.com/)
+2. [CSS validation](https://jigsaw.w3.org/css-validator/)
+3. [VS Code JSHint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.jshint)
+4. [Python Validation](http://pep8online.com/)
 TODO: Add validation results
 
 ### Notable Bugs
