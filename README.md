@@ -443,14 +443,6 @@ Proof: ![Search horror](readme-assets\search_horror.gif?raw=true)
 
 [ ] Test deleting profile and seeing what happens to reviews, books and upvotes
   
-  
-<table>
-  <tr>
-    <td></td>
-  </tr>
-<table>
-
-
 
 <ins>Code validation:</ins>
 1. [HTML validation](https://validator.w3.org/nu/)
