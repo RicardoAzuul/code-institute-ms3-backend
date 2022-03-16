@@ -343,16 +343,30 @@ These screenshots indicate the responsiveness of the pages on various screens. P
 ## Testing
 
 <ins>Tests for Readme.md:</ins>
-- :heavy_check_mark: Realizing that I was doing a lot of manual work to check all the links, I googled for an automated solution. I found one using a Github Action Workflow. This Workflow checks all the links in markdown files. The action does generate an error: a 403 status for the Pexels website. This error is probably due to a blacklist, because I ran the workflow too often.
-<br/>
+- :heavy_check_mark: Realizing that I was doing a lot of manual work to check all the links, I googled for an automated solution. I found one using a Github Action Workflow. This Workflow checks all the links in markdown files.
+
 
 <ins>Automated tests</ins>
-Selenium
-pip install selenium
-install chromedriver for selenium --> download correct one for your chrome version: https://chromedriver.chromium.org/downloads
-TODO: Write out how to do automated tests
-I've written some automatic tests. These can be found in selenium_test.py and test_app.py. All tests pass:
-- [Output pytest](readme-assets/output_pytest.png)
+
+I've tried doing some automated testing of the website. These automated tests are run against the actual webapp, as hosted on Heroku.
+
+In order to run the tests yourself, do the following:
+- pytest is already installed via requirements.txt
+- Install selenium for Python: 
+  
+  ```pip install selenium```
+- Tests were writting using the Chrome Driver for Selenium. This automates google Chrome and interactions with Chrome. Download the correct one for your Chrome version: https://chromedriver.chromium.org/downloads
+
+After this you can run all tests using:
+
+```python -m pytest``` 
+
+Use the following if you want more verbose logging:
+
+```python -m pytest -v``` 
+
+
+The tests can be found in selenium_test.py and test_app.py, in the test folder. All tests pass: [Output pytest](readme-assets/output_pytest.png)
   
 Functionality tested:
 test_app.py tests browsing to different pages: /, /get_books, /register and /login:
