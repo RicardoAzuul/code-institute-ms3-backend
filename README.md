@@ -35,7 +35,6 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
     - [Features Left to Implement](#features-left-to-implement)
   - [Technologies Used](#technologies-used)
   - [Responsiveness of Pages](#responsiveness-of-pages)
-  - [TODO: Add screenshots.](#todo-add-screenshots)
   - [Testing](#testing)
     - [Notable Bugs](#notable-bugs)
     - [Problems](#problems)
@@ -328,9 +327,17 @@ IMPROVE: expand admin portal
 
 ## Responsiveness of Pages
 
-These screenshots indicate the responsiveness of the pages on various screens.
+These screenshots indicate the responsiveness of the pages on various screens. Pages that require a login are not included.
 
-TODO: Add screenshots.
+![Responsive /get-books](readme-assets\responsive_home_page.png?raw=true "Get Books")
+
+![Responsive /get_book](readme-assets\responsive_get_book.png?raw=true "Get Book")
+
+![Responsive /login](readme-assets\responsive_login.png?raw=true "Login")
+
+![Responsive /register](readme-assets\responsive_register.png?raw=true "Register")
+
+
 ---
 
 ## Testing
