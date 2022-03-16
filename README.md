@@ -442,6 +442,13 @@ Proof: ![Search horror](readme-assets\search_horror.gif?raw=true)
 [ ] Test editing and deleting from profile page
 
 [ ] Test deleting profile and seeing what happens to reviews, books and upvotes
+  
+  
+<table>
+  <tr>
+    <td></td>
+  </tr>
+<table>
 
 
 
