@@ -442,8 +442,7 @@ Using the "richard" account, add a review to a book. Expected result: the review
 [ ] Test editing and deleting from profile page
 
 [ ] Test deleting profile and seeing what happens to reviews, books and upvotes
-
-
+  
 
 | Tests for not logged in visitor | Expected |Passed |
 | :------------- |:-------------| :-----:|
