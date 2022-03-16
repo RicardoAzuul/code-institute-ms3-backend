@@ -164,7 +164,7 @@ The buttons are Bootstrap-style buttons: Bootstrap's design helps with a quicker
 
 Bootstrap's cards functionality is used, as a quick way to add a certain style to the webapp.
 
-<!-- TODO: Update wireframes -->
+<!-- TODO: Update wireframes: wait with making wireframes for admin portal -->
 <ins>Wireframes</ins>
 - [Home](readme-assets/home.png)
 - [Home - tablet](readme-assets/home_tablet_view.png)
