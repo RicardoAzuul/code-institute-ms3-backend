@@ -190,7 +190,10 @@ def delete_book(book_id):
     mongo.db.books.delete_one(book_to_delete)
     if reviews_of_book != None:
         for review in reviews_of_book:
-            mongo.db.reviews.find_one_and_delete(review)   
+            review_document = mongo.db.reviews.find_one({'_id': ObjectId(review)})
+            user_who_added_review = review_document.get("addedByUser")
+            mongo.db.users.find_one_and_update(user_who_added_review, {'$pull': {'reviewsAdded': ObjectId(review)}})  
+            mongo.db.reviews.delete_one({'_id': ObjectId(review)})   
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
@@ -204,7 +207,6 @@ def delete_review(review_id):
     mongo.db.books.update_one({"title": book_title}, {'$pull': {'reviews': ObjectId(review_id)}})
     mongo.db.users.update_one({"username": username}, {'$pull': {'reviewsAdded': ObjectId(review_id)}})
     mongo.db.reviews.delete_one(review_to_delete)
-
     flash("Review has been deleted.")
     return redirect(url_for("get_books"))
 
@@ -214,6 +216,7 @@ def delete_review(review_id):
 def new_book():
     if request.method == "POST":
         # Do I want to lowercase titles?
+        # BUG: Books can have the same title. Perhaps if title and author are the same, we prevent adding it to the database?
         book_exists = mongo.db.books.find_one({"title": request.form.get("booktitle")})
 
         if book_exists:
@@ -289,11 +292,12 @@ def new_review(book_id):
 @login_required
 def edit_book(book_id):
     if request.method == "POST":
+
         book_to_update_id = book_id   
         title_to_update = request.form.get("booktitle")
         authors_to_update = request.form.get("authors")
         # FIXME: turn genres into genre, everywhere
-        genre_to_update: request.form.get("genreSelector")
+        genre_to_update = request.form.get("genreSelector")
         genres_to_update = request.form.get("genres")
         coverImageURL_to_update = request.form.get("cover-image")
         blurb_to_update = request.form.get("blurb")
@@ -302,7 +306,7 @@ def edit_book(book_id):
             flash("The url you entered is not an image.")
             return redirect(url_for("edit_book", book_id=book_to_update_id))
 
-        mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$set': {'title': title_to_update, 'authors': authors_to_update, 'genres': genres_to_update, 'coverImageURL': coverImageURL_to_update, 'blurb': blurb_to_update}})
+        mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$set': {'title': title_to_update, 'authors': authors_to_update, 'genres': genre_to_update, 'coverImageURL': coverImageURL_to_update, 'blurb': blurb_to_update}})
 
         flash("Book has been updated in the database!")
         return redirect(url_for("get_books"))

@@ -1,3 +1,6 @@
+<!-- FIXME: Images in the readme on Github are not working -->
+
+
 # Bookable
 A book review and recommendation site, using MongoDB, Python, Flask, HTML, CSS and JavaScript.
 
@@ -329,13 +332,13 @@ IMPROVE: expand admin portal
 
 These screenshots indicate the responsiveness of the pages on various screens. Pages that require a login are not included.
 
-![Responsive /get-books](readme-assets\responsive_home_page.png?raw=true "Get Books")
+![Responsive /get-books](readme-assets/responsive_home_page.png?raw=true "Get Books")
 
-![Responsive /get_book](readme-assets\responsive_get_book.png?raw=true "Get Book")
+![Responsive /get_book](readme-assets/responsive_get_book.png?raw=true "Get Book")
 
-![Responsive /login](readme-assets\responsive_login.png?raw=true "Login")
+![Responsive /login](readme-assets/responsive_login.png?raw=true "Login")
 
-![Responsive /register](readme-assets\responsive_register.png?raw=true "Register")
+![Responsive /register](readme-assets/responsive_register.png?raw=true "Register")
 
 
 ---
@@ -399,49 +402,102 @@ THEN check the title is "Bookable"
 
 
 <ins>Manual tests</ins>
-Some of the manual tests require a user with the following requirements:
-- has added a book to the database
-- has added a review, but at least one book without a review
-- has upvoted a book, but at least one book has not been upvoted
+Manually testing the webapp is quite involved: things change depending on whether a visitor is logged in, has added a book, reviewed a book or upvoted a book.
 
-Also sometimes required is testing without being logged in: a user without login should see no buttons.
-
-[ ] Test getting more info about a book: do I get info about the right book?
-1. Test with a user without login. I expect that when I click on the button to get more info about a book that:
-   - I am taken to a page with more info about the book I clicked on.
-   - That there is a button to buy the book that takes me to Amazon.
-   - That there are no buttons to edit or delete the book.
-   - That there is no button to review the book.
-   - That I cannot upvote the book.
-Proof: ![Get book while not logged in](readme-assets\get_book_not_logged_in.gif?raw=true)
   
 
-[x] Test search: I should be able to search titles, authors and genres
+- :heavy_check_mark: Test search: I should be able to search titles, authors and genres
 - Search for "Shining". I expect to find only a book card for "The Shining".
-Proof: ![Search Shining](readme-assets\search_shining.gif?raw=true)
+Proof: ![Search Shining](readme-assets/search_shining.gif?raw=true)
 - Search for "King". I expect to find only a book by Stephen King.
-Proof: ![Search King](readme-assets\search_king.gif?raw=true)
+Proof: ![Search King](readme-assets/search_king.gif?raw=true)
 - Search for "horror". I expect to find only a book card with the genre horror.
-Proof: ![Search horror](readme-assets\search_horror.gif?raw=true)
+Proof: ![Search horror](readme-assets/search_horror.gif?raw=true)
 
 [ ] Test getting more info about a book when logged in:
     - I should be able to review a book --> this should be disabled if I already reviewed the book
     - I should be able to upvote a book --> this should be disabled if I already upvoted the book
     - if I added the book, I should be able to edit or delete it
     - if the book has no current "owner", I should be able to adopt it
-  
+
+  <!-- BUG: Redo test: only when a book has the same title and author can it be considered a duplicate  -->
 [ ] Test adding a book
 - for this I used the account with username "richard"
 - Subtests: 
-- I should be unable to add a book whose title is already in the database. Proof: ![Add book already in db](readme-assets\add_book_already_in_db.gif?raw=true)
-- I should be unable to add a book without a valid url for a cover image (url ends in an image format extension) Proof: ![Add book invalid image](readme-assets\add_book_invalid_img_url.gif?raw=true)
-- Actual test: add the book "Consider Phlebas", by Iain M. Banks. Expected result: the book is added to the database, and when I get more info about the book, because I am the one who added it, I see the options Edit and Delete Book. These options are also available from my profile. Proof: ![Add book](readme-assets\add_book.gif?raw=true) 
+- I should be unable to add a book whose title is already in the database. Proof: ![Add book already in db](readme-assets/add_book_already_in_db.gif?raw=true)
+- I should be unable to add a book without a valid url for a cover image (url ends in an image format extension) Proof: ![Add book invalid image](readme-assets/add_book_invalid_img_url.gif?raw=true)
+- Actual test: add the book "Consider Phlebas", by Iain M. Banks. Expected result: the book is added to the database, and when I get more info about the book, because I am the one who added it, I see the options Edit and Delete Book. These options are also available from my profile. Proof: ![Add book](readme-assets/add_book.gif?raw=true) This proof also confirms that when I added a book, I also see the Edit and Delete buttons when I get more info for the book itself. 
 
-[ ] Test adding a review
+[] Test editing a book:
+Using the "richard" account, edit a book. Subtests:
+- I should be unable to edit a book's title to a title that is already in the database, if the author is also the same: this would suggest a duplicate book.
+- I should be unable to edit a book without a valid url for a cover image (url ends in an image format extension). Proof: ![Edit book invalid image](readme-assets/edit_book_invalid_img_url.gif?raw=true)
+- Actual test: edit the book "Consider Phlebas". Change its genre and edit the blurb. Expected result: the genre and blurb should be updated. Proof: ![Edit book](readme-assets/edit_book.gif?raw=true) 
+
+- :heavy_check_mark: Test adding a review
+Using the "richard" account, add a review to a book. Expected result: the review is added to the database, and can be found when going to the page of the book the review was for, and on the user's profile page. Proof: ![Review book](readme-assets/review_book.gif?raw=true)
+
+[ ] Test upvoting a book
 
 [ ] Test editing and deleting from profile page
 
 [ ] Test deleting profile and seeing what happens to reviews, books and upvotes
+
+
+
+| Tests for not logged in visitor | Expected |Passed |
+| :------------- |:-------------| :-----:|
+| Visitor uses the search functionality to search for a title | Books with the search term in the title field are displayed | &#9745; |
+| Visitor uses the search functionality to search for an author | Books with the search term in the author field are displayed | &#9745; |
+| Visitor uses the search functionality to search for a genre | Books with the search term in the genre field are displayed | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | More info about the correct book is displayed | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | Upvote button is disabled | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | Either reviews are displayed, or a text that there are no reviews | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | The Buy button is displayed  | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | There are no buttons to edit or delete the book, or add a review  | &#9745; |
+
+| Tests for logged in user | Expected |Passed |
+| :------------- |:-------------| :-----:|
+| User uses the search functionality to search for a title | Books with the search term in the title field are displayed | &#9745; |
+| User uses the search functionality to search for an author | Books with the search term in the author field are displayed | &#9745; |
+| User uses the search functionality to search for a genre | Books with the search term in the genre field are displayed | &#9745; |
+| User clicks the "More About This Book" button for a book | More info about the correct book is displayed | &#9745; |
+| User clicks the "More About This Book" button for a book | Upvote button is enabled | &#9745; |
+| User clicks the upvote button | Upvote button is disabled and the upvote number is increased by 1. The page reloads with a flash message that the book has been upvoted | &#9745; |
+| After upvoting a book, the user goes back to the main page | The number of upvotes for the book just upvoted has increased | &#9745; |
+| User clicks the "More About This Book" button for a book | Either reviews are displayed, or a text that there are no reviews | &#9745; |
+| User clicks the "More About This Book" button for a book | The Buy button is displayed  | &#9745; |
+| User clicks the "More About This Book" button for a book | The "Review Book" button is displayed  | &#9745; |
+| User clicks the "Review Book" button for a book | User is taken to a new page, with a form where they can add a review to the book. The book's title has been populated | &#9745; |
+| User cancels submitting a review | User is taken back to the book they came from | &#9745; |
+| User submits a review via the form | User is taken back to home page, with a flash message that the review has been added | &#9745; |
+| User clicks the "More About This Book" button for the book they just reviewed | Their review is populated, and "Review Book" button has been disabled | &#9745; |
+| User clicks the "Profile" button in the navbar | The review they added is visible on their profile page, with "Edit" and "Delete" buttons | &#9745; |
+| User clicks the "Edit" button on the profile page for the review they added | The user is taken to a page with a form to edit their review, with fields prepopulated | &#9745; |
+| User clicks the "Cancel" button on the edit review form | The user is taken back to the home page | &#9745; |
+| User clicks the "Edit" button on the edit review form, after changing their review | The user is taken back to the home page, with a flash message that the review has been updated | &#9745; |
+| User clicks the "More About This Book" button for the book they just changed their review for | More info about the book is displayed, including the changed review | &#9745; |
+| User goes to their profile page and clicks the "Delete" button for a review they added | A modal popups asking the user to confirm they want to delete the review: the modal populates with the title of the book | &#9745; |
+| User clicks on the "Cancel" button of the "Delete review" modal  | The modal disappears and the user is back on their profile page | &#9745; |
+| User clicks on the "Delete" button of the "Delete review" modal  | The modal disappears and the user is taken back to the home page, with a flash message that the review has been deleted | &#9745; |
+| User clicks the "Add Book" button in the navbar | User is taken to a new page, where fields are populated to add a new book | &#9745; |
+| User fills in a booktitle that is already in the database in the Add Book form | User is redirected to the Add book form, with a flash message that the book is already in the database | &#9745; |
+| User fills in a link for the cover image that is not a valid image | The form indicates to fill in a valid url | &#9745; |
+| User fills in the form for adding a book and submits | User is taken back to the main page with a flash message that the book has been added | &#9745; |
+| User clicks the "More About This Book" button for the book they just added | User is taken to page with the info for the book they just added, and the buttons "Delete Book" and "Edit Book" are visible | &#9745; |
+| User clicks the "Edit Book" button  | User is taken to a form with the info for the book prefilled, ready for editing | &#9745; |
+| User cancels editing the book  | User is taken back to home page | &#9745; |
+| User edits the book information and submits the form  | User is taken back to home page with flash message that the book has been updated | &#9745; |
+| User clicks the "More About This Book" button for the book they just updated  | The edits are visible on the page | &#9745; |
+| User clicks the "Delete book" button on the page for a book they added  | A modal pop ups, confirming that the user wants to delete the book | &#9745; |
+| User clicks the "Cancel delete" button on the modal  | The modal disappears and they are back on the book page | &#9745; |
+| User clicks the "Confirm delete" button on the modal  | The user is taken to the home page, with a flash message that the book has been deleted from the database | &#9745; |
+
+
+
+
+
+
 
 
 
