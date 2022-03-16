@@ -399,20 +399,49 @@ THEN check the title is "Bookable"
 
 
 <ins>Manual tests</ins>
-TODO: Add manual tests, for the things that I am not testing automatically.
+Some of the manual tests require a user with the following requirements:
+- has added a book to the database
+- has added a review, but at least one book without a review
+- has upvoted a book, but at least one book has not been upvoted
+
+Also sometimes required is testing without being logged in: a user without login should see no buttons.
 
 [ ] Test getting more info about a book: do I get info about the right book?
-[ ] Test search: I should be able to search titles, authors and genres
+1. Test with a user without login. I expect that when I click on the button to get more info about a book that:
+   - I am taken to a page with more info about the book I clicked on.
+   - That there is a button to buy the book that takes me to Amazon.
+   - That there are no buttons to edit or delete the book.
+   - That there is no button to review the book.
+   - That I cannot upvote the book.
+Proof: ![Get book while not logged in](readme-assets\get_book_not_logged_in.gif?raw=true)
+  
+
+[x] Test search: I should be able to search titles, authors and genres
+- Search for "Shining". I expect to find only a book card for "The Shining".
+Proof: ![Search Shining](readme-assets\search_shining.gif?raw=true)
+- Search for "King". I expect to find only a book by Stephen King.
+Proof: ![Search King](readme-assets\search_king.gif?raw=true)
+- Search for "horror". I expect to find only a book card with the genre horror.
+Proof: ![Search horror](readme-assets\search_horror.gif?raw=true)
+
 [ ] Test getting more info about a book when logged in:
     - I should be able to review a book --> this should be disabled if I already reviewed the book
     - I should be able to upvote a book --> this should be disabled if I already upvoted the book
     - if I added the book, I should be able to edit or delete it
     - if the book has no current "owner", I should be able to adopt it
+  
 [ ] Test adding a book
-[ ] Test adding a review
-[ ] Test editing and deleting from profile page
-[ ] Test deleting profile and seeing what happens to reviews, books and upvotes
+- for this I used the account with username "richard"
+- Subtests: 
+- I should be unable to add a book whose title is already in the database. Proof: ![Add book already in db](readme-assets\add_book_already_in_db.gif?raw=true)
+- I should be unable to add a book without a valid url for a cover image (url ends in an image format extension) Proof: ![Add book invalid image](readme-assets\add_book_invalid_img_url.gif?raw=true)
+- Actual test: add the book "Consider Phlebas", by Iain M. Banks. Expected result: the book is added to the database, and when I get more info about the book, because I am the one who added it, I see the options Edit and Delete Book. These options are also available from my profile. Proof: ![Add book](readme-assets\add_book.gif?raw=true) 
 
+[ ] Test adding a review
+
+[ ] Test editing and deleting from profile page
+
+[ ] Test deleting profile and seeing what happens to reviews, books and upvotes
 
 
 
