@@ -187,16 +187,20 @@ def delete_book(book_id):
     mongo.db.users.find_one_and_update(user, {'$pull': {'booksAdded': ObjectId(book_id)}})
     user = mongo.db.users.find_one({"username": session["user"]})
     mongo.db.users.find_one_and_update(user, {'$pull': {'booksUpvoted': ObjectId(book_id)}})
-    # TODO: We need to do the same for upvotes: multiple users can have upvoted a book
-    reviews_of_book = book_to_delete.get("reviews")
-    mongo.db.books.delete_one(book_to_delete)
+    reviews_of_book = book_to_delete.get("reviews")    
     if reviews_of_book != None:
         for review in reviews_of_book:
             review_document = mongo.db.reviews.find_one({'_id': ObjectId(review)})
             user_who_added_review = review_document.get("addedByUser")
             user_document = mongo.db.users.find_one({'username': user_who_added_review})
             mongo.db.users.find_one_and_update(user_document, {'$pull': {'reviewsAdded': ObjectId(review)}})  
-            mongo.db.reviews.delete_one({'_id': ObjectId(review)})   
+            mongo.db.reviews.delete_one({'_id': ObjectId(review)})
+    upvoters_of_book = book_to_delete.get("upvotedBy")
+    if upvoters_of_book != None:
+        for upvoter in upvoters_of_book:
+            user = mongo.db.users.find_one({'username': upvoter})
+            mongo.db.users.find_one_and_update(user, {'$pull': {'booksUpvoted': ObjectId(book_id)}})  
+    mongo.db.books.delete_one(book_to_delete)  
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
