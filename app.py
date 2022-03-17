@@ -257,7 +257,8 @@ def new_book():
         book_id_to_register = registered_book.get("_id")
         user_to_update = mongo.db.users.find_one({"username": session["user"]})
         user_id = user_to_update.get("_id")
-        mongo.db.users.update_one({"_id": ObjectId(user_id)}, { '$push': {'booksAdded': book_id_to_register}})
+        mongo.db.users.update_one({"_id": ObjectId(user_id)}, { '$push': {'booksAdded': ObjectId(book_id_to_register)}})
+
 
         flash("Book has been added to the database!")
         return redirect(url_for("get_books"))

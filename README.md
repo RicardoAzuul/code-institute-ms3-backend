@@ -299,6 +299,11 @@ So, in a JSON-ish structure, my current database design:
 - have a way to sort the books on the main page
 - add a downvote functionality
 - add a way for users to remove their upvotes
+- redirect the admin directly to the admin portal, instead of to their profile
+- allow the admin to edit all books from the book page itself, like owners of the book
+- disable upvoting for the admin on the book page
+- disable the Buy button for the admin on the book page
+- disable the Review button for the admin on the book page
 
 ---
 
@@ -405,29 +410,38 @@ THEN check the title is "Bookable"
 
 
 <ins>Manual tests</ins>
-Manually testing the webapp is quite involved: things change depending on whether a visitor is logged in, has added a book, reviewed a book or upvoted a book.
+Manually testing the webapp is quite involved: things change depending on whether a visitor is logged in, has added a book, reviewed a book or upvoted a book. Some functionality has already been tested by automatic tests: things like whether a visitor who is not logged in can only see certain nav items in the navbar, whether a logged in user sees other nav items and even what happens when you register or login and logout. Below are more elaborate tests:
   <!-- BUG: Redo test: only when a book has the same title and author can it be considered a duplicate  -->
 
-[ ] Test editing and deleting from profile page
-
-[ ] Test deleting profile and seeing what happens to reviews, books and upvotes  
-
+**Search functionality**
 | Tests for not logged in visitor | Expected |Passed |
 | :------------- |:-------------| :-----:|
 | Visitor uses the search functionality to search for a title | Books with the search term in the title field are displayed | &#9745; |
 | Visitor uses the search functionality to search for an author | Books with the search term in the author field are displayed | &#9745; |
 | Visitor uses the search functionality to search for a genre | Books with the search term in the genre field are displayed | &#9745; |
-| Visitor clicks the "More About This Book" button for a book | More info about the correct book is displayed | &#9745; |
-| Visitor clicks the "More About This Book" button for a book | Upvote button is disabled | &#9745; |
-| Visitor clicks the "More About This Book" button for a book | Either reviews are displayed, or a text that there are no reviews | &#9745; |
-| Visitor clicks the "More About This Book" button for a book | The Buy button is displayed  | &#9745; |
-| Visitor clicks the "More About This Book" button for a book | There are no buttons to edit or delete the book, or add a review  | &#9745; |
+
+
 
 | Tests for logged in user | Expected |Passed |
 | :------------- |:-------------| :-----:|
 | User uses the search functionality to search for a title | Books with the search term in the title field are displayed | &#9745; |
 | User uses the search functionality to search for an author | Books with the search term in the author field are displayed | &#9745; |
 | User uses the search functionality to search for a genre | Books with the search term in the genre field are displayed | &#9745; |
+
+
+
+**"More About This book" functionality**
+| Tests for not logged in visitor | Expected |Passed |
+| :------------- |:-------------| :-----:|
+| Visitor clicks the "More About This Book" button for a book | More info about the correct book is displayed | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | Upvote button is disabled | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | Either reviews are displayed, or a text that there are no reviews | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | The Buy button is displayed  | &#9745; |
+| Visitor clicks the "More About This Book" button for a book | There are no buttons to edit or delete the book, or add a review  | &#9745; |
+
+
+| Tests for logged in user | Expected |Passed |
+| :------------- |:-------------| :-----:|
 | User clicks the "More About This Book" button for a book | More info about the correct book is displayed | &#9745; |
 | User clicks the "More About This Book" button for a book | Upvote button is enabled | &#9745; |
 | User clicks the upvote button | Upvote button is disabled and the upvote number is increased by 1. The page reloads with a flash message that the book has been upvoted | &#9745; |
@@ -435,6 +449,12 @@ Manually testing the webapp is quite involved: things change depending on whethe
 | User clicks the "More About This Book" button for a book | Either reviews are displayed, or a text that there are no reviews | &#9745; |
 | User clicks the "More About This Book" button for a book | The Buy button is displayed  | &#9745; |
 | User clicks the "More About This Book" button for a book | The "Review Book" button is displayed  | &#9745; |
+
+
+
+**Review functionalities: Create, Read, Update, Delete**
+| Tests for logged in user | Expected |Passed |
+| :------------- |:-------------| :-----:|
 | User clicks the "Review Book" button for a book | User is taken to a new page, with a form where they can add a review to the book. The book's title has been populated | &#9745; |
 | User cancels submitting a review | User is taken back to the book they came from | &#9745; |
 | User submits a review via the form | User is taken back to home page, with a flash message that the review has been added | &#9745; |
@@ -447,8 +467,14 @@ Manually testing the webapp is quite involved: things change depending on whethe
 | User goes to their profile page and clicks the "Delete" button for a review they added | A modal popups asking the user to confirm they want to delete the review: the modal populates with the title of the book | &#9745; |
 | User clicks on the "Cancel" button of the "Delete review" modal  | The modal disappears and the user is back on their profile page | &#9745; |
 | User clicks on the "Delete" button of the "Delete review" modal  | The modal disappears and the user is taken back to the home page, with a flash message that the review has been deleted | &#9745; |
+| User clicks the "More About This Book" button for the book they just deleted the review for | Their review is gone, and "Review Book" button is once more enabled | &#9745; |
+| User goes to their profile page | The review they just deleted is no longer visible on the profile page | &#9745; |
+
+
+
+**Book functionalities: Create, Read, Update, Delete**
 | User clicks the "Add Book" button in the navbar | User is taken to a new page, where fields are populated to add a new book | &#9745; |
-| User fills in a booktitle that is already in the database in the Add Book form | User is redirected to the Add book form, with a flash message that the book is already in the database | &#9745; |
+| User fills in a booktitle that is already in the database in the Add Book form | User is redirected to the Add book form, with a flash message that the book is already in the database* | &#9745; |
 | User fills in a link for the cover image that is not a valid image | The form indicates to fill in a valid url | &#9745; |
 | User fills in the form for adding a book and submits | User is taken back to the main page with a flash message that the book has been added | &#9745; |
 | User clicks the "More About This Book" button for the book they just added | User is taken to page with the info for the book they just added, and the buttons "Delete Book" and "Edit Book" are visible | &#9745; |
@@ -463,8 +489,28 @@ Manually testing the webapp is quite involved: things change depending on whethe
 | User clicks the "Confirm delete" button on the modal  | The user is taken to the home page, with a flash message that the book has been deleted from the database. The book is no longer visible | &#9745; |
 | User goes to their profile page  | The book they deleted is no longer listed on the page | &#9745; |
 | User deletes a book using the "Delete" button on their profile page | Works like deleting from the book page  | &#9745; |
+| Another logged in user clicks the "More About This Book" button for a book added by a user who deleted their profile  | The "Adopt Book?" button is now visible | &#9745; |
+| The user clicks the "Adopt Book?" button  | The page is reloaded. A flash message stating that the book has been adopted appears, and the user now has Edit and Delete buttons for the book | &#9745; |
+* This is intentional, but can be improved: it is possible for two different books to have the same title.
 
 
+
+**Profile functionalities: Create, Read, Update, Delete**
+Several of these functionalities have already been tested: when reviews or books are added or deleted, this is updated on the profile page. Creating a profile has also been tested already, by the automatic tests. Below are the few tests remaining.
+| User clicks on "Delete Profile" button at the bottom of their profile card  | A modal pop ups, confirming that the user wants to delete their profile | &#9745; |
+| User clicks the "Cancel delete" button on the modal  | The modal disappears and they are back on their profile page | &#9745; |
+| User clicks the "Confirm delete" button on the modal  | The modal disappears and the user is taken back to the home page, with a flash message that their profile has been deleted. The session has also been logged out. | &#9745; |
+| User clicks the "More About This Book" button for a book they've upvoted and/or reviewed  | The upvote and/or review is gone | &#9745; |
+
+
+
+**Admin functionalities: Create, Read, Update, Delete**
+| The admin logs in  | The "Admin Portal" navbar item is visible  | &#9745; |
+| The admin clicks on the "Admin Portal" navbar item  | The admin is taken to the Admin Portal page, which is populated with all books, reviews, and users in the database  | &#9745; |
+| The admin clicks on the "Edit" button for a book  | The admin is taken to the Edit Book page, which is prepopulated with the right data for the book to be edited, much like a normal user  | &#9745; |
+| The admin clicks on the "Cancel" button on the Edit Book page  | The admin is taken to the home page  | &#9745; |
+| The admin changes information on the Edit book page and clicks the "Edit Book" button  | The admin is taken to the home page, with a flash message that the book has been updated  | &#9745; |
+| The admin clicks the "More About This Book" button for the book they just edited  | The admin is taken to the book page, and the data they changed is populated  | &#9745; |
 
 
 
