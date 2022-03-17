@@ -472,6 +472,7 @@ Manually testing the webapp is quite involved: things change depending on whethe
 
 
 **Book functionalities: Create, Read, Update, Delete**
+| :------------- |:-------------| :-----:|
 | User clicks the "Add Book" button in the navbar | User is taken to a new page, where fields are populated to add a new book | &#9745; |
 | User fills in a booktitle that is already in the database in the Add Book form | User is redirected to the Add book form, with a flash message that the book is already in the database* | &#9745; |
 | User fills in a link for the cover image that is not a valid image | The form indicates to fill in a valid url | &#9745; |
@@ -494,8 +495,9 @@ Manually testing the webapp is quite involved: things change depending on whethe
 
 
 
-**Profile functionalities: Create, Read, Update, Delete**
+**Profile functionalities: Create, Read, Update, Delete** 
 Several of these functionalities have already been tested: when reviews or books are added or deleted, this is updated on the profile page. Creating a profile has also been tested already, by the automatic tests. Below are the few tests remaining.
+| :------------- |:-------------| :-----:|
 | User clicks on "Delete Profile" button at the bottom of their profile card  | A modal pop ups, confirming that the user wants to delete their profile | &#9745; |
 | User clicks the "Cancel delete" button on the modal  | The modal disappears and they are back on their profile page | &#9745; |
 | User clicks the "Confirm delete" button on the modal  | The modal disappears and the user is taken back to the home page, with a flash message that their profile has been deleted. The session has also been logged out. | &#9745; |
@@ -504,6 +506,7 @@ Several of these functionalities have already been tested: when reviews or books
 
 
 **Admin functionalities: Create, Read, Update, Delete**
+| :------------- |:-------------| :-----:|
 | The admin logs in  | The "Admin Portal" navbar item is visible  | &#9745; |
 | The admin clicks on the "Admin Portal" navbar item  | The admin is taken to the Admin Portal page, which is populated with all books, reviews, and users in the database  | &#9745; |
 | The admin clicks on the "Edit" button for a book on the Admin Portal page | The admin is taken to the Edit Book page, which is prepopulated with the right data for the book to be edited, much like a normal user  | &#9745; |
@@ -538,21 +541,22 @@ TODO: Add validation results
 ---
 
 ## Deployment
-<!-- TODO: Mention that there should a database available for use with the app, preferably MongoDB -->
 The project has been deployed to Heroku. If you want to do the same:
-1. First, fork the repository to your own GitHub: https://github.com/RicardoAzuul/code-institute-ms3-backend.
+1. You need a database for the webapp to store its data. This should be a MongoDB database. It will have four collections: books, reviews, users and genres. Only genres already needs data: without any documents for genres in this collection, the list to pick a genre when adding or editing a book will not populate.
+1. Fork the repository to your own GitHub: https://github.com/RicardoAzuul/code-institute-ms3-backend.
 1. Log in to Heroku (www.heroku.com) - or register if you don't have an account yet.
 1. In the Heroku dashboard, click the New button in the top right corner and create a new app.
 1. Give your new app a name and choose a region. The name has to be unique within Heroku.
 1. On the page for your new Heroku app, go to Deployment method and choose "Connect to GitHub". If you haven't connected your GitHub account to Heroku yet, you will be able to do so now.
 1. Choose the forked repository of this project from your own GitHub account.
 1. If you want, you can enable Automatic Deploys here: whenever you perform a push to your GitHub repository, the Heroku app can redeploy. Otherwise you can deploy manually. Heroku will use the PROCFILE and requirements.txt to install dependencies and build the app.
-1. You will also have to set some Config Vars in the Settings section of your Heroku app. There are 5 Config Vars:
+1. You will also have to set some Config Vars in the Settings section of your Heroku app. There are 6 Config Vars:
    1. IP: set to 0.0.0.0
    2. MONGO_DBNAME: enter the name of your MongoDB here, which stores the books, reviews, genres and users.
    3. MONGO_URI: enter the uri to your MongoDB here.
    4. PORT: set to 5000.
    5. SECRET_KEY: enter the secret key needed for the flash package to display flash messages.
+   6. DEBUG: set to False
 
 ### Run locally
 If you want to run the project locally:
@@ -561,7 +565,18 @@ If you want to run the project locally:
 1. Install Python 3.9.10: https://www.python.org/downloads/release/python-3910/?msclkid=cffbdc88a5f911ecb325513f7d98b51f 
 2. From the terminal, run the below to install required modules:
   ``` pip3 install -r requirements.txt ```
-1. To activate the Flash virtual environment:
+1. You will need to create an env.py file (or another form of environment file) for running the app locally. The content of this file:
+```
+import os
+
+os.environ.setdefault("IP", "0.0.0.0")
+os.environ.setdefault("PORT", "5000")
+os.environ.setdefault("SECRET_KEY", "[secret key for use with flash package]")
+os.environ.setdefault("MONGO_URI", "[uri to your MongoDB]")
+os.environ.setdefault("MONGO_DBNAME", "[name of your MongoDB database")
+os.environ.setdefault("DEBUG", "True")
+```
+2. To activate the Flash virtual environment:
 & "g:/My Drive/A-B-C/Coding/Github 
 Repos/code-institute-ms3-backend/venv/Scripts/Activate.ps1"
 1. To run the app:
