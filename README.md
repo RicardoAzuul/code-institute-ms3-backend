@@ -54,16 +54,14 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
 ## UI and UX
  
 ### User stories
+<!-- TODO: Add screenshots -->
 - First Time Visitor Goals
     - As a First Time Visitor, I want to easily understand the main purpose of the site. If I see a couple of books, together with upvotes and reviews, I'll quickly realize what the site is about.
     - As a First Time Visitor, I want to be able to easily navigate the site to find content.
-    - As a First Time Visitor, I want to get information that indicates how actively the site is used, to determine how valuable the reviews and recommendations are.
 - Returning User Goals
     - As a Returning User, I want to find reviews and recommendations for books.
     - As a Returning User, I want to be able to quickly see all my reviews.
     - As a Returning User, I want to be able to create, update and delete reviews, and create, update and delete books.
-- Frequent User Goals
-    - As a Frequent User, I want to find all reviews from a particular user, to determine how valuable their opinion is, which helps in finding new books.
 - Site Owner Goals
     - As the site owner, I want to get recommendations for new books by crowdsourcing book reviews. The users of my site add reviews to books, which allows me to find new books I might like.
     - As the site owner, I want to earn money using affiliate links for the books on my site.
@@ -296,8 +294,11 @@ So, in a JSON-ish structure, my current database design:
 ---
 
 ### Features Left to Implement
-IMPROVE: expand admin portal
 - make it possible to delete users, and add and delete categories on the admin page
+- have the backend code check if the combination of both title and author are already in the database, to detect possible duplicates
+- have a way to sort the books on the main page
+- add a downvote functionality
+- add a way for users to remove their upvotes
 
 ---
 
@@ -479,6 +480,9 @@ Manually testing the webapp is quite involved: things change depending on whethe
 TODO: Add validation results
 
 ### Notable Bugs
+While testing deleting books I found some bugs that were quickly solved: most of them were me forgetting that data is stored in other places in the database.
+One bug that proved to be interesting was the following:
+When deleting a book, it should also delete the reference to that book from the user document who added the book, and the reference to users who upvoted it.
 
 ### Problems
 
