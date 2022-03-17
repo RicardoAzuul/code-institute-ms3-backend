@@ -185,14 +185,17 @@ def delete_book(book_id):
     book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
     user = mongo.db.users.find_one({"username": session["user"]})
     mongo.db.users.find_one_and_update(user, {'$pull': {'booksAdded': ObjectId(book_id)}})
+    user = mongo.db.users.find_one({"username": session["user"]})
     mongo.db.users.find_one_and_update(user, {'$pull': {'booksUpvoted': ObjectId(book_id)}})
+    # TODO: We need to do the same for upvotes: multiple users can have upvoted a book
     reviews_of_book = book_to_delete.get("reviews")
     mongo.db.books.delete_one(book_to_delete)
     if reviews_of_book != None:
         for review in reviews_of_book:
             review_document = mongo.db.reviews.find_one({'_id': ObjectId(review)})
             user_who_added_review = review_document.get("addedByUser")
-            mongo.db.users.find_one_and_update(user_who_added_review, {'$pull': {'reviewsAdded': ObjectId(review)}})  
+            user_document = mongo.db.users.find_one({'username': user_who_added_review})
+            mongo.db.users.find_one_and_update(user_document, {'$pull': {'reviewsAdded': ObjectId(review)}})  
             mongo.db.reviews.delete_one({'_id': ObjectId(review)})   
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
@@ -335,7 +338,7 @@ def upvote_book(book_id):
     username =  user_to_update.get("username")
     mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$inc': {'upvotes': +1}})
     mongo.db.books.update_one({"_id": ObjectId(book_id)}, {'$push': {'upvotedBy': username}})
-    mongo.db.users.update_one(user_to_update, {'$push': {'booksUpvoted': book_id}})
+    mongo.db.users.update_one(user_to_update, {'$push': {'booksUpvoted': ObjectId(book_id)}})
     flash("Book has been upvoted !")
     return redirect(url_for("get_book", book_id=book_id))
 

@@ -358,6 +358,8 @@ In order to run the tests yourself, do the following:
 - Install selenium for Python: 
   
   ```pip install selenium```
+
+  
 - Tests were writting using the Chrome Driver for Selenium. This automates google Chrome and interactions with Chrome. Download the correct one for your Chrome version: https://chromedriver.chromium.org/downloads
 
 After this you can run all tests using:
@@ -403,46 +405,11 @@ THEN check the title is "Bookable"
 
 <ins>Manual tests</ins>
 Manually testing the webapp is quite involved: things change depending on whether a visitor is logged in, has added a book, reviewed a book or upvoted a book.
-
-  
-
-- :heavy_check_mark: Test search: I should be able to search titles, authors and genres
-- Search for "Shining". I expect to find only a book card for "The Shining".
-Proof: ![Search Shining](readme-assets/search_shining.gif?raw=true)
-- Search for "King". I expect to find only a book by Stephen King.
-Proof: ![Search King](readme-assets/search_king.gif?raw=true)
-- Search for "horror". I expect to find only a book card with the genre horror.
-Proof: ![Search horror](readme-assets/search_horror.gif?raw=true)
-
-[ ] Test getting more info about a book when logged in:
-    - I should be able to review a book --> this should be disabled if I already reviewed the book
-    - I should be able to upvote a book --> this should be disabled if I already upvoted the book
-    - if I added the book, I should be able to edit or delete it
-    - if the book has no current "owner", I should be able to adopt it
-
   <!-- BUG: Redo test: only when a book has the same title and author can it be considered a duplicate  -->
-[ ] Test adding a book
-- for this I used the account with username "richard"
-- Subtests: 
-- I should be unable to add a book whose title is already in the database. Proof: ![Add book already in db](readme-assets/add_book_already_in_db.gif?raw=true)
-- I should be unable to add a book without a valid url for a cover image (url ends in an image format extension) Proof: ![Add book invalid image](readme-assets/add_book_invalid_img_url.gif?raw=true)
-- Actual test: add the book "Consider Phlebas", by Iain M. Banks. Expected result: the book is added to the database, and when I get more info about the book, because I am the one who added it, I see the options Edit and Delete Book. These options are also available from my profile. Proof: ![Add book](readme-assets/add_book.gif?raw=true) This proof also confirms that when I added a book, I also see the Edit and Delete buttons when I get more info for the book itself. 
-
-[] Test editing a book:
-Using the "richard" account, edit a book. Subtests:
-- I should be unable to edit a book's title to a title that is already in the database, if the author is also the same: this would suggest a duplicate book.
-- I should be unable to edit a book without a valid url for a cover image (url ends in an image format extension). Proof: ![Edit book invalid image](readme-assets/edit_book_invalid_img_url.gif?raw=true)
-- Actual test: edit the book "Consider Phlebas". Change its genre and edit the blurb. Expected result: the genre and blurb should be updated. Proof: ![Edit book](readme-assets/edit_book.gif?raw=true) 
-
-- :heavy_check_mark: Test adding a review
-Using the "richard" account, add a review to a book. Expected result: the review is added to the database, and can be found when going to the page of the book the review was for, and on the user's profile page. Proof: ![Review book](readme-assets/review_book.gif?raw=true)
-
-[ ] Test upvoting a book
 
 [ ] Test editing and deleting from profile page
 
-[ ] Test deleting profile and seeing what happens to reviews, books and upvotes
-  
+[ ] Test deleting profile and seeing what happens to reviews, books and upvotes  
 
 | Tests for not logged in visitor | Expected |Passed |
 | :------------- |:-------------| :-----:|
@@ -484,13 +451,17 @@ Using the "richard" account, add a review to a book. Expected result: the review
 | User fills in a link for the cover image that is not a valid image | The form indicates to fill in a valid url | &#9745; |
 | User fills in the form for adding a book and submits | User is taken back to the main page with a flash message that the book has been added | &#9745; |
 | User clicks the "More About This Book" button for the book they just added | User is taken to page with the info for the book they just added, and the buttons "Delete Book" and "Edit Book" are visible | &#9745; |
+| User goes to their profile page | The profile page is populated with the book they just added, including "Edit" and "Delete" buttons | &#9745; |
 | User clicks the "Edit Book" button  | User is taken to a form with the info for the book prefilled, ready for editing | &#9745; |
 | User cancels editing the book  | User is taken back to home page | &#9745; |
 | User edits the book information and submits the form  | User is taken back to home page with flash message that the book has been updated | &#9745; |
 | User clicks the "More About This Book" button for the book they just updated  | The edits are visible on the page | &#9745; |
+| User edits a book using the "Edit" button on their profile page  | Works like editing from the book page | &#9745; |
 | User clicks the "Delete book" button on the page for a book they added  | A modal pop ups, confirming that the user wants to delete the book | &#9745; |
 | User clicks the "Cancel delete" button on the modal  | The modal disappears and they are back on the book page | &#9745; |
-| User clicks the "Confirm delete" button on the modal  | The user is taken to the home page, with a flash message that the book has been deleted from the database | &#9745; |
+| User clicks the "Confirm delete" button on the modal  | The user is taken to the home page, with a flash message that the book has been deleted from the database. The book is no longer visible | &#9745; |
+| User goes to their profile page  | The book they deleted is no longer listed on the page | &#9745; |
+| User deletes a book using the "Delete" button on their profile page | Works like deleting from the book page  | &#9745; |
 
 
 
