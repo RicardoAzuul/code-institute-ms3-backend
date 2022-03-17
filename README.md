@@ -41,7 +41,7 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
   - [Testing](#testing)
     - [Notable Bugs](#notable-bugs)
     - [Problems](#problems)
-  - [DeploymentT](#deploymentt)
+  - [Deployment](#deployment)
     - [Run locally](#run-locally)
   - [Credits](#credits)
     - [Inspiration](#inspiration)
@@ -524,6 +524,7 @@ Several of these functionalities have already been tested: when reviews or books
 
 <ins>Code validation:</ins>
 1. [HTML validation](https://validator.w3.org/nu/)
+Not all HTML will be able to be validated online
 2. [CSS validation](https://jigsaw.w3.org/css-validator/)
 3. [VS Code JSHint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.jshint)
 4. [Python Validation](http://pep8online.com/)
@@ -536,8 +537,8 @@ TODO: Add validation results
 
 ---
 
-## DeploymentT
-<!-- TODO: Add creating a MongoDB? -->
+## Deployment
+<!-- TODO: Mention that there should a database available for use with the app, preferably MongoDB -->
 The project has been deployed to Heroku. If you want to do the same:
 1. First, fork the repository to your own GitHub: https://github.com/RicardoAzuul/code-institute-ms3-backend.
 1. Log in to Heroku (www.heroku.com) - or register if you don't have an account yet.
@@ -565,6 +566,7 @@ If you want to run the project locally:
 Repos/code-institute-ms3-backend/venv/Scripts/Activate.ps1"
 1. To run the app:
    ``` python app.py ```
+1. This will run the Flask app locally, you can then browse to http://192.168.1.68:5000/ to interact with the app.
 
 
 

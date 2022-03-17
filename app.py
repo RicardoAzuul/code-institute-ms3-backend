@@ -159,7 +159,7 @@ def delete_profile():
     # We want to keep the books - we use these to make money through affiliate links. When a user deletes their profile, the books they added come up for "adoption".
     books_by_user = user.get("booksAdded")
     books_upvoted =  user.get("booksUpvoted")
-    if reviews_by_user != None:
+    if reviews_by_user != None: # can be changed to: if not reviews_by_user
         for review in reviews_by_user:
             review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review)})
             book_title = review_to_delete.get("booktitle")
@@ -324,6 +324,7 @@ def edit_book(book_id):
     return render_template("edit_book.html", book=book, genres=genres)
 
 
+# TODO: button should only be visible for logged in users
 @app.route("/adopt_book/<book_id>")
 @login_required
 def adopt_book(book_id):
@@ -377,4 +378,4 @@ def admin():
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True) # TODO: set to false when handing in project
+            debug=bool(os.environ.get("DEBUG")))
