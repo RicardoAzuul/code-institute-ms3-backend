@@ -55,7 +55,6 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
 ## UI and UX
  
 ### User stories
-<!-- TODO: Add screenshots -->
 - First Time Visitor Goals
     - As a First Time Visitor, I want to easily understand the main purpose of the site. If I see a couple of books, together with upvotes and reviews, I'll quickly realize what the site is about.
     - As a First Time Visitor, I want to be able to easily navigate the site to find content.
