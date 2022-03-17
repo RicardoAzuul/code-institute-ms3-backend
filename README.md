@@ -530,37 +530,44 @@ Several of these functionalities have already been tested: when reviews or books
 TODO: Add validation results
 
 ### Notable Bugs
-While testing deleting books I found some bugs that were quickly solved: most of them were me forgetting that data is stored in other places in the database.
-One bug that proved to be interesting was the following:
-When deleting a book, it should also delete the reference to that book from the user document who added the book, and the reference to users who upvoted it.
+
 
 ### Problems
 
 ---
 
 ## DeploymentT
+<!-- TODO: Add creating a MongoDB? -->
 The project has been deployed to Heroku. If you want to do the same:
 1. First, fork the repository to your own GitHub: https://github.com/RicardoAzuul/code-institute-ms3-backend.
-1. Log in to Heroku (www.heroku.com) - or register if you don't have an accoun yet.
+1. Log in to Heroku (www.heroku.com) - or register if you don't have an account yet.
 1. In the Heroku dashboard, click the New button in the top right corner and create a new app.
 1. Give your new app a name and choose a region. The name has to be unique within Heroku.
-1. On the page for your new Heroku app, go to Deployment method and choose "Connect to GitHub". Y
-TODO: Write how to deploy to Heroku
+1. On the page for your new Heroku app, go to Deployment method and choose "Connect to GitHub". If you haven't connected your GitHub account to Heroku yet, you will be able to do so now.
+1. Choose the forked repository of this project from your own GitHub account.
+1. If you want, you can enable Automatic Deploys here: whenever you perform a push to your GitHub repository, the Heroku app can redeploy. Otherwise you can deploy manually. Heroku will use the PROCFILE and requirements.txt to install dependencies and build the app.
+1. You will also have to set some Config Vars in the Settings section of your Heroku app. There are 5 Config Vars:
+   1. IP: set to 0.0.0.0
+   2. MONGO_DBNAME: enter the name of your MongoDB here, which stores the books, reviews, genres and users.
+   3. MONGO_URI: enter the uri to your MongoDB here.
+   4. PORT: set to 5000.
+   5. SECRET_KEY: enter the secret key needed for the flash package to display flash messages.
 
 ### Run locally
-
-1. If you want to run the project locally 
-
-pip install -r requirements.txt to install required modules
-
-To activate Flash virtual environment:
+If you want to run the project locally:
+1. First, fork the repository to your own GitHub: https://github.com/RicardoAzuul/code-institute-ms3-backend.
+1. Clone the forked repository to your own machine.
+1. Install Python 3.9.10: https://www.python.org/downloads/release/python-3910/?msclkid=cffbdc88a5f911ecb325513f7d98b51f 
+2. From the terminal, run the below to install required modules:
+  ``` pip3 install -r requirements.txt ```
+1. To activate the Flash virtual environment:
 & "g:/My Drive/A-B-C/Coding/Github 
 Repos/code-institute-ms3-backend/venv/Scripts/Activate.ps1"
+1. To run the app:
+   ``` python app.py ```
 
-run the app: python app.py
 
 
-pip3 install -r requirements.txt
 
 
 ---
