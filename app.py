@@ -324,7 +324,6 @@ def edit_book(book_id):
     return render_template("edit_book.html", book=book, genres=genres)
 
 
-# TODO: button should only be visible for logged in users
 @app.route("/adopt_book/<book_id>")
 @login_required
 def adopt_book(book_id):
