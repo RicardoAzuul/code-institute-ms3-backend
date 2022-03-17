@@ -1,4 +1,5 @@
 <!-- FIXME: Images in the readme on Github are not working -->
+<!-- FIXME: Go through readme.md online, to make sure everything is displaying correctly -->
 
 
 # Bookable
@@ -62,9 +63,28 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
     - As a Returning User, I want to find reviews and recommendations for books.
     - As a Returning User, I want to be able to quickly see all my reviews.
     - As a Returning User, I want to be able to create, update and delete reviews, and create, update and delete books.
+    - As a Returning User, if I like a book, I want to be able to buy it, ideally via a link on the site.
 - Site Owner Goals
     - As the site owner, I want to get recommendations for new books by crowdsourcing book reviews. The users of my site add reviews to books, which allows me to find new books I might like.
     - As the site owner, I want to earn money using affiliate links for the books on my site.
+
+Screenshots that fulfill these user stories: 
+[Screenshot](readme-assets/screenshot_first_time_visitor.png)
+[Screenshot](readme-assets/screenshot_review.png)
+
+I see a couple of books with buttons to click for more information, I see upvotes, I see a link to login and a link to register, and a search function. This indicates that this site is about books and reviews of books. I can search for books, and if I register I can probably add books myself. If I get more info about a book, I see reviews as well. There is also a button that takes me to Amazon, where I can buy the book if I want to.
+
+[Screenshot](readme-assets/screenshot_profile.png)
+
+If I'm logged in, I have a link to my profile in the navbar, and if I go there I see a list of all the books and reviews I've added. I can edit and delete those as well. I can also add a book through a link in the navbar.
+[Screenshot](readme-assets/screenshot_add_book.png)
+[Screenshot](readme-assets/screenshot_add_review.png)
+[Screenshot](readme-assets/screenshot_edit_book.png)
+[Screenshot](readme-assets/screenshot_edit_review.png)
+[Screenshot](readme-assets/screenshot_profile.png)
+
+As the site owner, I know all books added get a button added as well, that allows visitors to buy books, which will earn me money. And I can look at the reviews and upvotes to find books I might like.
+
 
 ---
 
