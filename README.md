@@ -183,7 +183,7 @@ The buttons are Bootstrap-style buttons: Bootstrap's design helps with a quicker
 
 Bootstrap's cards functionality is used, as a quick way to add a certain style to the webapp.
 
-<!-- TODO: Update wireframes: wait with making wireframes for admin portal -->
+<!-- TODO: add wireframes for admin portal -->
 <ins>Wireframes</ins>
 - [Home](readme-assets/home.png)
 - [Home - tablet](readme-assets/home_tablet_view.png)
@@ -345,10 +345,10 @@ So, in a JSON-ish structure, my current database design:
 - [Am I Responsive?](http://ami.responsivedesign.is/): to generate screenshots of the site at various viewpoints, indicating responsiveness.
 - [EyeDropper](https://eyedropper.org/): to pick colours from an image.
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse): an automated tool in Chrome DevTools that audits for performance, accessibility, progressive web apps, SEO and more.
-- [JSHint](https://jshint.com/): a linter for JavaScript, to help identify coding problems
 - [Prettier VS Code plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode): a code formatter that helps with code formatting, which is good for creating a consistent style.
 - [ScreenToGif](https://www.screentogif.com/): to make screen recordings and turn them into gifs.
 - [Markdown link check](https://github.com/marketplace/actions/markdown-link-check): an automated tool to check for dead links in Markdown files.
+- [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree): to keep track of todos, bugs, things that need to be fixed and such in my project.
 - TODO: Add Python tools
 
 ---

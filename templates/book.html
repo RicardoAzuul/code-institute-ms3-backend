@@ -11,12 +11,12 @@
         {% if session.user %}
           {% if book.addedByUser == "" %}
           <!-- TODO: Add some CSS styling to this -->
-            <p class="card-text">This book has no owner!</p>
-            <a
+            <p class="card-text text-center alert alert-success" role="alert">This book has no owner!</p>
+            <p class="card-text text-center">            <a
               href="{{ url_for('adopt_book', book_id=book._id) }}"
               class="btn btn-success"
               >Adopt Book?</a
-            >
+            ></p>
           {% endif %}
         {% endif %}
         <h2 class="card-subtitle text-muted" id="book-card-subtitle">
@@ -37,7 +37,7 @@
           {{ book.upvotes }}
         </p>
         <p class="card-text">{{ book.blurb }}</p>
-        <p class="card-text"><a href="{{ book.affiliateLink }}" class="btn btn-info" target="_blank">Buy {{ book.title}}</a></p>     
+        <p class="card-text text-center"><a href="{{ book.affiliateLink }}" class="btn btn-info" target="_blank">Buy {{ book.title}}</a></p>     
         <h3 class="card-text">Reviews from our users</h3>
       </div>
       <ul class="list-group list-group-flush" id="book-reviews">
