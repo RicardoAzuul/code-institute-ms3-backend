@@ -41,7 +41,7 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
   - [Testing](#testing)
     - [Notable Bugs](#notable-bugs)
     - [Problems](#problems)
-  - [Deployment](#deployment)
+  - [DeploymentT](#deploymentt)
     - [Run locally](#run-locally)
   - [Credits](#credits)
     - [Inspiration](#inspiration)
@@ -411,7 +411,6 @@ THEN check the title is "Bookable"
 
 <ins>Manual tests</ins>
 Manually testing the webapp is quite involved: things change depending on whether a visitor is logged in, has added a book, reviewed a book or upvoted a book. Some functionality has already been tested by automatic tests: things like whether a visitor who is not logged in can only see certain nav items in the navbar, whether a logged in user sees other nav items and even what happens when you register or login and logout. Below are more elaborate tests:
-  <!-- BUG: Redo test: only when a book has the same title and author can it be considered a duplicate  -->
 
 **Search functionality**
 | Tests for not logged in visitor | Expected |Passed |
@@ -507,10 +506,15 @@ Several of these functionalities have already been tested: when reviews or books
 **Admin functionalities: Create, Read, Update, Delete**
 | The admin logs in  | The "Admin Portal" navbar item is visible  | &#9745; |
 | The admin clicks on the "Admin Portal" navbar item  | The admin is taken to the Admin Portal page, which is populated with all books, reviews, and users in the database  | &#9745; |
-| The admin clicks on the "Edit" button for a book  | The admin is taken to the Edit Book page, which is prepopulated with the right data for the book to be edited, much like a normal user  | &#9745; |
+| The admin clicks on the "Edit" button for a book on the Admin Portal page | The admin is taken to the Edit Book page, which is prepopulated with the right data for the book to be edited, much like a normal user  | &#9745; |
 | The admin clicks on the "Cancel" button on the Edit Book page  | The admin is taken to the home page  | &#9745; |
 | The admin changes information on the Edit book page and clicks the "Edit Book" button  | The admin is taken to the home page, with a flash message that the book has been updated  | &#9745; |
 | The admin clicks the "More About This Book" button for the book they just edited  | The admin is taken to the book page, and the data they changed is populated  | &#9745; |
+| The admin clicks the "Delete" button for a book from the Admin Portal  | The admin is taken to the home page, with a flash message that the book has been deleted | &#9745; |
+| The admin goes back to the Admin Portal  | The book that has just been deleted is no longer in the list of books | &#9745; |
+| The admin clicks the "Delete" button for a review on the Admin Portal page | The admin is taken to the home page, with a flash message that the review has been deleted  | &#9745; |
+| The admin goes back to the Admin Portal | The review that has just been deleted is no longer in the list of books | &#9745; |
+
 
 
 
@@ -534,7 +538,13 @@ When deleting a book, it should also delete the reference to that book from the 
 
 ---
 
-## Deployment
+## DeploymentT
+The project has been deployed to Heroku. If you want to do the same:
+1. First, fork the repository to your own GitHub: https://github.com/RicardoAzuul/code-institute-ms3-backend.
+1. Log in to Heroku (www.heroku.com) - or register if you don't have an accoun yet.
+1. In the Heroku dashboard, click the New button in the top right corner and create a new app.
+1. Give your new app a name and choose a region. The name has to be unique within Heroku.
+1. On the page for your new Heroku app, go to Deployment method and choose "Connect to GitHub". Y
 TODO: Write how to deploy to Heroku
 
 ### Run locally
