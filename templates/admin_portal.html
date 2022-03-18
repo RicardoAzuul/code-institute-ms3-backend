@@ -15,6 +15,7 @@
           <tr>
             <td>{{ book.title }}</td>
             <td class="text-right"><a href="{{ url_for('edit_book', book_id=book._id) }}" class="btn btn-success">Edit</a></td>
+            <!-- IMPROVE: this can be a modal, just like profile.html -->
             <td class="text-right"><a href="{{ url_for('delete_book', book_id=book._id) }}" class="btn btn-danger">Delete</a></td>
           </tr> 
         {% endfor %}
@@ -29,6 +30,7 @@
               Review of: {{ review.booktitle }}
             </td>
             <td class="text-right">
+            <!-- IMPROVE: this can be a modal, just like profile.html -->
               <a href="{{ url_for('delete_review', review_id=review._id) }}" class="btn btn-danger">Delete</a>
             </td>
           </tr>

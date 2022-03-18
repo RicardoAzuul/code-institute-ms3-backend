@@ -11,20 +11,13 @@
     <h2 class="card-text">Books you've added:</h2>
     {% if books|length > 0 %}
     <table class="table">
-      <thead>
-        <tr>
-          <th>Book</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
       <tbody>
         {% for book in books %}
         <tr>
-          <td>{{ book.title }}</td>
-          <td><a href="{{ url_for('edit_book', book_id=book._id) }}" class="btn btn-success">Edit</a>
+          <td class="w-75">{{ book.title }}</td>
+          <td class="text-right"><a href="{{ url_for('edit_book', book_id=book._id) }}" class="btn btn-success">Edit</a>
           </td>
-          <td>
+          <td class="text-right">
       <!-- Button trigger modal: found on https://stackoverflow.com/questions/45874906/flask-and-javascript-confirm-before-deleting -->
       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{book._id}}">
         Delete
@@ -62,25 +55,18 @@
     <h2 class="card-text">Reviews you've added:</h2>
     {% if reviews|length > 0 %}
     <table class="table">
-      <thead>
-        <tr>
-          <th>Review for</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
       <tbody>
         {% for review in reviews %}
         <tr>
-          <td>{{ review.booktitle }}</td>
-          <td>
+          <td class="w-75">{{ review.booktitle }}</td>
+          <td class="text-right">
             <a
               href="{{ url_for('edit_review', review_id=review._id) }}"
               class="btn btn-success"
               >Edit</a
             >
           </td>
-          <td>
+          <td class="text-right">
       <!-- Button trigger modal: found on https://stackoverflow.com/questions/45874906/flask-and-javascript-confirm-before-deleting -->
       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{review._id}}">
         Delete
