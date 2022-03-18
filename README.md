@@ -236,11 +236,12 @@ Looking at [Learn MongoDB The Hard Way](http://learnmongodbthehardway.com/schema
 1. Documents for Authors, in their own collection. These are then linked to books using foreign ids, much like in a relational database. The same goes for books: I'll add foreign ids for the authors to the book documents.
 1. I'll also have a collection for genres. This is because, as the site mentions, it's possible that many books belong to a particular genre. Embedding those books within the genre document would then mean that the maximum size of the document could be reached.
 
-**Update 1** 
-While talking to my mentor about my database design, he made some poignant observations:
-- the genre of a book or the author of a book will not change. As such it makes more sense to have genre and author as properties of the book document. This information is static: a book will always have been written by the same author, and will always have the same genre: it will not suddenly change from horror to romance.
+**Update 1**
+
+While talking to my mentor about my database design, he made some poignant observations: the genre of a book or the author of a book will not change. As such it makes more sense to have genre and author as properties of the book document. This information is static: a book will always have been written by the same author, and will always have the same genre: it will not suddenly change from horror to romance.
 
 **Update 2**
+
 Realizing that I was adding extra complexity to the database design, I decided to simplify it. A real-life webapp would make use of something along the lines of the above database design, in order to deal with potential hundreds or thousands of reviews, but right now, it's better to keep it simple. This meant not using the bucket concept for reviews, but having a collection for reviews, with each review being their own document.
 
 
@@ -519,7 +520,7 @@ Manually testing the webapp is quite involved: things change depending on whethe
 | Tests for logged in user | Expected |Passed |
 | :------------- |:-------------| :-----:|
 | User clicks the "Add Book" button in the navbar | User is taken to a new page, where fields are populated to add a new book | &#9745; |
-| User fills in a booktitle that is already in the database in the Add Book form | User is redirected to the Add book form, with a flash message that the book is already in the database* | &#9745; |
+| User fills in a booktitle that is already in the database in the Add Book form | User is redirected to the Add book form, with a flash message that the book is already in the database | &#9745; |
 | User fills in a link for the cover image that is not a valid image | The form indicates to fill in a valid url | &#9745; |
 | User fills in the form for adding a book and submits | User is taken back to the main page with a flash message that the book has been added | &#9745; |
 | User clicks the "More About This Book" button for the book they just added | User is taken to page with the info for the book they just added, and the buttons "Delete Book" and "Edit Book" are visible | &#9745; |
@@ -536,7 +537,7 @@ Manually testing the webapp is quite involved: things change depending on whethe
 | User deletes a book using the "Delete" button on their profile page | Works like deleting from the book page  | &#9745; |
 | Another logged in user clicks the "More About This Book" button for a book added by a user who deleted their profile  | The "Adopt Book?" button is now visible | &#9745; |
 | The user clicks the "Adopt Book?" button  | The page is reloaded. A flash message stating that the book has been adopted appears, and the user now has Edit and Delete buttons for the book | &#9745; |
-* This is intentional, but can be improved: it is possible for two different books to have the same title.
+
 
 
 
@@ -596,7 +597,9 @@ The results for the first validation run:
 
 [First validation](readme-assets/result_20220318_085319.txt) 
 
-A lot of the problems found are about formatting problems: lines too long, trailing whitespaces, blank lines containing whitespaces. To try and fix this I used autopep8 - which I first installed using ```pip install -U autopep8```.
+A lot of the problems found are about formatting problems: lines too long, trailing whitespaces, blank lines containing whitespaces. To try and fix this I used autopep8 - which I first installed using 
+
+```pip install -U autopep8```
 
 Running autopep8 fixed a lot of the problems: 
 
@@ -668,7 +671,7 @@ os.environ.setdefault("MONGO_URI", "[uri to your MongoDB]")
 os.environ.setdefault("MONGO_DBNAME", "[name of your MongoDB database")
 os.environ.setdefault("DEBUG", "True")
 ```
-1. To activate the Flask virtual environment, run one of the activate scripts from the venv/Scripts directory, depending on your environment.
+1. It's a good idea to run Flask in a virtual environment, you can find instructions here: https://flask.palletsprojects.com/en/2.0.x/installation/#create-an-environment
 1. To run the app:
    
    ``` python app.py ```

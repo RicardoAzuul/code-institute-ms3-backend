@@ -152,25 +152,16 @@ block content %}
         {% for user in users %}
         <tr>
           <td>Username: {{ user.username }}</td>
-          <td class="text-right">
-            <!-- IMPROVE: delete users, edit? -->
-            <a href="" class="btn btn-danger">Delete</a>
-          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     <h2 class="card-text">Genres In the Database</h2>
-    <a href="" class="btn btn-primary">Add</a>
     <table class="table table-hover">
       <tbody>
         {% for genre in genres %}
         <tr>
           <td colspan="2">Genre: {{ genre.genreName }}</td>
-          <!-- IMPROVE: Add, delete genres -->
-          <td class="text-right">
-            <a href="" class="btn btn-danger">Delete</a>
-          </td>
         </tr>
         {% endfor %}
       </tbody>
