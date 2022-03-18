@@ -587,6 +587,8 @@ Manually fixed a lot of the problems with lines too long: [Third validation](rea
 
 Fixed the last of the lines too long: [Fourth validation](readme-assets/result_20220318_093758.txt)
 
+The remaining validation errors had to do with writing comparisons in a non-Python way, these have been fixed: [Fifth validation](readme-assets/result_20220318_094408.txt)
+
 ### Notable Bugs
 
 

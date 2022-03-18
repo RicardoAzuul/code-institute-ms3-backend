@@ -1,3 +1,10 @@
+Check results
+=============
+
+
+
+Code
+=============
 # CLEANUP: Remove comments, superfluous empty lines
 
 import os
