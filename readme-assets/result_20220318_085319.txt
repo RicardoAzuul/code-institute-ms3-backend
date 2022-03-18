@@ -1,4 +1,104 @@
+Check results
+=============
+
+E501:2:80:line too long (89 > 79 characters)
+E501:23:80:line too long (82 > 79 characters)
+E501:26:80:line too long (108 > 79 characters)
+E302:27:1:expected 2 blank lines, found 1
+W293:28:1:blank line contains whitespace
+W291:30:53:trailing whitespace
+E501:38:80:line too long (95 > 79 characters)
+E302:39:1:expected 2 blank lines, found 1
+E501:59:80:line too long (104 > 79 characters)
+W291:62:34:trailing whitespace
+E501:66:80:line too long (85 > 79 characters)
+E501:70:80:line too long (136 > 79 characters)
+E501:83:80:line too long (97 > 79 characters)
+W293:88:1:blank line contains whitespace
+W293:98:1:blank line contains whitespace
+E501:105:80:line too long (97 > 79 characters)
+E501:108:80:line too long (90 > 79 characters)
+W291:118:46:trailing whitespace
+E501:128:80:line too long (135 > 79 characters)
+E501:129:80:line too long (149 > 79 characters)
+E501:140:80:line too long (85 > 79 characters)
+E501:143:80:line too long (91 > 79 characters)
+E501:159:80:line too long (165 > 79 characters)
+E222:161:20:multiple spaces after operator
+E711:162:24:comparison to None should be 'if cond is not None:'
+E261:162:32:at least two spaces before inline comment
+E501:164:80:line too long (83 > 79 characters)
+E711:169:22:comparison to None should be 'if cond is not None:'
+E501:171:80:line too long (93 > 79 characters)
+E711:172:22:comparison to None should be 'if cond is not None:'
+E501:174:80:line too long (106 > 79 characters)
+W291:174:107:trailing whitespace
+E201:175:73:whitespace after '{'
+E501:175:80:line too long (98 > 79 characters)
+W291:175:99:trailing whitespace
+E501:187:80:line too long (90 > 79 characters)
+E501:189:80:line too long (92 > 79 characters)
+W291:190:52:trailing whitespace
+E711:191:24:comparison to None should be 'if cond is not None:'
+E501:193:80:line too long (82 > 79 characters)
+E501:195:80:line too long (88 > 79 characters)
+E501:196:80:line too long (108 > 79 characters)
+W291:196:109:trailing whitespace
+E711:199:25:comparison to None should be 'if cond is not None:'
+E501:202:80:line too long (100 > 79 characters)
+W291:202:101:trailing whitespace
+W291:203:46:trailing whitespace
+E501:214:80:line too long (97 > 79 characters)
+E501:215:80:line too long (103 > 79 characters)
+E501:226:80:line too long (125 > 79 characters)
+E501:227:80:line too long (87 > 79 characters)
+E712:234:41:comparison to False should be 'if cond is False:' or 'if not cond:'
+W293:237:1:blank line contains whitespace
+E501:238:80:line too long (95 > 79 characters)
+E501:239:80:line too long (106 > 79 characters)
+W291:239:107:trailing whitespace
+W293:240:1:blank line contains whitespace
+E501:255:80:line too long (99 > 79 characters)
+E201:260:64:whitespace after '{'
+E501:260:80:line too long (120 > 79 characters)
+E303:263:9:too many blank lines (2)
+W293:265:1:blank line contains whitespace
+E501:274:80:line too long (80 > 79 characters)
+W293:275:1:blank line contains whitespace
+W291:278:54:trailing whitespace
+E501:282:80:line too long (122 > 79 characters)
+E201:288:74:whitespace after '{'
+E501:288:80:line too long (119 > 79 characters)
+E201:289:64:whitespace after '{'
+E501:289:80:line too long (114 > 79 characters)
+W291:304:36:trailing whitespace
+E712:313:47:comparison to False should be 'if cond is False:' or 'if not cond:'
+E201:317:64:whitespace after '{'
+E501:317:80:line too long (225 > 79 characters)
+E222:331:15:multiple spaces after operator
+E201:332:60:whitespace after '{'
+E501:332:80:line too long (95 > 79 characters)
+W291:332:96:trailing whitespace
+E201:333:48:whitespace after '{'
+E501:333:80:line too long (82 > 79 characters)
+W291:333:83:trailing whitespace
+E222:343:15:multiple spaces after operator
+E201:344:60:whitespace after '{'
+E501:344:80:line too long (85 > 79 characters)
+E501:345:80:line too long (93 > 79 characters)
+E501:346:80:line too long (93 > 79 characters)
+E201:357:68:whitespace after '{'
+E501:357:80:line too long (114 > 79 characters)
+W291:370:34:trailing whitespace
+W291:371:38:trailing whitespace
+W291:372:34:trailing whitespace
+W291:373:36:trailing whitespace
+E501:374:80:line too long (105 > 79 characters)
+
+Code
+=============
 # CLEANUP: Remove comments, superfluous empty lines
+# IMPROVE: use Flask-login --> module for Flask to deal with login and session management
 
 import os
 import re
@@ -19,22 +119,14 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
-"""
-CLEANUP: Delete everything from database
-and re-add upon submission, for cleanup
-"""
+# CLEANUP: Delete everything from database and re-add upon submission, for cleanup
 mongo = PyMongo(app)
 
-"""
-function from 
-https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
-"""
-
-
+# function from https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
 def imageFile(str):
-
+ 
     # Regex to check valid image file extension.
-    regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)"
+    regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)"     
     p = re.compile(regex)
 
     if(re.search(p, str)):
@@ -42,13 +134,7 @@ def imageFile(str):
     else:
         return False
 
-
-"""
-function from 
-https://blog.teclado.com/protecting-endpoints-in-flask-apps-by-requiring-login/
-"""
-
-
+# function from https://blog.teclado.com/protecting-endpoints-in-flask-apps-by-requiring-login/
 def login_required(func):
     @functools.wraps(func)
     def secure_function(*args, **kwargs):
@@ -69,21 +155,18 @@ def get_books():
 @app.route("/get_book/<book_id>")
 def get_book(book_id):
     book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
+    # We need to get the reviews dictionary element: this contains the ids for reviews, if there are any
     review_ids = book.get("reviews")
     review_documents = []
-    users_that_added_reviews = []
+    users_that_added_reviews = [] 
     # if there are reviews, variable reviews is type list
     if type(review_ids) is list:
         for review_id in review_ids:
-            review_document = mongo.db.reviews.find_one(
-                {"_id": ObjectId(review_id)})
+            review_document = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
             user_that_added_review = review_document.get("addedByUser")
             review_documents.append(review_document)
             users_that_added_reviews.append(user_that_added_review)
-    return render_template(
-        "book.html", book=book, review_documents=review_documents,
-        users_that_added_reviews=users_that_added_reviews
-    )
+    return render_template("book.html", book=book, review_documents=review_documents, users_that_added_reviews=users_that_added_reviews)
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -96,13 +179,12 @@ def search():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        user_exists = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+        user_exists = mongo.db.users.find_one({"username": request.form.get("username").lower()})
 
         if user_exists:
             flash("Sorry, your username has already been taken!")
             return redirect(url_for("register"))
-
+        
         user_to_register = {
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password"))
@@ -112,20 +194,17 @@ def register():
         session["user"] = request.form.get("username").lower()
         flash("Congratulations, you've been registered!")
         return redirect(url_for("profile", username=session["user"]))
-
+        
     return render_template("register.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        user_exists = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+        user_exists = mongo.db.users.find_one({"username": request.form.get("username").lower()})
 
         if user_exists:
-            if check_password_hash(
-                user_exists["password"], request.form.get("password")
-            ):
+            if check_password_hash(user_exists["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome back, {}!".format(request.form.get("username")))
                 return redirect(url_for("profile", username=session["user"]))
@@ -135,7 +214,7 @@ def login():
 
         else:
             flash("Incorrect username and/or password")
-            return redirect(url_for("login"))
+            return redirect(url_for("login")) 
 
     return render_template("login.html")
 
@@ -145,6 +224,8 @@ def login():
 def profile(username):
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
+    # We want to add the titles of books added to the profile page, and also pass through the id of the books, for use with the buttons
+    # We want to add the titles of books that are reviewed to the profile page, and also pass through the id of the reviews, for use with the buttons
     books_added = user.get("booksAdded")
     books = []
     if type(books_added) is list:
@@ -155,13 +236,10 @@ def profile(username):
     reviews = []
     if type(reviews_added) is list:
         for review_id in reviews_added:
-            review_document = mongo.db.reviews.find_one(
-                {"_id": ObjectId(review_id)})
+            review_document = mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
             reviews.append(review_document)
 
-    return render_template(
-        "profile.html", username=username, books=books, reviews=reviews
-    )
+    return render_template("profile.html", username=username, books=books, reviews=reviews)
 
 
 @app.route("/logout")
@@ -171,38 +249,29 @@ def logout():
     return redirect(url_for("login"))
 
 
-"""
-When a user deletes their profile, the books are kept. This is mentioned when a user wants to delete their profile.
-This allows us to keep the books, for the purpose of making money through affiliate links.
-"""
-
-
 @app.route("/delete_profile")
 @login_required
 def delete_profile():
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
     reviews_by_user = user.get("reviewsAdded")
+    # We want to keep the books - we use these to make money through affiliate links. When a user deletes their profile, the books they added come up for "adoption".
     books_by_user = user.get("booksAdded")
-    books_upvoted = user.get("booksUpvoted")
-    if reviews_by_user != None:  # can be changed to: if not reviews_by_user
+    books_upvoted =  user.get("booksUpvoted")
+    if reviews_by_user != None: # can be changed to: if not reviews_by_user
         for review in reviews_by_user:
-            review_to_delete = mongo.db.reviews.find_one(
-                {'_id': ObjectId(review)})
+            review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review)})
             book_title = review_to_delete.get("booktitle")
             book = mongo.db.books.find_one({"title": book_title})
             mongo.db.books.update_one(book, {'$pull': {'reviews': review}})
             mongo.db.reviews.find_one_and_delete({'_id': ObjectId(review)})
     if books_by_user != None:
         for book in books_by_user:
-            mongo.db.books.update_one({'_id': ObjectId(book)}, {
-                                      '$set': {'addedByUser': ""}})
+            mongo.db.books.update_one({'_id': ObjectId(book)}, {'$set': {'addedByUser': ""}})
     if books_upvoted != None:
         for upvoted_book in books_upvoted:
-            mongo.db.books.update_one({'_id': ObjectId(upvoted_book)}, {
-                                      '$pull': {'upvotedBy': username}})
-            mongo.db.books.update_one({'_id': ObjectId(upvoted_book)}, {
-                                      '$inc': {'upvotes': -1}})
+            mongo.db.books.update_one({'_id': ObjectId(upvoted_book)}, {'$pull': {'upvotedBy': username}})  
+            mongo.db.books.update_one({'_id': ObjectId(upvoted_book)}, { '$inc': {'upvotes': -1}})  
     mongo.db.users.find_one_and_delete({'username': username})
     flash("Your profile has been deleted.")
     session.pop("user")
@@ -214,29 +283,23 @@ def delete_profile():
 def delete_book(book_id):
     book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
     user = mongo.db.users.find_one({"username": session["user"]})
-    mongo.db.users.find_one_and_update(
-        user, {'$pull': {'booksAdded': ObjectId(book_id)}})
+    mongo.db.users.find_one_and_update(user, {'$pull': {'booksAdded': ObjectId(book_id)}})
     user = mongo.db.users.find_one({"username": session["user"]})
-    mongo.db.users.find_one_and_update(
-        user, {'$pull': {'booksUpvoted': ObjectId(book_id)}})
-    reviews_of_book = book_to_delete.get("reviews")
+    mongo.db.users.find_one_and_update(user, {'$pull': {'booksUpvoted': ObjectId(book_id)}})
+    reviews_of_book = book_to_delete.get("reviews")    
     if reviews_of_book != None:
         for review in reviews_of_book:
-            review_document = mongo.db.reviews.find_one(
-                {'_id': ObjectId(review)})
+            review_document = mongo.db.reviews.find_one({'_id': ObjectId(review)})
             user_who_added_review = review_document.get("addedByUser")
-            user_document = mongo.db.users.find_one(
-                {'username': user_who_added_review})
-            mongo.db.users.find_one_and_update(
-                user_document, {'$pull': {'reviewsAdded': ObjectId(review)}})
+            user_document = mongo.db.users.find_one({'username': user_who_added_review})
+            mongo.db.users.find_one_and_update(user_document, {'$pull': {'reviewsAdded': ObjectId(review)}})  
             mongo.db.reviews.delete_one({'_id': ObjectId(review)})
     upvoters_of_book = book_to_delete.get("upvotedBy")
     if upvoters_of_book != None:
         for upvoter in upvoters_of_book:
             user = mongo.db.users.find_one({'username': upvoter})
-            mongo.db.users.find_one_and_update(
-                user, {'$pull': {'booksUpvoted': ObjectId(book_id)}})
-    mongo.db.books.delete_one(book_to_delete)
+            mongo.db.users.find_one_and_update(user, {'$pull': {'booksUpvoted': ObjectId(book_id)}})  
+    mongo.db.books.delete_one(book_to_delete)  
     flash("Book has been deleted.")
     return redirect(url_for("get_books"))
 
@@ -247,10 +310,8 @@ def delete_review(review_id):
     review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
     book_title = review_to_delete.get("booktitle")
     username = review_to_delete.get("addedByUser")
-    mongo.db.books.update_one({"title": book_title}, {
-                              '$pull': {'reviews': ObjectId(review_id)}})
-    mongo.db.users.update_one({"username": username}, {
-                              '$pull': {'reviewsAdded': ObjectId(review_id)}})
+    mongo.db.books.update_one({"title": book_title}, {'$pull': {'reviews': ObjectId(review_id)}})
+    mongo.db.users.update_one({"username": username}, {'$pull': {'reviewsAdded': ObjectId(review_id)}})
     mongo.db.reviews.delete_one(review_to_delete)
     flash("Review has been deleted.")
     return redirect(url_for("get_books"))
@@ -260,8 +321,9 @@ def delete_review(review_id):
 @login_required
 def new_book():
     if request.method == "POST":
-        book_exists = mongo.db.books.find_one(
-            {"title": request.form.get("booktitle")})
+        # Do I want to lowercase titles?
+        # BUG: Books can have the same title. Perhaps if title and author are the same, we prevent adding it to the database?
+        book_exists = mongo.db.books.find_one({"title": request.form.get("booktitle")})
 
         if book_exists:
             flash("This book is already in the database.")
@@ -271,12 +333,10 @@ def new_book():
         if imageFile(cover_image_input) == False:
             flash("The url you entered is not an image.")
             return redirect(url_for("new_book"))
-
-        book_title_for_affiliate_link = request.form.get(
-            "booktitle").lower().replace(" ", "+")
-        affiliate_link = "https://www.amazon.com/s?tag=bookablefaketag&k=" + \
-            book_title_for_affiliate_link
-
+        
+        book_title_for_affiliate_link = request.form.get("booktitle").lower().replace(" ", "+")
+        affiliate_link = "https://www.amazon.com/s?tag=bookablefaketag&k=" + book_title_for_affiliate_link       
+        
         book_to_register = {
             "title": request.form.get("booktitle"),
             "authors": request.form.get("authors"),
@@ -291,16 +351,17 @@ def new_book():
             "upvotedBy": []
         }
         mongo.db.books.insert_one(book_to_register)
+        # When we register a book, we also register its id to the user document that added the book
         registered_book = mongo.db.books.find_one(book_to_register)
         book_id_to_register = registered_book.get("_id")
         user_to_update = mongo.db.users.find_one({"username": session["user"]})
         user_id = user_to_update.get("_id")
-        mongo.db.users.update_one({"_id": ObjectId(user_id)}, {
-                                  '$push': {'booksAdded': ObjectId(book_id_to_register)}})
+        mongo.db.users.update_one({"_id": ObjectId(user_id)}, { '$push': {'booksAdded': ObjectId(book_id_to_register)}})
+
 
         flash("Book has been added to the database!")
         return redirect(url_for("get_books"))
-
+    
     genres = mongo.db.genres.find()
     return render_template("new_book.html", genres=genres)
 
@@ -309,24 +370,22 @@ def new_book():
 @login_required
 def new_review(book_id):
     if request.method == "POST":
-        book = mongo.db.books.find_one(
-            {"title": request.form.get("booktitle")})
-
+        book = mongo.db.books.find_one({"title": request.form.get("booktitle")})
+       
         review_to_register = {
             "booktitle": request.form.get("booktitle"),
-            "reviewtext": request.form.get("review"),
+            "reviewtext": request.form.get("review"), 
             "addedByUser": session["user"]
         }
         mongo.db.reviews.insert_one(review_to_register)
+        # When a new review is added, we retrieve it again, to insert the id on the book document and on the user document
         registered_review = mongo.db.reviews.find_one(review_to_register)
         review_id_to_register = registered_review.get("_id")
         book_id_to_update = book.get("_id")
         user_to_update = mongo.db.users.find_one({"username": session["user"]})
         user_id = user_to_update.get("_id")
-        mongo.db.books.update_one({"_id": ObjectId(book_id_to_update)}, {
-                                  '$push': {'reviews': review_id_to_register}})
-        mongo.db.users.update_one({"_id": ObjectId(user_id)}, {
-                                  '$push': {'reviewsAdded': review_id_to_register}})
+        mongo.db.books.update_one({"_id": ObjectId(book_id_to_update)}, { '$push': {'reviews': review_id_to_register}})
+        mongo.db.users.update_one({"_id": ObjectId(user_id)}, { '$push': {'reviewsAdded': review_id_to_register}})
 
         flash("Review has been added!")
         return redirect(url_for("get_books"))
@@ -341,7 +400,7 @@ def new_review(book_id):
 def edit_book(book_id):
     if request.method == "POST":
 
-        book_to_update_id = book_id
+        book_to_update_id = book_id   
         title_to_update = request.form.get("booktitle")
         authors_to_update = request.form.get("authors")
         # FIXME: turn genres into genre, everywhere
@@ -354,8 +413,7 @@ def edit_book(book_id):
             flash("The url you entered is not an image.")
             return redirect(url_for("edit_book", book_id=book_to_update_id))
 
-        mongo.db.books.update_one({"_id": ObjectId(book_id)}, {'$set': {'title': title_to_update, 'authors': authors_to_update,
-                                  'genres': genre_to_update, 'coverImageURL': coverImageURL_to_update, 'blurb': blurb_to_update}})
+        mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$set': {'title': title_to_update, 'authors': authors_to_update, 'genres': genre_to_update, 'coverImageURL': coverImageURL_to_update, 'blurb': blurb_to_update}})
 
         flash("Book has been updated in the database!")
         return redirect(url_for("get_books"))
@@ -369,11 +427,9 @@ def edit_book(book_id):
 @login_required
 def adopt_book(book_id):
     user_to_update = mongo.db.users.find_one({"username": session["user"]})
-    username = user_to_update.get("username")
-    mongo.db.books.update_one({"_id": ObjectId(book_id)}, {
-                              '$set': {'addedByUser': username}})
-    mongo.db.users.update_one(
-        user_to_update, {'$push': {'booksAdded': book_id}})
+    username =  user_to_update.get("username")
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$set': {'addedByUser': username}}) 
+    mongo.db.users.update_one(user_to_update, { '$push': {'booksAdded': book_id}}) 
 
     flash("Book has been adopted !")
     return redirect(url_for("get_book", book_id=book_id))
@@ -383,13 +439,10 @@ def adopt_book(book_id):
 @login_required
 def upvote_book(book_id):
     user_to_update = mongo.db.users.find_one({"username": session["user"]})
-    username = user_to_update.get("username")
-    mongo.db.books.update_one({"_id": ObjectId(book_id)}, {
-                              '$inc': {'upvotes': +1}})
-    mongo.db.books.update_one({"_id": ObjectId(book_id)}, {
-                              '$push': {'upvotedBy': username}})
-    mongo.db.users.update_one(
-        user_to_update, {'$push': {'booksUpvoted': ObjectId(book_id)}})
+    username =  user_to_update.get("username")
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, { '$inc': {'upvotes': +1}})
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, {'$push': {'upvotedBy': username}})
+    mongo.db.users.update_one(user_to_update, {'$push': {'booksUpvoted': ObjectId(book_id)}})
     flash("Book has been upvoted !")
     return redirect(url_for("get_book", book_id=book_id))
 
@@ -400,8 +453,7 @@ def edit_review(review_id):
     if request.method == "POST":
         reviewtext_to_update = request.form.get("review")
 
-        mongo.db.reviews.update_one({"_id": ObjectId(review_id)}, {
-                                    '$set': {'reviewtext': reviewtext_to_update}})
+        mongo.db.reviews.update_one({"_id": ObjectId(review_id)}, { '$set': {'reviewtext': reviewtext_to_update}})
 
         flash("Review has been updated in the database!")
         return redirect(url_for("get_books"))
@@ -414,10 +466,10 @@ def edit_review(review_id):
 @app.route("/admin", methods=["GET", "POST"])
 @login_required
 def admin():
-    books = mongo.db.books.find()
-    reviews = mongo.db.reviews.find()
-    users = mongo.db.users.find()
-    genres = mongo.db.genres.find()
+    books = mongo.db.books.find() 
+    reviews = mongo.db.reviews.find() 
+    users = mongo.db.users.find() 
+    genres = mongo.db.genres.find() 
     return render_template("admin_portal.html", users=users, books=books, reviews=reviews, genres=genres)
 
 

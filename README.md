@@ -337,6 +337,7 @@ So, in a JSON-ish structure, my current database design:
 - disable the Review button for the admin on the book page
 - use Flask for error handling. Have custom error pages - with inline CSS in case style.css can't be loaded - to handle 404 and 500 errors for instance.
 - have Python error handle the input of genres: right now the genres are exposed to the user via HTML, which means that the user can edit the HTML and for instance input genres that are not in the database. When the user submits a form, Python should check the genre input, to see if it matches the genres in the database.
+- using [Flask-login](https://flask-login.readthedocs.io/en/latest/?msclkid=377a241fa69a11ec912bffef67d76419) module to deal with login and session management
 
 
 ---
@@ -575,8 +576,12 @@ Only pages that can be accessed without logging in can be validated:
 - 728 warnings found in bootstrap.min.css and https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css, which I am not going to fix.
 
 
-1. [Python Validation](http://pep8online.com/)
-TODO: Add validation results
+3. [Python Validation](http://pep8online.com/)
+The results for the first validation run: [First validation](readme-assets/result_20220318_085319.txt) 
+
+A lot of the problems found are about formatting problems: lines too long, trailing whitespaces, blank lines containing whitespaces. To try and fix this I used autopep8 - which I first installed using ```pip install -U autopep8```.
+
+Running autopep8 fixed a lot of the problems: [Second validation](readme-assets/result_20220318_090139.txt) 
 
 ### Notable Bugs
 

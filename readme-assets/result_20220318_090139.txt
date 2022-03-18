@@ -1,4 +1,38 @@
+Check results
+=============
+
+E501:2:80:line too long (89 > 79 characters)
+E501:23:80:line too long (82 > 79 characters)
+E501:26:80:line too long (108 > 79 characters)
+E501:40:80:line too long (95 > 79 characters)
+E501:63:80:line too long (104 > 79 characters)
+E501:75:80:line too long (136 > 79 characters)
+E501:115:80:line too long (90 > 79 characters)
+E501:135:80:line too long (135 > 79 characters)
+E501:136:80:line too long (149 > 79 characters)
+E501:151:80:line too long (91 > 79 characters)
+E501:167:80:line too long (165 > 79 characters)
+E711:170:24:comparison to None should be 'if cond is not None:'
+E711:178:22:comparison to None should be 'if cond is not None:'
+E711:182:22:comparison to None should be 'if cond is not None:'
+E711:205:24:comparison to None should be 'if cond is not None:'
+E711:216:25:comparison to None should be 'if cond is not None:'
+E501:246:80:line too long (125 > 79 characters)
+E712:255:41:comparison to False should be 'if cond is False:' or 'if not cond:'
+E501:278:80:line too long (99 > 79 characters)
+E501:284:80:line too long (90 > 79 characters)
+E501:306:80:line too long (122 > 79 characters)
+E501:315:80:line too long (84 > 79 characters)
+E712:339:47:comparison to False should be 'if cond is False:' or 'if not cond:'
+E501:343:80:line too long (127 > 79 characters)
+E501:344:80:line too long (130 > 79 characters)
+E501:390:80:line too long (82 > 79 characters)
+E501:407:80:line too long (105 > 79 characters)
+
+Code
+=============
 # CLEANUP: Remove comments, superfluous empty lines
+# IMPROVE: use Flask-login --> module for Flask to deal with login and session management
 
 import os
 import re
@@ -19,16 +53,10 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
-"""
-CLEANUP: Delete everything from database
-and re-add upon submission, for cleanup
-"""
+# CLEANUP: Delete everything from database and re-add upon submission, for cleanup
 mongo = PyMongo(app)
 
-"""
-function from 
-https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
-"""
+# function from https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
 
 
 def imageFile(str):
@@ -42,11 +70,7 @@ def imageFile(str):
     else:
         return False
 
-
-"""
-function from 
-https://blog.teclado.com/protecting-endpoints-in-flask-apps-by-requiring-login/
-"""
+# function from https://blog.teclado.com/protecting-endpoints-in-flask-apps-by-requiring-login/
 
 
 def login_required(func):
@@ -69,6 +93,7 @@ def get_books():
 @app.route("/get_book/<book_id>")
 def get_book(book_id):
     book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
+    # We need to get the reviews dictionary element: this contains the ids for reviews, if there are any
     review_ids = book.get("reviews")
     review_documents = []
     users_that_added_reviews = []
@@ -80,10 +105,7 @@ def get_book(book_id):
             user_that_added_review = review_document.get("addedByUser")
             review_documents.append(review_document)
             users_that_added_reviews.append(user_that_added_review)
-    return render_template(
-        "book.html", book=book, review_documents=review_documents,
-        users_that_added_reviews=users_that_added_reviews
-    )
+    return render_template("book.html", book=book, review_documents=review_documents, users_that_added_reviews=users_that_added_reviews)
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -123,9 +145,7 @@ def login():
             {"username": request.form.get("username").lower()})
 
         if user_exists:
-            if check_password_hash(
-                user_exists["password"], request.form.get("password")
-            ):
+            if check_password_hash(user_exists["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome back, {}!".format(request.form.get("username")))
                 return redirect(url_for("profile", username=session["user"]))
@@ -145,6 +165,8 @@ def login():
 def profile(username):
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
+    # We want to add the titles of books added to the profile page, and also pass through the id of the books, for use with the buttons
+    # We want to add the titles of books that are reviewed to the profile page, and also pass through the id of the reviews, for use with the buttons
     books_added = user.get("booksAdded")
     books = []
     if type(books_added) is list:
@@ -159,9 +181,7 @@ def profile(username):
                 {"_id": ObjectId(review_id)})
             reviews.append(review_document)
 
-    return render_template(
-        "profile.html", username=username, books=books, reviews=reviews
-    )
+    return render_template("profile.html", username=username, books=books, reviews=reviews)
 
 
 @app.route("/logout")
@@ -171,18 +191,13 @@ def logout():
     return redirect(url_for("login"))
 
 
-"""
-When a user deletes their profile, the books are kept. This is mentioned when a user wants to delete their profile.
-This allows us to keep the books, for the purpose of making money through affiliate links.
-"""
-
-
 @app.route("/delete_profile")
 @login_required
 def delete_profile():
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
     reviews_by_user = user.get("reviewsAdded")
+    # We want to keep the books - we use these to make money through affiliate links. When a user deletes their profile, the books they added come up for "adoption".
     books_by_user = user.get("booksAdded")
     books_upvoted = user.get("booksUpvoted")
     if reviews_by_user != None:  # can be changed to: if not reviews_by_user
@@ -260,6 +275,8 @@ def delete_review(review_id):
 @login_required
 def new_book():
     if request.method == "POST":
+        # Do I want to lowercase titles?
+        # BUG: Books can have the same title. Perhaps if title and author are the same, we prevent adding it to the database?
         book_exists = mongo.db.books.find_one(
             {"title": request.form.get("booktitle")})
 
@@ -291,6 +308,7 @@ def new_book():
             "upvotedBy": []
         }
         mongo.db.books.insert_one(book_to_register)
+        # When we register a book, we also register its id to the user document that added the book
         registered_book = mongo.db.books.find_one(book_to_register)
         book_id_to_register = registered_book.get("_id")
         user_to_update = mongo.db.users.find_one({"username": session["user"]})
@@ -318,6 +336,7 @@ def new_review(book_id):
             "addedByUser": session["user"]
         }
         mongo.db.reviews.insert_one(review_to_register)
+        # When a new review is added, we retrieve it again, to insert the id on the book document and on the user document
         registered_review = mongo.db.reviews.find_one(review_to_register)
         review_id_to_register = registered_review.get("_id")
         book_id_to_update = book.get("_id")
