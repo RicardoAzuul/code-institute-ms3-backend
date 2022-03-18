@@ -358,13 +358,11 @@ So, in a JSON-ish structure, my current database design:
 - [Balsamiq](https://balsamiq.com): for creating wireframes of all the pages.
 - [Chrome Developer Tools](https://developer.chrome.com/docs/devtools/): for quick debugging and testing of HTML and CSS. 
 - [Am I Responsive?](http://ami.responsivedesign.is/): to generate screenshots of the site at various viewpoints, indicating responsiveness.
-- [EyeDropper](https://eyedropper.org/): to pick colours from an image.
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse): an automated tool in Chrome DevTools that audits for performance, accessibility, progressive web apps, SEO and more.
 - [Prettier VS Code plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode): a code formatter that helps with code formatting, which is good for creating a consistent style.
-- [ScreenToGif](https://www.screentogif.com/): to make screen recordings and turn them into gifs.
 - [Markdown link check](https://github.com/marketplace/actions/markdown-link-check): an automated tool to check for dead links in Markdown files.
 - [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree): to keep track of todos, bugs, things that need to be fixed and such in my project.
-- TODO: Add Python tools
+
 
 ---
 
@@ -562,18 +560,34 @@ Several of these functionalities have already been tested: when reviews or books
 
 
 
-<ins>Code validation:</ins>
+<ins>Code validation:</ins> 
+
 1. [HTML validation](https://validator.w3.org/nu/)
-Not all HTML will be able to be validated online
-2. [CSS validation](https://jigsaw.w3.org/css-validator/)
-3. [VS Code JSHint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.jshint)
-4. [Python Validation](http://pep8online.com/)
+Only pages that can be accessed without logging in can be validated:
+
+- http://code-institute-ms3-book-review.herokuapp.com/ and http://code-institute-ms3-book-review.herokuapp.com/get_books: 5 warnings and 9 errors. See Problems section for fixes.
+- http://code-institute-ms3-book-review.herokuapp.com/get_book/62335798c7113074d825718d: this page is used as the page to be validated for all pages with book information, as these are based on a template: 1 warning found, pertaining to a section missing a heading. However, this section is only visible when there is a flash message, and as such needs no heading.
+- http://code-institute-ms3-book-review.herokuapp.com/login: 1 warning found, pertaining to a section missing a heading. However, this section is only visible when there is a flash message, and as such needs no heading.
+- http://code-institute-ms3-book-review.herokuapp.com/register: 1 warning found, pertaining to a section missing a heading. However, this section is only visible when there is a flash message, and as such needs no heading.
+
+
+1. [CSS validation](https://jigsaw.w3.org/css-validator/)
+2. [Python Validation](http://pep8online.com/)
 TODO: Add validation results
 
 ### Notable Bugs
 
 
 ### Problems
+
+HTML validation http://code-institute-ms3-book-review.herokuapp.com/ and http://code-institute-ms3-book-review.herokuapp.com/get_books
+1 warning for a section missing a heading. This section is used for displaying flash messages, and needs no heading: it is not always visible. 
+
+4 warnings for the first appearance of an element ID: id="main-page-card-footer-div">. This id is used in the books.html template. After searching if this id was referenced elsewhere - in style.css or the tests - I found no references. The ID has been deleted.
+
+4 of the 9 errors found also had to do with this id: these errors indicated that a duplicate ID had been found: this has been resolved by deleting the ID.
+
+5 errors were found mentioning a stray end tag </a>. I must have missed deleting this in a previous edit, and it showed up 5 times, once for each book in the database. The stray end tag has been deleted.
 
 ---
 
