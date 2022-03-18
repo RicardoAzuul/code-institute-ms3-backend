@@ -571,8 +571,11 @@ Only pages that can be accessed without logging in can be validated:
 - http://code-institute-ms3-book-review.herokuapp.com/register: 1 warning found, pertaining to a section missing a heading. However, this section is only visible when there is a flash message, and as such needs no heading.
 
 
-1. [CSS validation](https://jigsaw.w3.org/css-validator/)
-2. [Python Validation](http://pep8online.com/)
+2. [CSS validation](https://jigsaw.w3.org/css-validator/)
+- 728 warnings found in bootstrap.min.css and https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css, which I am not going to fix.
+
+
+1. [Python Validation](http://pep8online.com/)
 TODO: Add validation results
 
 ### Notable Bugs
