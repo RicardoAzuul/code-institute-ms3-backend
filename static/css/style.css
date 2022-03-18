@@ -138,6 +138,9 @@ h3 {
   .card-footer {
     text-align: left;
   }
+  .books-card-footer {
+    text-align: center;
+  }
   #book-card .card-footer {
     text-align: center;
   }
