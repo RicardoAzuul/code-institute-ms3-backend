@@ -154,10 +154,10 @@ All pages should have the same navigation bar and footer:
 - a form for adding a new review of a book to the database, including a cancel button
 
 <ins>The Edit Book page</ins>
-- a form for editing a book in the database, including a delete button 
+- a form for editing a book in the database, including a cancel button 
 
 <ins>The Edit Review page</ins>
-- a form for editing a review of a book in the database, including a delete button
+- a form for editing a review of a book in the database, including a cancel button
 
 <ins>The Profile page</ins>
 - shows a user's profile, including their reviews and books
@@ -177,7 +177,7 @@ All pages should have the same navigation bar and footer:
 The navigation bar will be added to the top of every page and will always remain visible. There are links to all pages on this navbar, though some links are only visible if the user has logged in. 
 On the left will be the logo, which when clicked upon will take the visitor back to the home page.
 
-The active page is indicated with a line under the navigation item. When hovering over navigation items, the navigation item will be highlighted.
+The active page is indicated with a different font color for the navigation item. When hovering over navigation items, the navigation item will be highlighted.
 
 At the bottom of every page will be the same footer.
 
@@ -253,7 +253,7 @@ So, in a JSON-ish structure, my current database design:
     _id: ObjectId("1"),
     title: "The Shining",
     authors: "Stephen King",
-    genres: "horror, psychological horror",
+    genre: "horror",
     coverImageURL: "https://images-na.ssl-images-amazon.com/images/I/81w6JNKs5BS.jpg",
     blurb: "Jack Torrance's new job at the Overlook Hotel is the perfect chance for a fresh start. As the off-season caretaker at the atmospheric old hotel, he'll have plenty of time to spend reconnecting with his family and working on his writing. But as the harsh winter weather sets in, the idyllic location feels ever more remote...and more sinister. And the only one to notice the strange and terrible forces gathering around the Overlook is Danny Torrance, a uniquely gifted five-year-old.", 
     upvotes: 13,    
@@ -366,6 +366,7 @@ So, in a JSON-ish structure, my current database design:
 - [Prettier VS Code plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode): a code formatter that helps with code formatting, which is good for creating a consistent style.
 - [Markdown link check](https://github.com/marketplace/actions/markdown-link-check): an automated tool to check for dead links in Markdown files.
 - [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree): to keep track of todos, bugs, things that need to be fixed and such in my project.
+- [autopep8](https://pypi.org/project/autopep8/): a Python package that helps with formatting Python code according to PEP8.
 
 
 ---
@@ -374,11 +375,19 @@ So, in a JSON-ish structure, my current database design:
 
 These screenshots indicate the responsiveness of the pages on various screens. Pages that require a login are not included.
 
+**Home page**
+
 ![Responsive /get-books](readme-assets/responsive_home_page.png?raw=true "Get Books")
+
+**Book page**
 
 ![Responsive /get_book](readme-assets/responsive_get_book.png?raw=true "Get Book")
 
+**Login page**
+
 ![Responsive /login](readme-assets/responsive_login.png?raw=true "Login")
+
+**Register page**
 
 ![Responsive /register](readme-assets/responsive_register.png?raw=true "Register")
 
@@ -511,6 +520,7 @@ Manually testing the webapp is quite involved: things change depending on whethe
 
 
 **Book functionalities: Create, Read, Update, Delete**
+| Tests for logged in user | Expected |Passed |
 | :------------- |:-------------| :-----:|
 | User clicks the "Add Book" button in the navbar | User is taken to a new page, where fields are populated to add a new book | &#9745; |
 | User fills in a booktitle that is already in the database in the Add Book form | User is redirected to the Add book form, with a flash message that the book is already in the database* | &#9745; |
@@ -536,6 +546,8 @@ Manually testing the webapp is quite involved: things change depending on whethe
 
 **Profile functionalities: Create, Read, Update, Delete** 
 Several of these functionalities have already been tested: when reviews or books are added or deleted, this is updated on the profile page. Creating a profile has also been tested already, by the automatic tests. Below are the few tests remaining.
+
+| Tests for logged in user | Expected |Passed |
 | :------------- |:-------------| :-----:|
 | User clicks on "Delete Profile" button at the bottom of their profile card  | A modal pop ups, confirming that the user wants to delete their profile | &#9745; |
 | User clicks the "Cancel delete" button on the modal  | The modal disappears and they are back on their profile page | &#9745; |
@@ -545,6 +557,7 @@ Several of these functionalities have already been tested: when reviews or books
 
 
 **Admin functionalities: Create, Read, Update, Delete**
+| Tests for admin | Expected |Passed | 
 | :------------- |:-------------| :-----:|
 | The admin logs in  | The "Admin Portal" navbar item is visible  | &#9745; |
 | The admin clicks on the "Admin Portal" navbar item  | The admin is taken to the Admin Portal page, which is populated with all books, reviews, and users in the database  | &#9745; |
@@ -556,12 +569,6 @@ Several of these functionalities have already been tested: when reviews or books
 | The admin goes back to the Admin Portal  | The book that has just been deleted is no longer in the list of books | &#9745; |
 | The admin clicks the "Delete" button for a review on the Admin Portal page | The admin is taken to the home page, with a flash message that the review has been deleted  | &#9745; |
 | The admin goes back to the Admin Portal | The review that has just been deleted is no longer in the list of books | &#9745; |
-
-
-
-
-
-
 
 
 <ins>Code validation:</ins> 
@@ -580,19 +587,31 @@ Only pages that can be accessed without logging in can be validated:
 
 
 3. [Python Validation](http://pep8online.com/)
-The results for the first validation run: [First validation](readme-assets/result_20220318_085319.txt) 
+The results for the first validation run: 
+
+[First validation](readme-assets/result_20220318_085319.txt) 
 
 A lot of the problems found are about formatting problems: lines too long, trailing whitespaces, blank lines containing whitespaces. To try and fix this I used autopep8 - which I first installed using ```pip install -U autopep8```.
 
-Running autopep8 fixed a lot of the problems: [Second validation](readme-assets/result_20220318_090139.txt) 
+Running autopep8 fixed a lot of the problems: 
 
-Manually fixed a lot of the problems with lines too long: [Third validation](readme-assets/result_20220318_092703.txt)
+[Second validation](readme-assets/result_20220318_090139.txt) 
 
-Fixed the last of the lines too long: [Fourth validation](readme-assets/result_20220318_093758.txt)
+Manually fixed a lot of the problems with lines too long: 
 
-The remaining validation errors had to do with writing comparisons in a non-Python way, these have been fixed: [Fifth validation](readme-assets/result_20220318_094408.txt)
+[Third validation](readme-assets/result_20220318_092703.txt)
+
+Fixed the last of the lines too long: 
+
+[Fourth validation](readme-assets/result_20220318_093758.txt)
+
+The remaining validation errors had to do with writing comparisons in a non-Python way, these have been fixed: 
+
+[Fifth validation](readme-assets/result_20220318_094408.txt)
 
 ### Notable Bugs
+
+While working on the project, there were no notable bugs that required a lot of troubleshooting found. Most bugs were a result of me forgetting that there are more places where certain data is registered in the database than just one field on a document.
 
 
 ### Problems
@@ -631,7 +650,7 @@ If you want to run the project locally:
 1. First, fork the repository to your own GitHub: https://github.com/RicardoAzuul/code-institute-ms3-backend.
 1. Clone the forked repository to your own machine.
 1. Install Python 3.9.10: https://www.python.org/downloads/release/python-3910/?msclkid=cffbdc88a5f911ecb325513f7d98b51f 
-2. From the terminal, run the below to install required modules:
+1. From the terminal, run the below to install required modules:
   ``` pip3 install -r requirements.txt ```
 1. You will need to create an env.py file (or another form of environment file) for running the app locally. The content of this file:
 ```
@@ -644,15 +663,12 @@ os.environ.setdefault("MONGO_URI", "[uri to your MongoDB]")
 os.environ.setdefault("MONGO_DBNAME", "[name of your MongoDB database")
 os.environ.setdefault("DEBUG", "True")
 ```
-2. To activate the Flash virtual environment:
-& "g:/My Drive/A-B-C/Coding/Github 
-Repos/code-institute-ms3-backend/venv/Scripts/Activate.ps1"
+1. To activate the Flask virtual environment, run one of the activate scripts from the venv/Scripts directory, depending on your environment.
 1. To run the app:
+   
    ``` python app.py ```
+
 1. This will run the Flask app locally, you can then browse to http://192.168.1.68:5000/ to interact with the app.
-
-
-
 
 
 ---
@@ -670,7 +686,7 @@ Book cover images were sourced from [Goodreads](https://www.goodreads.com/) as w
 
 ### Acknowledgements
 
-- I received help and support from my mentor at Code Institute, [Jack Wachira](https://github.com/iamjackwachira). 
+- I received help and support from my mentor at Code Institute, [Jack Wachira](https://github.com/iamjackwachira). He pointed out for instance that it would be a good idea to add a decorator to functions that should have a logged in user.
 - I would also like to thank to all the people at [Code Institute](https://codeinstitute.net/) for providing the Diploma in Software Development course and giving me the tools and guidance to create this app.
 - And also thanks to [Bootstrap](https://getbootstrap.com/) for helping with implementing their Bootstrap stylings, and [Stackoverflow](https://stackoverflow.com/) for helping with finding solutions to coding problems, like animating the pictures in sequence instead of all at once. The documentation for MongoDB (https://docs.mongodb.com/) and Jinja (https://jinja.palletsprojects.com/) were also very helpful.
 - My wife, Elizabeth Lane, for supporting me during this coding course.
