@@ -46,6 +46,7 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
     - [Inspiration](#inspiration)
     - [Content](#content)
     - [Media](#media)
+    - [Code](#code)
     - [Acknowledgements](#acknowledgements)
 
 ---
@@ -619,7 +620,8 @@ The remaining validation errors had to do with writing comparisons in a non-Pyth
 
 ### Notable Bugs
 
-While working on the project, there were no notable bugs that required a lot of troubleshooting found. Most bugs were a result of me forgetting that there are more places where certain data is registered in the database than just one field on a document.
+One notable bug was the use of modals in combination with Jinja. I noticed that delete or edit buttons that were supposed to link to their own book or review, would actually link to the first book or review loaded. This was resolved by placing the modal itself in the Jinja loops that looped through the books or reviews.
+Doing so means that the HTML is quite cluttered: an entire modal is contained within a <td> element, but the functionality works: because the modal is within the Jinja for loop, it gets passed the right id for editing or deleting the correct object.
 
 
 ### Problems
@@ -657,7 +659,7 @@ The project has been deployed to Heroku. If you want to do the same:
 If you want to run the project locally:
 1. First, fork the repository to your own GitHub: https://github.com/RicardoAzuul/code-institute-ms3-backend.
 1. Clone the forked repository to your own machine.
-1. Install Python 3.9.10: https://www.python.org/downloads/release/python-3910/?msclkid=cffbdc88a5f911ecb325513f7d98b51f 
+1. Install Python 3.9.10, as this is what the project was built with: https://www.python.org/downloads/release/python-3910/?msclkid=cffbdc88a5f911ecb325513f7d98b51f 
 1. From the terminal, run the below to install required modules:
   ``` pip3 install -r requirements.txt ```
 1. You will need to create an env.py file (or another form of environment file) for running the app locally. The content of this file:
@@ -691,6 +693,10 @@ Book content was sourced from [Goodreads](https://www.goodreads.com/)
 
 ### Media
 Book cover images were sourced from [Goodreads](https://www.goodreads.com/) as well.
+
+### Code
+I used other people's code to create a decorator function for functions that require a logged in user, and a function that uses regex to check if a url links to a valid image file format.
+This has been indicated in app.py with comments linking to the site where I found the code.
 
 ### Acknowledgements
 
