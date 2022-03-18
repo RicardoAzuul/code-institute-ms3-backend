@@ -26,11 +26,15 @@
         <p class="card-text">Genre: {{ book.genre }}</p>
         <p class="card-text">
           Upvotes: {% if session.user in book.upvotedBy %}
-          <i class="fas fa-arrow-circle-up"></i>
+          <a href="{{ url_for('remove_upvote', book_id=book._id) }}" class="text-danger"
+            ><i class="fas fa-arrow-circle-up"></i
+          ></a>
           {% elif session.user == "bookable_admin" %}
           <i class="fas fa-arrow-circle-up"></i>
           {% elif session.user %}
-          <a href="{{ url_for('upvote_book', book_id=book._id) }}"
+          <a
+            href="{{ url_for('upvote_book', book_id=book._id) }}"
+            class="text-success"
             ><i class="fas fa-arrow-circle-up"></i
           ></a>
           {% else %}
@@ -39,14 +43,13 @@
         </p>
         <p class="card-text">{{ book.blurb }}</p>
         <p class="card-text text-center">
-          {% if session.user == "bookable_admin" %}
-          {% else %}  
-            <a
-              href="{{ book.affiliateLink }}"
-              class="btn btn-info"
-              target="_blank"
-              >Buy {{ book.title}}</a
-            >
+          {% if session.user == "bookable_admin" %} {% else %}
+          <a
+            href="{{ book.affiliateLink }}"
+            class="btn btn-info"
+            target="_blank"
+            >Buy {{ book.title}}</a
+          >
           {% endif %}
         </p>
         <h3 class="card-text">Reviews from our users</h3>

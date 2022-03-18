@@ -465,7 +465,29 @@ def upvote_book(book_id):
                               '$push': {'upvotedBy': username}})
     mongo.db.users.update_one(
         user_to_update, {'$push': {'booksUpvoted': ObjectId(book_id)}})
-    flash("Book has been upvoted !")
+    flash("Book has been upvoted!")
+    return redirect(url_for("get_book", book_id=book_id))
+
+
+@app.route("/remove_upvote/<book_id>")
+@login_required
+def remove_upvote(book_id):
+    """
+    Allows a user to remove the upvote on a book they upvoted.
+
+    The upvotes field on the book document is updated,
+    as well as the booksUpvoted array on the user document
+    and the upvotedBy array on the book document.
+    """
+    user_to_update = mongo.db.users.find_one({"username": session["user"]})
+    username = user_to_update.get("username")
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, {
+                              '$inc': {'upvotes': -1}})
+    mongo.db.books.update_one({"_id": ObjectId(book_id)}, {
+                              '$pull': {'upvotedBy': username}})
+    mongo.db.users.update_one(
+        user_to_update, {'$pull': {'booksUpvoted': ObjectId(book_id)}})
+    flash("Your upvote has been removed!")
     return redirect(url_for("get_book", book_id=book_id))
 
 

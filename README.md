@@ -488,9 +488,11 @@ Manually testing the webapp is quite involved: things change depending on whethe
 | Tests for logged in user | Expected |Passed |
 | :------------- |:-------------| :-----:|
 | User clicks the "More About This Book" button for a book | More info about the correct book is displayed | &#9745; |
-| User clicks the "More About This Book" button for a book | Upvote button is enabled | &#9745; |
-| User clicks the upvote button | Upvote button is disabled and the upvote number is increased by 1. The page reloads with a flash message that the book has been upvoted | &#9745; |
+| User clicks the "More About This Book" button for a book | Upvote button is enabled and green | &#9745; |
+| User clicks the upvote button | Upvote button is red and the upvote number is increased by 1. The page reloads with a flash message that the book has been upvoted | &#9745; |
+| User clicks the red upvote button | The upvote number is decreased by 1. The page reloads with a flash message that the upvote has been removed  | &#9745; |
 | After upvoting a book, the user goes back to the main page | The number of upvotes for the book just upvoted has increased | &#9745; |
+| After removing their upvote, the user goes back to the main page | The number of upvotes for the book just updated has decreased | &#9745; |
 | User clicks the "More About This Book" button for a book | Either reviews are displayed, or a text that there are no reviews | &#9745; |
 | User clicks the "More About This Book" button for a book | The Buy button is displayed  | &#9745; |
 | User clicks the "More About This Book" button for a book | The "Review Book" button is displayed  | &#9745; |
