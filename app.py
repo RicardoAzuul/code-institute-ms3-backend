@@ -1,5 +1,3 @@
-# CLEANUP: Remove comments, superfluous empty lines
-
 import os
 import re
 import functools
@@ -19,20 +17,17 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
-"""
-CLEANUP: Delete everything from database
-and re-add upon submission, for cleanup
-"""
-mongo = PyMongo(app)
 
-"""
-function from
-https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
-"""
+mongo = PyMongo(app)
 
 
 def imageFile(str):
+    """
+    function from
+    https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
 
+    Used to check the urls of cover images, to see if they are images.
+    """
     # Regex to check valid image file extension.
     regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)"
     p = re.compile(regex)
@@ -43,13 +38,14 @@ def imageFile(str):
         return False
 
 
-"""
-function from
-https://blog.teclado.com/protecting-endpoints-in-flask-apps-by-requiring-login/
-"""
-
-
 def login_required(func):
+    """
+    function from
+    https://blog.teclado.com/protecting-endpoints-in-flask-apps-by-requiring-login/
+
+    Used to require login for urls that
+    should only be accessed by logged in users.
+    """
     @functools.wraps(func)
     def secure_function(*args, **kwargs):
         if "user" not in session:
@@ -68,11 +64,17 @@ def get_books():
 
 @app.route("/get_book/<book_id>")
 def get_book(book_id):
+    """
+    Gets more information about a book.
+
+    If the book document has review id's listed, the function
+    will get those review documents, to add their data - the review text
+    and the user who reviewed - to the book template.
+    """
     book = mongo.db.books.find_one({"_id": ObjectId(book_id)})
     review_ids = book.get("reviews")
     review_documents = []
     users_that_added_reviews = []
-    # if there are reviews, variable reviews is type list
     if type(review_ids) is list:
         for review_id in review_ids:
             review_document = mongo.db.reviews.find_one(
@@ -82,8 +84,7 @@ def get_book(book_id):
             users_that_added_reviews.append(user_that_added_review)
     return render_template(
         "book.html", book=book, review_documents=review_documents,
-        users_that_added_reviews=users_that_added_reviews
-    )
+        users_that_added_reviews=users_that_added_reviews)
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -95,6 +96,13 @@ def search():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    """
+    Registers a user in the database.
+
+    Before registering, checks if the username is not already in the database.
+    The username is used to show who reviewed a book,
+    so username has to be unique.
+    """
     if request.method == "POST":
         user_exists = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
@@ -143,6 +151,13 @@ def login():
 @app.route("/profile/<username>", methods=["GET", "POST"])
 @login_required
 def profile(username):
+    """
+    Gets a user's profile page.
+
+    If the user document has data in .booksAdded or .reviewsAdded,
+    the function gets the associated book and/or review documents,
+    and displays them on the page.
+    """
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
     books_added = user.get("booksAdded")
@@ -171,17 +186,18 @@ def logout():
     return redirect(url_for("login"))
 
 
-"""
-When a user deletes their profile, the books are kept.
-This is mentioned when a user wants to delete their profile.
-This allows us to keep the books,
-for the purpose of making money through affiliate links.
-"""
-
-
 @app.route("/delete_profile")
 @login_required
 def delete_profile():
+    """
+    Deletes a user's profile.
+
+    When a user deletes their profile, the books are kept.
+    This is mentioned when a user wants to delete their profile.
+    This allows us to keep the books,
+    for the purpose of making money through affiliate links.
+    Reviews and upvotes are deleted.
+    """
     user = mongo.db.users.find_one({"username": session["user"]})
     username = user.get("username")
     reviews_by_user = user.get("reviewsAdded")
@@ -214,6 +230,13 @@ def delete_profile():
 @app.route("/delete_book/<book_id>")
 @login_required
 def delete_book(book_id):
+    """
+    Deletes a book from the database.
+
+    Also removes the book from the booksAdded array on the user document.
+    Also removes any reviews from the database.
+    Also removes the book from booksUpvoted array on the user document.
+    """
     book_to_delete = mongo.db.books.find_one({'_id': ObjectId(book_id)})
     user = mongo.db.users.find_one({"username": session["user"]})
     mongo.db.users.find_one_and_update(
@@ -246,6 +269,12 @@ def delete_book(book_id):
 @app.route("/delete_review/<review_id>")
 @login_required
 def delete_review(review_id):
+    """
+    Deletes a review from the database.
+
+    Also deletes the review from the reviews array on the book document,
+    and from the reviewsAdded array on the user document.
+    """
     review_to_delete = mongo.db.reviews.find_one({'_id': ObjectId(review_id)})
     book_title = review_to_delete.get("booktitle")
     username = review_to_delete.get("addedByUser")
@@ -261,6 +290,16 @@ def delete_review(review_id):
 @app.route("/new_book", methods=["GET", "POST"])
 @login_required
 def new_book():
+    """
+    Adds a new book to the database.
+
+    The function checks if a title is already in the database,
+    to prevent possible duplicates.
+    The function also calls the imageFile function,
+    to check if the url is for an image.
+    The book id is also registered in the booksAdded
+    array of the user document.
+    """
     if request.method == "POST":
         book_exists = mongo.db.books.find_one(
             {"title": request.form.get("booktitle")})
@@ -282,8 +321,7 @@ def new_book():
         book_to_register = {
             "title": request.form.get("booktitle"),
             "authors": request.form.get("authors"),
-            # FIXME: turn genres into genre, everywhere
-            "genres": request.form.get("genreSelector"),
+            "genre": request.form.get("genreSelector"),
             "coverImageURL": request.form.get("cover-image"),
             "blurb": request.form.get("blurb"),
             "upvotes": 0,
@@ -311,6 +349,12 @@ def new_book():
 @app.route("/new_review/<book_id>", methods=["GET", "POST"])
 @login_required
 def new_review(book_id):
+    """
+    Adds a new review to the database.
+
+    The review is also added to the reviews array of the book document,
+    and to the reviewsAdded array of the user document.
+    """
     if request.method == "POST":
         book = mongo.db.books.find_one(
             {"title": request.form.get("booktitle")})
@@ -344,14 +388,20 @@ def new_review(book_id):
 @app.route("/edit_book/<book_id>", methods=["GET", "POST"])
 @login_required
 def edit_book(book_id):
+    """
+    Edits a book in the database.
+
+    Before doing an update on the database,
+    the function calls the imageFile function
+    to check if the cover image url ends in a file format
+    extension.
+    """
     if request.method == "POST":
 
         book_to_update_id = book_id
         title_to_update = request.form.get("booktitle")
         authors_to_update = request.form.get("authors")
-        # FIXME: turn genres into genre, everywhere
         genre_to_update = request.form.get("genreSelector")
-        genres_to_update = request.form.get("genres")
         coverImageURL_to_update = request.form.get("cover-image")
         blurb_to_update = request.form.get("blurb")
 
@@ -364,7 +414,7 @@ def edit_book(book_id):
                 '$set': {
                     'title': title_to_update,
                     'authors': authors_to_update,
-                    'genres': genre_to_update,
+                    'genre': genre_to_update,
                     'coverImageURL': coverImageURL_to_update,
                     'blurb': blurb_to_update}})
 
@@ -379,6 +429,13 @@ def edit_book(book_id):
 @app.route("/adopt_book/<book_id>")
 @login_required
 def adopt_book(book_id):
+    """
+    Sets the user who clicks the Adopt Book button
+    as the new owner of the book.
+
+    The addedByUser field on the book document is updated,
+    as well as the booksAdded array on the user document.
+    """
     user_to_update = mongo.db.users.find_one({"username": session["user"]})
     username = user_to_update.get("username")
     mongo.db.books.update_one({"_id": ObjectId(book_id)}, {
@@ -393,6 +450,13 @@ def adopt_book(book_id):
 @app.route("/upvote_book/<book_id>")
 @login_required
 def upvote_book(book_id):
+    """
+    Allows a user to upvote a book.
+
+    The upvotes field on the book document is updated,
+    as well as the booksUpvoted array on the user document
+    and the upvotedBy array on the book document.
+    """
     user_to_update = mongo.db.users.find_one({"username": session["user"]})
     username = user_to_update.get("username")
     mongo.db.books.update_one({"_id": ObjectId(book_id)}, {
