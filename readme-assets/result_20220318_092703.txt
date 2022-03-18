@@ -1,3 +1,26 @@
+Check results
+=============
+
+W291:29:14:trailing whitespace
+W291:47:14:trailing whitespace
+E501:175:80:line too long (115 > 79 characters)
+E501:176:80:line too long (90 > 79 characters)
+E711:188:24:comparison to None should be 'if cond is not None:'
+E711:196:22:comparison to None should be 'if cond is not None:'
+E711:200:22:comparison to None should be 'if cond is not None:'
+E711:223:24:comparison to None should be 'if cond is not None:'
+E711:234:25:comparison to None should be 'if cond is not None:'
+E712:271:41:comparison to False should be 'if cond is False:' or 'if not cond:'
+E501:299:80:line too long (90 > 79 characters)
+E501:329:80:line too long (84 > 79 characters)
+E712:353:47:comparison to False should be 'if cond is False:' or 'if not cond:'
+E501:357:80:line too long (127 > 79 characters)
+E501:358:80:line too long (130 > 79 characters)
+E501:404:80:line too long (82 > 79 characters)
+E501:421:80:line too long (105 > 79 characters)
+
+Code
+=============
 # CLEANUP: Remove comments, superfluous empty lines
 
 import os
@@ -26,7 +49,7 @@ and re-add upon submission, for cleanup
 mongo = PyMongo(app)
 
 """
-function from
+function from 
 https://www.geeksforgeeks.org/how-to-validate-image-file-extension-using-regular-expression/
 """
 
@@ -44,7 +67,7 @@ def imageFile(str):
 
 
 """
-function from
+function from 
 https://blog.teclado.com/protecting-endpoints-in-flask-apps-by-requiring-login/
 """
 
@@ -172,10 +195,8 @@ def logout():
 
 
 """
-When a user deletes their profile, the books are kept.
-This is mentioned when a user wants to delete their profile.
-This allows us to keep the books,
-for the purpose of making money through affiliate links.
+When a user deletes their profile, the books are kept. This is mentioned when a user wants to delete their profile.
+This allows us to keep the books, for the purpose of making money through affiliate links.
 """
 
 
@@ -297,9 +318,8 @@ def new_book():
         book_id_to_register = registered_book.get("_id")
         user_to_update = mongo.db.users.find_one({"username": session["user"]})
         user_id = user_to_update.get("_id")
-        mongo.db.users.update_one(
-            {"_id": ObjectId(user_id)}, {
-                '$push': {'booksAdded': ObjectId(book_id_to_register)}})
+        mongo.db.users.update_one({"_id": ObjectId(user_id)}, {
+                                  '$push': {'booksAdded': ObjectId(book_id_to_register)}})
 
         flash("Book has been added to the database!")
         return redirect(url_for("get_books"))
@@ -326,12 +346,10 @@ def new_review(book_id):
         book_id_to_update = book.get("_id")
         user_to_update = mongo.db.users.find_one({"username": session["user"]})
         user_id = user_to_update.get("_id")
-        mongo.db.books.update_one(
-            {"_id": ObjectId(book_id_to_update)}, {
-                '$push': {'reviews': review_id_to_register}})
-        mongo.db.users.update_one(
-            {"_id": ObjectId(user_id)}, {
-                '$push': {'reviewsAdded': review_id_to_register}})
+        mongo.db.books.update_one({"_id": ObjectId(book_id_to_update)}, {
+                                  '$push': {'reviews': review_id_to_register}})
+        mongo.db.users.update_one({"_id": ObjectId(user_id)}, {
+                                  '$push': {'reviewsAdded': review_id_to_register}})
 
         flash("Review has been added!")
         return redirect(url_for("get_books"))
@@ -359,14 +377,8 @@ def edit_book(book_id):
             flash("The url you entered is not an image.")
             return redirect(url_for("edit_book", book_id=book_to_update_id))
 
-        mongo.db.books.update_one(
-            {"_id": ObjectId(book_id)}, {
-                '$set': {
-                    'title': title_to_update,
-                    'authors': authors_to_update,
-                    'genres': genre_to_update,
-                    'coverImageURL': coverImageURL_to_update,
-                    'blurb': blurb_to_update}})
+        mongo.db.books.update_one({"_id": ObjectId(book_id)}, {'$set': {'title': title_to_update, 'authors': authors_to_update,
+                                  'genres': genre_to_update, 'coverImageURL': coverImageURL_to_update, 'blurb': blurb_to_update}})
 
         flash("Book has been updated in the database!")
         return redirect(url_for("get_books"))
@@ -411,9 +423,8 @@ def edit_review(review_id):
     if request.method == "POST":
         reviewtext_to_update = request.form.get("review")
 
-        mongo.db.reviews.update_one(
-            {"_id": ObjectId(review_id)}, {
-                '$set': {'reviewtext': reviewtext_to_update}})
+        mongo.db.reviews.update_one({"_id": ObjectId(review_id)}, {
+                                    '$set': {'reviewtext': reviewtext_to_update}})
 
         flash("Review has been updated in the database!")
         return redirect(url_for("get_books"))
@@ -430,12 +441,7 @@ def admin():
     reviews = mongo.db.reviews.find()
     users = mongo.db.users.find()
     genres = mongo.db.genres.find()
-    return render_template(
-        "admin_portal.html",
-        users=users,
-        books=books,
-        reviews=reviews,
-        genres=genres)
+    return render_template("admin_portal.html", users=users, books=books, reviews=reviews, genres=genres)
 
 
 if __name__ == "__main__":

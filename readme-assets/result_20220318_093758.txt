@@ -1,3 +1,16 @@
+Check results
+=============
+
+E711:190:24:comparison to None should be 'if cond is not None:'
+E711:198:22:comparison to None should be 'if cond is not None:'
+E711:202:22:comparison to None should be 'if cond is not None:'
+E711:225:24:comparison to None should be 'if cond is not None:'
+E711:236:25:comparison to None should be 'if cond is not None:'
+E712:273:41:comparison to False should be 'if cond is False:' or 'if not cond:'
+E712:358:47:comparison to False should be 'if cond is False:' or 'if not cond:'
+
+Code
+=============
 # CLEANUP: Remove comments, superfluous empty lines
 
 import os

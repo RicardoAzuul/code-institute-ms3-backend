@@ -583,6 +583,10 @@ A lot of the problems found are about formatting problems: lines too long, trail
 
 Running autopep8 fixed a lot of the problems: [Second validation](readme-assets/result_20220318_090139.txt) 
 
+Manually fixed a lot of the problems with lines too long: [Third validation](readme-assets/result_20220318_092703.txt)
+
+Fixed the last of the lines too long: [Fourth validation](readme-assets/result_20220318_093758.txt)
+
 ### Notable Bugs
 
 
