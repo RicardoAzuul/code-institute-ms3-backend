@@ -1,4 +1,3 @@
-<!-- FIXME: Images in the readme on Github are not working -->
 <!-- FIXME: Go through readme.md online, to make sure everything is displaying correctly -->
 
 
@@ -565,9 +564,13 @@ Several of these functionalities have already been tested: when reviews or books
 | The admin clicks on the "Cancel" button on the Edit Book page  | The admin is taken to the home page  | &#9745; |
 | The admin changes information on the Edit book page and clicks the "Edit Book" button  | The admin is taken to the home page, with a flash message that the book has been updated  | &#9745; |
 | The admin clicks the "More About This Book" button for the book they just edited  | The admin is taken to the book page, and the data they changed is populated  | &#9745; |
-| The admin clicks the "Delete" button for a book from the Admin Portal  | The admin is taken to the home page, with a flash message that the book has been deleted | &#9745; |
+| The admin clicks the "Delete" button for a book from the Admin Portal  | A modal pop ups, confirming that the admin wants to delete the book | &#9745; |
+| The admin clicks the "Cancel" button in the modal  | The modal disappears and they are back on the Admin Portal | &#9745; |
+| The admin clicks the "Delete" button in the modal  | The modal disappears and they aretaken to the home page, with a message that the book has been deleted | &#9745; |
 | The admin goes back to the Admin Portal  | The book that has just been deleted is no longer in the list of books | &#9745; |
-| The admin clicks the "Delete" button for a review on the Admin Portal page | The admin is taken to the home page, with a flash message that the review has been deleted  | &#9745; |
+| The admin clicks the "Delete" button for a review on the Admin Portal page | A modal pop ups, confirming that the admin wants to delete the review  | &#9745; |
+| The admin clicks the "Cancel" button in the modal  | The modal disappears and they are back on the Admin Portal | &#9745; |
+| The admin clicks the "Delete" button in the modal  | The modal disappears and they aretaken to the home page, with a message that the review has been deleted | &#9745; |
 | The admin goes back to the Admin Portal | The review that has just been deleted is no longer in the list of books | &#9745; |
 
 

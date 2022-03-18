@@ -1,8 +1,6 @@
-# IMPROVE: Add more tests
 import pytest
 import time
 from selenium import webdriver
-# Keys allows for emulating keyboard keys
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
