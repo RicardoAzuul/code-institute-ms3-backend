@@ -10,13 +10,14 @@
       <div class="card-body">
         {% if session.user %}
           {% if book.addedByUser == "" %}
-          <!-- TODO: Add some CSS styling to this -->
             <p class="card-text text-center alert alert-success" role="alert">This book has no owner!</p>
-            <p class="card-text text-center">            <a
-              href="{{ url_for('adopt_book', book_id=book._id) }}"
+            <p class="card-text text-center">
+              <a href="{{ url_for('adopt_book', book_id=book._id) }}"
               class="btn btn-success"
-              >Adopt Book?</a
-            ></p>
+              >
+              Adopt Book?
+              </a>
+            </p>
           {% endif %}
         {% endif %}
         <h2 class="card-subtitle text-muted" id="book-card-subtitle">
@@ -41,16 +42,17 @@
         <h3 class="card-text">Reviews from our users</h3>
       </div>
       <ul class="list-group list-group-flush" id="book-reviews">
-        {% if review_documents|length > 0 %} {% for review_document in
-        review_documents %}
-        <li class="list-group-item">
-          Review from: {{ review_document.addedByUser }}
-          <p>{{ review_document.reviewtext }}</p>
-        </li>
-        {% endfor %} {% else %}
-        <li class="list-group-item">
+        {% if review_documents|length > 0 %} 
+          {% for review_document in review_documents %}
+            <li class="list-group-item">
+            Review from: {{ review_document.addedByUser }}
+              <p>{{ review_document.reviewtext }}</p>
+          </li>
+          {% endfor %}
+        {% else %}
+          <li class="list-group-item">
           There are no reviews for {{ book.title }} yet!
-        </li>
+          </li>
         {% endif %}
       </ul>
       <div class="card-footer">

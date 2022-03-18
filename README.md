@@ -35,7 +35,6 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
   - [Database Design](#database-design)
   - [Features](#features)
     - [Existing Features](#existing-features)
-  - [- an admin portal, where the admin can delete and edit books, and delete reviews](#--an-admin-portal-where-the-admin-can-delete-and-edit-books-and-delete-reviews)
     - [Features Left to Implement](#features-left-to-implement)
   - [Technologies Used](#technologies-used)
   - [Responsiveness of Pages](#responsiveness-of-pages)
@@ -67,8 +66,10 @@ To see the site in action, visit [https://code-institute-ms3-book-review.herokua
     - As the site owner, I want to get recommendations for new books by crowdsourcing book reviews. The users of my site add reviews to books, which allows me to find new books I might like.
     - As the site owner, I want to earn money using affiliate links for the books on my site.
 
-Screenshots that fulfill these user stories: 
+Screenshots that fulfill these user stories:
+
 [Screenshot](readme-assets/screenshot_first_time_visitor.png)
+
 [Screenshot](readme-assets/screenshot_review.png)
 
 I see a couple of books with buttons to click for more information, I see upvotes, I see a link to login and a link to register, and a search function. This indicates that this site is about books and reviews of books. I can search for books, and if I register I can probably add books myself. If I get more info about a book, I see reviews as well. There is also a button that takes me to Amazon, where I can buy the book if I want to.
@@ -76,10 +77,15 @@ I see a couple of books with buttons to click for more information, I see upvote
 [Screenshot](readme-assets/screenshot_profile.png)
 
 If I'm logged in, I have a link to my profile in the navbar, and if I go there I see a list of all the books and reviews I've added. I can edit and delete those as well. I can also add a book through a link in the navbar.
+
 [Screenshot](readme-assets/screenshot_add_book.png)
+
 [Screenshot](readme-assets/screenshot_add_review.png)
+
 [Screenshot](readme-assets/screenshot_edit_book.png)
+
 [Screenshot](readme-assets/screenshot_edit_review.png)
+
 [Screenshot](readme-assets/screenshot_profile.png)
 
 As the site owner, I know all books added get a button added as well, that allows visitors to buy books, which will earn me money. And I can look at the reviews and upvotes to find books I might like.
@@ -99,7 +105,8 @@ I also want visitors to come back. One way to encourage that is to have them reg
 - the ability to upvote books.
 - the ability to review books, and edit and delete their reviews.
 - the ability to add, edit and delete books.
-- access to their profile page, where they can find all their reviews, and edit or delete them. All the books they added are also listed, with options to edit and delete them. Als includes an option to delete their profile.
+- access to their profile page, where they can find all their reviews, and edit or delete them. All the books they added are also listed, with options to edit and delete them. Also includes an option to delete their profile.
+
 
 ---
 
@@ -162,6 +169,7 @@ All pages should have the same navigation bar and footer:
 <ins>The Register page</ins>
 - a form for registering, including a cancel button 
 
+
 ---
 
 #### Skeleton Plane
@@ -172,6 +180,7 @@ On the left will be the logo, which when clicked upon will take the visitor back
 The active page is indicated with a line under the navigation item. When hovering over navigation items, the navigation item will be highlighted.
 
 At the bottom of every page will be the same footer.
+
 
 ---
 
@@ -209,6 +218,7 @@ Bootstrap's cards functionality is used, as a quick way to add a certain style t
 - [Register](readme-assets/register.png)
 - [Register - tablet](readme-assets/register_tablet_view.png)
 - [Register - mobile](readme-assets/register_mobile_view.png)
+
 
 ---
 
@@ -310,6 +320,8 @@ So, in a JSON-ish structure, my current database design:
 - register and login/logout functionality.
 - when a new book is added, a proof of concept affiliate link is created and added to the book document. This is used to generate a button which takes the user to an Amazon search page.
 - an admin portal, where the admin can delete and edit books, and delete reviews
+
+
 ---
 
 ### Features Left to Implement
@@ -323,6 +335,9 @@ So, in a JSON-ish structure, my current database design:
 - disable upvoting for the admin on the book page
 - disable the Buy button for the admin on the book page
 - disable the Review button for the admin on the book page
+- use Flask for error handling. Have custom error pages - with inline CSS in case style.css can't be loaded - to handle 404 and 500 errors for instance.
+- have Python error handle the input of genres: right now the genres are exposed to the user via HTML, which means that the user can edit the HTML and for instance input genres that are not in the database. When the user submits a form, Python should check the genre input, to see if it matches the genres in the database.
+
 
 ---
 
@@ -385,18 +400,20 @@ In order to run the tests yourself, do the following:
   ```pip install selenium```
 
   
-- Tests were writting using the Chrome Driver for Selenium. This automates google Chrome and interactions with Chrome. Download the correct one for your Chrome version: https://chromedriver.chromium.org/downloads
+- Tests were writting using the Chrome Driver for Selenium. This automates Google Chrome and interactions with Chrome. Download the correct one for your Chrome version: https://chromedriver.chromium.org/downloads
 
-After this you can run all tests using:
+- After this you can run all tests using:
 
 ```python -m pytest``` 
 
-Use the following if you want more verbose logging:
+- Use the following if you want more verbose logging:
 
 ```python -m pytest -v``` 
 
 
-The tests can be found in selenium_test.py and test_app.py, in the test folder. All tests pass: [Output pytest](readme-assets/output_pytest.png)
+The tests can be found in selenium_test.py and test_app.py, in the test folder. All tests pass: 
+
+[Output pytest](readme-assets/output_pytest.png)
   
 Functionality tested:
 test_app.py tests browsing to different pages: /, /get_books, /register and /login:
@@ -429,6 +446,7 @@ THEN check the title is "Bookable"
 
 
 <ins>Manual tests</ins>
+
 Manually testing the webapp is quite involved: things change depending on whether a visitor is logged in, has added a book, reviewed a book or upvoted a book. Some functionality has already been tested by automatic tests: things like whether a visitor who is not logged in can only see certain nav items in the navbar, whether a logged in user sees other nav items and even what happens when you register or login and logout. Below are more elaborate tests:
 
 **Search functionality**
@@ -623,5 +641,5 @@ Book cover images were sourced from [Goodreads](https://www.goodreads.com/) as w
 
 - I received help and support from my mentor at Code Institute, [Jack Wachira](https://github.com/iamjackwachira). 
 - I would also like to thank to all the people at [Code Institute](https://codeinstitute.net/) for providing the Diploma in Software Development course and giving me the tools and guidance to create this app.
-- And also thanks to [Bootstrap](https://getbootstrap.com/) for helping with implementing their Bootstrap stylings, and [Stackoverflow](https://stackoverflow.com/) and [MDN](https://developer.mozilla.org/en-US/) for helping with finding solutions to coding problems, like animating the pictures in sequence instead of all at once.
+- And also thanks to [Bootstrap](https://getbootstrap.com/) for helping with implementing their Bootstrap stylings, and [Stackoverflow](https://stackoverflow.com/) for helping with finding solutions to coding problems, like animating the pictures in sequence instead of all at once. The documentation for MongoDB (https://docs.mongodb.com/) and Jinja (https://jinja.palletsprojects.com/) were also very helpful.
 - My wife, Elizabeth Lane, for supporting me during this coding course.
