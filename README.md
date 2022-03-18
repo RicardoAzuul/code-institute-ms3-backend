@@ -322,6 +322,7 @@ So, in a JSON-ish structure, my current database design:
 - register and login/logout functionality.
 - when a new book is added, a proof of concept affiliate link is created and added to the book document. This is used to generate a button which takes the user to an Amazon search page.
 - an admin portal, where the admin can delete and edit books, and delete reviews
+- an admin "view" of the webapp: upvoting is disabled, reviewing books is disabled, all books can be edited or deleted from their page, the "Buy" button for books is invisible
 
 
 ---
@@ -333,10 +334,6 @@ So, in a JSON-ish structure, my current database design:
 - add a downvote functionality
 - add a way for users to remove their upvotes
 - redirect the admin directly to the admin portal, instead of to their profile
-- allow the admin to edit all books from the book page itself, like owners of the book
-- disable upvoting for the admin on the book page
-- disable the Buy button for the admin on the book page
-- disable the Review button for the admin on the book page
 - use Flask for error handling. Have custom error pages - with inline CSS in case style.css can't be loaded - to handle 404 and 500 errors for instance.
 - have Python error handle the input of genres: right now the genres are exposed to the user via HTML, which means that the user can edit the HTML and for instance input genres that are not in the database. When the user submits a form, Python should check the genre input, to see if it matches the genres in the database.
 - using [Flask-login](https://flask-login.readthedocs.io/en/latest/?msclkid=377a241fa69a11ec912bffef67d76419) module to deal with login and session management
@@ -572,6 +569,11 @@ Several of these functionalities have already been tested: when reviews or books
 | The admin clicks the "Cancel" button in the modal  | The modal disappears and they are back on the Admin Portal | &#9745; |
 | The admin clicks the "Delete" button in the modal  | The modal disappears and they aretaken to the home page, with a message that the review has been deleted | &#9745; |
 | The admin goes back to the Admin Portal | The review that has just been deleted is no longer in the list of books | &#9745; |
+| The admin lands on their Profile page | The delete profile button is not visible | &#9745; |
+| The admin clicks the "More About this Book" button for any book | The upvote function is disabled | &#9745; |
+| The admin clicks the "More About this Book" button for any book | The "Review" button  is not visible | &#9745; |
+| The admin clicks the "More About this Book" button for any book | The "Buy" button  is not visible | &#9745; |
+| The admin clicks the "More About this Book" button for any book | The "Edit" and "Delete" buttons for the book are visible and functioning  | &#9745; |
 
 
 <ins>Code validation:</ins> 

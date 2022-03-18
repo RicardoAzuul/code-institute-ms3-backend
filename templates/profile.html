@@ -165,15 +165,18 @@ block content %}
   <div class="card-footer">
     <div class="row">
       <div class="col text-center">
-        <!-- Modal button from https://getbootstrap.com/docs/4.6/components/modal/#examples -->
-        <button
-          type="button"
-          class="btn btn-danger"
-          data-toggle="modal"
-          data-target="#deleteProfileModal"
-        >
-          Delete Profile
-        </button>
+        {% if session.user == "bookable_admin" %}
+        {% else %}
+          <!-- Modal button from https://getbootstrap.com/docs/4.6/components/modal/#examples -->
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-toggle="modal"
+            data-target="#deleteProfileModal"
+          >
+            Delete Profile
+          </button>
+        {% endif %}
       </div>
     </div>
   </div>
