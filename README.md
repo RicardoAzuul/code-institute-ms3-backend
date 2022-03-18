@@ -395,7 +395,7 @@ These screenshots indicate the responsiveness of the pages on various screens. P
 ## Testing
 
 <ins>Tests for Readme.md:</ins>
-- :heavy_check_mark: Realizing that I was doing a lot of manual work to check all the links, I googled for an automated solution. I found one using a Github Action Workflow. This Workflow checks all the links in markdown files.
+- :heavy_check_mark: Realizing that I was doing a lot of manual work to check all the links, I googled for an automated solution. I found one using a Github Action Workflow. This Workflow checks all the links in markdown files. I found one error: the Action is also checking links for my own webapp, and that link no longer exists. 
 
 
 <ins>Automated tests</ins>
@@ -588,7 +588,7 @@ Several of these functionalities have already been tested: when reviews or books
 Only pages that can be accessed without logging in can be validated:
 
 - http://code-institute-ms3-book-review.herokuapp.com/ and http://code-institute-ms3-book-review.herokuapp.com/get_books: 5 warnings and 9 errors. See Problems section for fixes.
-- http://code-institute-ms3-book-review.herokuapp.com/get_book/62335798c7113074d825718d: this page is used as the page to be validated for all pages with book information, as these are based on a template: 1 warning found, pertaining to a section missing a heading. However, this section is only visible when there is a flash message, and as such needs no heading.
+- http://code-institute-ms3-book-review.herokuapp.com/get_book/[book_id]: this page is used as the page to be validated for all pages with book information, as these are based on a template: 1 warning found, pertaining to a section missing a heading. However, this section is only visible when there is a flash message, and as such needs no heading.
 - http://code-institute-ms3-book-review.herokuapp.com/login: 1 warning found, pertaining to a section missing a heading. However, this section is only visible when there is a flash message, and as such needs no heading.
 - http://code-institute-ms3-book-review.herokuapp.com/register: 1 warning found, pertaining to a section missing a heading. However, this section is only visible when there is a flash message, and as such needs no heading.
 
