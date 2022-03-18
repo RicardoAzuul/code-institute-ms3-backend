@@ -218,6 +218,9 @@ Bootstrap's cards functionality is used, as a quick way to add a certain style t
 - [Register](readme-assets/register.png)
 - [Register - tablet](readme-assets/register_tablet_view.png)
 - [Register - mobile](readme-assets/register_mobile_view.png)
+- [Admin Portal](readme-assets/admin_portal.png)
+- [Admin Portal - tablet](readme-assets/admin_portal_tablet_view.png)
+- [Admin Portal - mobile](readme-assets/admin_portal_mobile_view.png)
 
 
 ---
