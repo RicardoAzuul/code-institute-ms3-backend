@@ -319,6 +319,7 @@ So, in a JSON-ish structure, my current database design:
 ### Existing Features
 - a home page with cards representing books on it. The cards contain title, author and genre of each book, as well as cover image. The number of upvotes is also indicated, and there is a button the user can click on to get more info about the book.
 - a page template for each book, that fills the page with the book's details, and adds buttons to add, edit or delete reviews, and edit or delete the book, depending on the user who is logged in. Upvoting is also possible for logged in users.
+- users can also remove their upvote from a book.
 - a page to add a new book, that asks for all the necessary info to add a book to the database.
 - a profile page, from where the logged in user can edit or delete the books and reviews they added, or even delete their entire profile.
 - register and login/logout functionality.
@@ -334,7 +335,6 @@ So, in a JSON-ish structure, my current database design:
 - have the backend code check if the combination of both title and author are already in the database, to detect possible duplicates
 - have a way to sort the books on the main page
 - add a downvote functionality
-- add a way for users to remove their upvotes
 - redirect the admin directly to the admin portal, instead of to their profile
 - use Flask for error handling. Have custom error pages - with inline CSS in case style.css can't be loaded - to handle 404 and 500 errors for instance.
 - have Python error handle the input of genres: right now the genres are exposed to the user via HTML, which means that the user can edit the HTML and for instance input genres that are not in the database. When the user submits a form, Python should check the genre input, to see if it matches the genres in the database.
