@@ -23,7 +23,7 @@
         <h2 class="card-subtitle text-muted" id="book-card-subtitle">
           Author(s): {{ book.authors }}
         </h2>
-        <p class="card-text">Genre(s): {{ book.genres }}</p>
+        <p class="card-text">Genre: {{ book.genre }}</p>
         <p class="card-text">
           Upvotes: {% if session.user in book.upvotedBy %}
           <i class="fas fa-arrow-circle-up"></i>

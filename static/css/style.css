@@ -161,11 +161,18 @@ h3 {
   .card-img-top {
     height: 25vw;
   }
+  .books-card-body {
+    text-align: center;
+    padding: 0rem;  
+  } 
+  .books-card-footer {
+    text-align: center;
+  }
   #book-card {
     width: 50rem;
   }
   #login-card, #register-card {
     margin-left: 15rem;
     width: 40rem;
-  }   
+  }    
 }
